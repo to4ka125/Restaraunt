@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="Restaraunt.Model.Tables"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Restaraunt.Model"
+             mc:Ignorable="d" 
+             d:DesignHeight="110" d:DesignWidth="210"
+             Height="110"
+             Width="210"
+             >
+    <Border Background="#F5F9FA" CornerRadius="5" 
+            BorderThickness="0.5"
+            BorderBrush="#ADADAD">
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock Text="Стол 1" Style="{StaticResource textblock}"
+                       FontSize="15" TextAlignment="Center"
+                       FontFamily="/Restaraunt;component/Fonts/#Montserrat Alternates SemiBold"/>
+
+            <TextBlock Style="{StaticResource textblock}"
+                       FontSize="15" 
+                       Text="Свободен"/>
+        </StackPanel>
+    </Border>
+</UserControl>

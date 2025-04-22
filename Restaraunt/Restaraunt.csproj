@@ -55,6 +55,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Forms\WorkTable.xaml.cs">
+      <DependentUpon>WorkTable.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Tables.xaml.cs">
+      <DependentUpon>Tables.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utilits\Btn.cs" />
+    <Compile Include="Utilits\MySqlCon.cs" />
+    <Compile Include="Utilits\SafeData.cs" />
+    <Compile Include="View\Order.xaml.cs">
+      <DependentUpon>Order.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Forms\WorkTable.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -67,6 +83,30 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Model\Tables.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\Button.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\ComboBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\Page.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\Text.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Order.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -86,6 +126,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Resource Include="Fonts\MontserratAlternates-Regular.ttf" />
+    <Resource Include="Fonts\MontserratAlternates-SemiBold.ttf" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -96,13 +138,25 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Backup\" />
-    <Folder Include="Fonts\" />
-    <Folder Include="Forms\" />
-    <Folder Include="Images\" />
-    <Folder Include="Model\" />
-    <Folder Include="Styles\" />
-    <Folder Include="Utilits\" />
-    <Folder Include="View\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IconsImage\Close-button.png" />
+    <Resource Include="Images\IconsImage\power-button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Logo\logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IconsUsers\Admin.png" />
+    <Resource Include="Images\IconsUsers\Chef.png" />
+    <Resource Include="Images\IconsUsers\Manager.png" />
+    <Resource Include="Images\IconsUsers\Waiter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IconsMenu\Home.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IconsMenu\orderAdd.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

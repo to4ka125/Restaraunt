@@ -5,8 +5,35 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Restaraunt"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="MainWindow" 
+        Height="600" 
+        Width="400" 
+        WindowStyle="None" 
+        AllowsTransparency="False" 
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        ResizeMode="NoResize">
+    <Border CornerRadius="5" Background="#F5F9FA">
+            <Grid>
+            <Button Style="{StaticResource BtnClose}" Width="25" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="10"/>
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <TextBlock FontSize="35"
+                           TextAlignment="Center"
+                           Foreground="#F85D5D"
+                           FontFamily="/Restaraunt;component/Fonts/#Montserrat Alternates SemiBold">РЕСТОРАН <LineBreak/> КИОТА</TextBlock>
+                <TextBox x:Name="qLogin" Style="{StaticResource pcaholderText}" 
+                         Width="280"
+                         Height="50" 
+                         Margin="0 25 0 15"
+                         Tag="Введите логин"/>
+                <PasswordBox x:Name="qPassword" Style="{StaticResource pcaholderPassword}"
+                          Width="280"
+                          Height="50"
+                          Tag="Введите пароль"/>
+
+                <Button Margin="0 30" Style="{StaticResource btnStyle}" Content="Войти" Width="180" Height="50" Click="Button_Click"/>
+
+            </StackPanel>
+            </Grid>
+        </Border>
 </Window>

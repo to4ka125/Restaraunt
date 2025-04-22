@@ -4,6 +4,13 @@
              xmlns:local="clr-namespace:Restaraunt"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/Button.xaml"/>
+                <ResourceDictionary Source="Styles/Page.xaml"/>
+                <ResourceDictionary Source="Styles/Text.xaml"/>
+                <ResourceDictionary Source="Styles/ComboBox.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -1,0 +1,193 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="btnStyle" TargetType="Button">
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border x:Name="border"
+                                CornerRadius="10"
+                                Background="#FDC5C5"
+                              >
+                        <Grid>
+                            <TextBlock x:Name="textBlock"
+                                           Text="{Binding Content, RelativeSource={RelativeSource Mode=TemplatedParent}}" 
+                                           Foreground="#fff"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontFamily="/Restaraunt;component/Fonts/#Montserrat Alternates"/>
+                        </Grid>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                                Storyboard.TargetName="border"
+                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                To="#F85D5D"
+                                                Duration="0:0:0:0.3"  
+                                                />
+                                        <ThicknessAnimation
+                                                Storyboard.TargetName="border"
+                                                Storyboard.TargetProperty="BorderThickness"
+                                                To="0"
+                                                Duration="0:0:0:0.3"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                                Storyboard.TargetName="border"
+                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                To="#FDC5C5"
+                                                Duration="0:0:0:0.3"  
+                                                />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="BtnClose" TargetType="Button">
+        <Setter Property="Width" Value="25"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Image x:Name="Image" Source="/Images/IconsImage/power-button.png"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Image" Property="Source" 
+                                    Value="/Images/IconsImage/Close-button.png"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="BtnMenu" TargetType="RadioButton">
+        <Setter Property="VerticalAlignment"
+                Value="Center"/>
+        <Setter Property="Opacity"
+                Value="0.8"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RadioButton">
+                    <Border x:Name="border"
+                            Height="50"
+                            Width="260"
+                            BorderThickness="0"
+                        >
+                        <Grid>
+                            <Border x:Name="Indicator"
+                                    Opacity="1"
+                                    Height="35"
+                                    Width="4"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Background="#F85D5D"
+                                    CornerRadius="2"
+                                    Margin="2 0"
+                                    Visibility="Collapsed"
+                                    />
+                            <ContentPresenter HorizontalAlignment="Left"
+                                          VerticalAlignment="Center"/>
+                        </Grid>
+
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Opacity" Value="1"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="Indicator" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="btnStyleCategory" TargetType="RadioButton">
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RadioButton">
+                    <Border x:Name="border"
+                        CornerRadius="15"
+                        BorderBrush="#ADADAD"
+                        BorderThickness="1"
+                        Background="#fff">
+                        <Grid>
+                            <TextBlock x:Name="textBlock"
+                                   Text="{Binding Content, RelativeSource={RelativeSource Mode=TemplatedParent}}" 
+                                   Foreground="#ADADAD"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontFamily="/Restaraunt;component/Fonts/#Montserrat Alternates"/>
+                        </Grid>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                        Storyboard.TargetName="border"
+                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                        To="#F85D5D"
+                                        Duration="0:0:0.3"/>
+                                        <ThicknessAnimation
+                                        Storyboard.TargetName="border"
+                                        Storyboard.TargetProperty="BorderThickness"
+                                        To="0"
+                                        Duration="0:0:0.3"/>
+                                        <ColorAnimation
+                                        Storyboard.TargetName="textBlock"
+                                        Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
+                                        To="#FFFFFF" 
+                                            Duration="0:0:0.3"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                        Storyboard.TargetName="border"
+                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                        To="#fff"
+                                        Duration="0:0:0.3"/>
+                                        <ThicknessAnimation
+                                        Storyboard.TargetName="border"
+                                        Storyboard.TargetProperty="BorderThickness"
+                                        To="1" 
+                                        Duration="0:0:0.3"/>
+                                        <ColorAnimation
+                                        Storyboard.TargetName="textBlock"
+                                        Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
+                                        To="#ADADAD" 
+                                            Duration="0:0:0.3"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

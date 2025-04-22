@@ -10,26 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Restaraunt.Forms;
 
-namespace Restaraunt
+namespace Restaraunt.Forms
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for WorkTable.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class WorkTable : Window
     {
-        public MainWindow()
+        public WorkTable()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            WorkTable wT = new WorkTable();
-            wT.Show();
         }
     }
 }

@@ -12,24 +12,20 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Restaraunt.Forms;
+using Restaraunt.Utilits;
 
-namespace Restaraunt
+namespace Restaraunt.Model
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Tables.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Tables : UserControl
     {
-        public MainWindow()
+        public Tables()
         {
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            WorkTable wT = new WorkTable();
-            wT.Show();
-        }
+      
     }
 }
