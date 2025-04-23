@@ -49,6 +49,21 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=4.7.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.4.7.25104.5739\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=4.7.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.4.7.25104.5739\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=4.7.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.4.7.25104.5739\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=4.7.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.4.7.25104.5739\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=4.7.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.4.7.25104.5739\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -57,6 +72,9 @@
     </ApplicationDefinition>
     <Compile Include="Forms\WorkTable.xaml.cs">
       <DependentUpon>WorkTable.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DishesBlock.xaml.cs">
+      <DependentUpon>DishesBlock.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\Tables.xaml.cs">
       <DependentUpon>Tables.xaml</DependentUpon>
@@ -83,6 +101,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Model\DishesBlock.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Model\Tables.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -128,6 +150,7 @@
     </EmbeddedResource>
     <Resource Include="Fonts\MontserratAlternates-Regular.ttf" />
     <Resource Include="Fonts\MontserratAlternates-SemiBold.ttf" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -157,6 +180,75 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\IconsMenu\orderAdd.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IconsImage\search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ImagesMenu\0POAIhLUHeA.jpg" />
+    <Resource Include="Images\ImagesMenu\0_WqdpcYwf0.jpg" />
+    <Resource Include="Images\ImagesMenu\2ucACZuHIlA.jpg" />
+    <Resource Include="Images\ImagesMenu\3QRMX3QDtE8.jpg" />
+    <Resource Include="Images\ImagesMenu\3QZtRGExJsU.jpg" />
+    <Resource Include="Images\ImagesMenu\7O83Ns7pcOA.jpg" />
+    <Resource Include="Images\ImagesMenu\8TYpV8jwLiQ.jpg" />
+    <Resource Include="Images\ImagesMenu\9WKxSiRobw0.jpg" />
+    <Resource Include="Images\ImagesMenu\AVQjumww-bw.jpg" />
+    <Resource Include="Images\ImagesMenu\Ayp2Xc3HfYI.jpg" />
+    <Resource Include="Images\ImagesMenu\Bi1XofLr8GY.jpg" />
+    <Resource Include="Images\ImagesMenu\Bs9H8vpT6fA.jpg" />
+    <Resource Include="Images\ImagesMenu\bSC_HewHFv0.jpg" />
+    <Resource Include="Images\ImagesMenu\ci48dKC71ao.jpg" />
+    <Resource Include="Images\ImagesMenu\ckVj9F2ILG4.jpg" />
+    <Resource Include="Images\ImagesMenu\CxlpMRk88FI.jpg" />
+    <Resource Include="Images\ImagesMenu\dnV5zKS_Gok.jpg" />
+    <Resource Include="Images\ImagesMenu\E8Uclz454C8.jpg" />
+    <Resource Include="Images\ImagesMenu\eAlzVHJDsAw.jpg" />
+    <Resource Include="Images\ImagesMenu\ehfh9CJwNkw.jpg" />
+    <Resource Include="Images\ImagesMenu\F3l3QZSlsZI.jpg" />
+    <Resource Include="Images\ImagesMenu\file.png" />
+    <Resource Include="Images\ImagesMenu\FiuCzsXqGr0.jpg" />
+    <Resource Include="Images\ImagesMenu\free-icon-filter-839890.png" />
+    <Resource Include="Images\ImagesMenu\FT9WpYmofzk.jpg" />
+    <Resource Include="Images\ImagesMenu\G4qBKVgdJ0E.jpg" />
+    <Resource Include="Images\ImagesMenu\GqBwLwVm92A.jpg" />
+    <Resource Include="Images\ImagesMenu\Gw0R4Y__KWg.jpg" />
+    <Resource Include="Images\ImagesMenu\hj5GQ20KIVc.jpg" />
+    <Resource Include="Images\ImagesMenu\HY5fKTx44ag.jpg" />
+    <Resource Include="Images\ImagesMenu\hyfbCMOBmVs.jpg" />
+    <Resource Include="Images\ImagesMenu\H_seXLksRPQ.jpg" />
+    <Resource Include="Images\ImagesMenu\ira39XlK_Y0.jpg" />
+    <Resource Include="Images\ImagesMenu\iYfuPohL5s4.jpg" />
+    <Resource Include="Images\ImagesMenu\jP-UB7CcbqA.jpg" />
+    <Resource Include="Images\ImagesMenu\jTBGbSVkYoY.jpg" />
+    <Resource Include="Images\ImagesMenu\KT6jye_bU7g.jpg" />
+    <Resource Include="Images\ImagesMenu\L1tPenKt7zg.jpg" />
+    <Resource Include="Images\ImagesMenu\LDh-CGRAtc4.jpg" />
+    <Resource Include="Images\ImagesMenu\MoVGIah6mJY.jpg" />
+    <Resource Include="Images\ImagesMenu\mR1PKUs4YYA.jpg" />
+    <Resource Include="Images\ImagesMenu\o1VP_WUS0Jg.jpg" />
+    <Resource Include="Images\ImagesMenu\oCIPnbmnp8o.jpg" />
+    <Resource Include="Images\ImagesMenu\pgohY8741Zg.jpg" />
+    <Resource Include="Images\ImagesMenu\POH8Avg8Kaw.jpg" />
+    <Resource Include="Images\ImagesMenu\q6LeJPJmDf8.jpg" />
+    <Resource Include="Images\ImagesMenu\shIdbsGawlU.jpg" />
+    <Resource Include="Images\ImagesMenu\SzQUHHniw5Q.jpg" />
+    <Resource Include="Images\ImagesMenu\szZk39aMQNg.jpg" />
+    <Resource Include="Images\ImagesMenu\TnrkZWO-QEY.jpg" />
+    <Resource Include="Images\ImagesMenu\TrllYacZR3A.jpg" />
+    <Resource Include="Images\ImagesMenu\TxiofXCWK64.jpg" />
+    <Resource Include="Images\ImagesMenu\TzrCi5ZkC6s.jpg" />
+    <Resource Include="Images\ImagesMenu\Ufs4bYZN7Ac.jpg" />
+    <Resource Include="Images\ImagesMenu\VcBhnL28kt4.jpg" />
+    <Resource Include="Images\ImagesMenu\wehH8Nsae98.jpg" />
+    <Resource Include="Images\ImagesMenu\WgFIuap68FA.jpg" />
+    <Resource Include="Images\ImagesMenu\Wsgl0lycrcQ.jpg" />
+    <Resource Include="Images\ImagesMenu\x4FRmxXXfnM.jpg" />
+    <Resource Include="Images\ImagesMenu\xSC-1P0VsEI.jpg" />
+    <Resource Include="Images\ImagesMenu\yh1j89kmBCE.jpg" />
+    <Resource Include="Images\ImagesMenu\ZuQLDCUe74M.jpg" />
+    <Resource Include="Images\ImagesMenu\_H8HdXxs1pE.jpg" />
+    <Resource Include="Images\ImagesMenu\_USbxOXigcg.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

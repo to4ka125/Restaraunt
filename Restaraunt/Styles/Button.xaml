@@ -57,6 +57,81 @@
         </Setter>
     </Style>
 
+    <Style x:Key="btnStyleSmall" TargetType="Button">
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border x:Name="border"
+                    CornerRadius="15"
+                    BorderBrush="#ADADAD"
+                    BorderThickness="1"
+                    Background="#fff">
+                        <Grid>
+                            <TextBlock x:Name="textBlock"
+                                           Text="{Binding Content, RelativeSource={RelativeSource Mode=TemplatedParent}}" 
+                                           Foreground="#ADADAD"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontFamily="/Restaraunt;component/Fonts/#Montserrat Alternates"/>
+                        </Grid>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                                Storyboard.TargetName="border"
+                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                To="#F85D5D"
+                                                Duration="0:0:0:0.3"  
+                                                />
+                                        <ColorAnimation
+                                                Storyboard.TargetName="textBlock"
+                                                Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
+                                                To="#fff"
+                                                Duration="0:0:0:0.2"
+                                                />
+                                        <ThicknessAnimation
+                                                Storyboard.TargetName="border"
+                                                Storyboard.TargetProperty="BorderThickness"
+                                                To="0"
+                                                Duration="0:0:0:0.3"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                                Storyboard.TargetName="border"
+                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                To="#fff"
+                                                Duration="0:0:0:0.3"  
+                                                />
+                                        <ColorAnimation
+                                                Storyboard.TargetName="textBlock"
+                                                Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
+                                                To="#ADADAD"
+                                                Duration="0:0:0:0.2"
+                                                />
+                                        <ThicknessAnimation
+                                                Storyboard.TargetName="border"
+                                                Storyboard.TargetProperty="BorderThickness"
+                                                To="1"
+                                                Duration="0:0:0:0.2"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
     <Style x:Key="BtnClose" TargetType="Button">
         <Setter Property="Width" Value="25"/>
         <Setter Property="Template">
@@ -126,64 +201,65 @@
             <Setter.Value>
                 <ControlTemplate TargetType="RadioButton">
                     <Border x:Name="border"
-                        CornerRadius="15"
-                        BorderBrush="#ADADAD"
-                        BorderThickness="1"
-                        Background="#fff">
+                    CornerRadius="15"
+                    BorderBrush="#ADADAD"
+                    BorderThickness="1"
+                    Background="#fff">
                         <Grid>
                             <TextBlock x:Name="textBlock"
-                                   Text="{Binding Content, RelativeSource={RelativeSource Mode=TemplatedParent}}" 
-                                   Foreground="#ADADAD"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   FontFamily="/Restaraunt;component/Fonts/#Montserrat Alternates"/>
+                               Text="{Binding Content, RelativeSource={RelativeSource Mode=TemplatedParent}}" 
+                               Foreground="#ADADAD"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontFamily="/Restaraunt;component/Fonts/#Montserrat Alternates"/>
                         </Grid>
                     </Border>
 
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Trigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <ColorAnimation
-                                        Storyboard.TargetName="border"
-                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                        To="#F85D5D"
-                                        Duration="0:0:0.3"/>
-                                        <ThicknessAnimation
-                                        Storyboard.TargetName="border"
-                                        Storyboard.TargetProperty="BorderThickness"
-                                        To="0"
-                                        Duration="0:0:0.3"/>
-                                        <ColorAnimation
-                                        Storyboard.TargetName="textBlock"
-                                        Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
-                                        To="#FFFFFF" 
-                                            Duration="0:0:0.3"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.EnterActions>
-                            <Trigger.ExitActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <ColorAnimation
-                                        Storyboard.TargetName="border"
-                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                        To="#fff"
-                                        Duration="0:0:0.3"/>
-                                        <ThicknessAnimation
-                                        Storyboard.TargetName="border"
-                                        Storyboard.TargetProperty="BorderThickness"
-                                        To="1" 
-                                        Duration="0:0:0.3"/>
-                                        <ColorAnimation
-                                        Storyboard.TargetName="textBlock"
-                                        Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
-                                        To="#ADADAD" 
-                                            Duration="0:0:0.3"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.ExitActions>
+                            <Setter TargetName="border" Property="Background" Value="#F85D5D"/>
+                            <Setter TargetName="border" Property="BorderThickness" Value="0"/>
+                            <Setter TargetName="textBlock" Property="Foreground" Value="#FFFFFF"/>
+                        </Trigger>
+
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="#F85D5D"/>
+                            <Setter TargetName="textBlock" Property="Foreground" Value="#fff"/>
+                            <Setter TargetName="border" Property="BorderThickness" Value="0"/>
+                        </Trigger>
+
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="False"/>
+                                <Condition Property="IsChecked" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="border" Property="Background" Value="#fff"/>
+                            <Setter TargetName="textBlock" Property="Foreground" Value="#ADADAD"/>
+                            <Setter TargetName="border" Property="BorderThickness" Value="1"/>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="BtnBText" TargetType="RadioButton">
+        <Setter Property="VerticalAlignment"
+                Value="Center"/>
+        <Setter Property="Opacity"
+                Value="0.6"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RadioButton">
+                    <Border x:Name="border"
+                        >
+                        <ContentPresenter HorizontalAlignment="Left"
+                                          VerticalAlignment="Center"/>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter  Property="Opacity" Value="1"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

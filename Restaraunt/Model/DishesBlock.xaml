@@ -1,0 +1,68 @@
+﻿<UserControl x:Class="Restaraunt.Model.DishesBlock"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Restaraunt.Model"
+             xmlns:btn="clr-namespace:Restaraunt.Utilits"
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="150">
+            
+    <Border Background="#F5F9FA" CornerRadius="5" BorderBrush="#ADADAD" BorderThickness="0.5">
+        <Grid Margin="10" Width="130">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <!-- Изображение -->
+                <RowDefinition Height="Auto"/>
+                <!-- Название -->
+                <RowDefinition Height="Auto"/>
+                <!-- Описание -->
+                <RowDefinition Height="*"/>
+                <!-- Пустое пространство -->
+                <RowDefinition Height="Auto"/>
+                <!-- Цена (фиксировано внизу) -->
+            </Grid.RowDefinitions>
+
+            <!-- Изображение -->
+            <Image Grid.Row="0" Width="110" Height="80" Source="/Images/ImagesMenu/_H8HdXxs1pE.jpg"/>
+
+            <!-- Название блюда -->
+            <TextBlock Grid.Row="1" 
+                   Text="Суши с тунцом"
+                   Style="{StaticResource textblockSemiBoold}" 
+                   Margin="0 8 0 0"/>
+
+            <!-- Описание -->
+            <TextBlock Grid.Row="2" 
+                   Text="Вареная соевая фасоль" 
+                   TextWrapping="Wrap"
+                   Opacity="0.5" 
+                   Style="{StaticResource textblock}"
+                   FontSize="10"/>
+
+            <!-- Цена (всегда внизу) -->
+            <StackPanel Orientation="Horizontal" Grid.Row="4">
+                <TextBlock
+                   Text="650 руб." 
+                   Style="{StaticResource textblockSemiBoold}" 
+                   Margin="0 15"
+                   FontSize="15"
+                   VerticalAlignment="Bottom"/>
+
+                <StackPanel Margin="10 0" Orientation="Horizontal">
+                    <btn:Btn Style="{StaticResource BtnBText}">
+                        <TextBlock Style="{StaticResource textblockSemiBoold}" FontSize="24" Foreground="#F85D5D" Text="-"/>
+                    </btn:Btn>
+
+                    <TextBlock x:Name="count" Text="0" VerticalAlignment="Center" Margin="5 0"/>
+
+                    <btn:Btn Style="{StaticResource BtnBText}">
+                        <TextBlock Style="{StaticResource textblockSemiBoold}" FontSize="24" Foreground="#F85D5D" Text="+"/>
+                    </btn:Btn>
+                </StackPanel>
+           
+            </StackPanel>
+      
+        </Grid>
+    </Border>
+</UserControl>

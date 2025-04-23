@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Restaraunt.View"
              xmlns:uc="clr-namespace:Restaraunt.Model"
+             xmlns:maskBox="clr-namespace:Xceed.Wpf.Toolkit.Obselete;assembly=Xceed.Wpf.Toolkit"
              mc:Ignorable="d" 
              d:DesignHeight="640" d:DesignWidth="800"
              Loaded="UserControl_Loaded">
@@ -87,7 +88,7 @@
             </Grid>
 
             <Grid Grid.Row="1">
-                <StackPanel Orientation="Horizontal">
+                <StackPanel>
                     <StackPanel x:Name="AddTables" Visibility="Collapsed" 
                         Margin="0 25" >
                         <TextBlock Style="{StaticResource textblock}"
@@ -121,13 +122,15 @@
 
                         </StackPanel>
 
+
+
                         <Grid x:Name="TablesConteiner">
 
                         </Grid>
                     </StackPanel>
 
-                    <StackPanel x:Name="ChoosingPaymentMethod"
-                                 Visibility="Visible"
+                    <StackPanel x:Name="ChoosingPaymentMethod" Style="{StaticResource OrderStep}"
+                                 Visibility="Collapsed"
                                 Margin="0 25">
                         <TextBlock Style="{StaticResource textblock}"
                                    FontFamily="/Fonts/#Montserrat Alternates SemiBold"
@@ -149,11 +152,139 @@
                                    Text="Выбрать гостя"
                                    FontSize="20"/>
 
-                        <StackPanel Margin="0 20">
+                        <StackPanel Margin="0 20" Orientation="Horizontal">
                             <TextBlock Style="{StaticResource textblock}" FontSize="15"
-                                       Text="Беляков Виктор"/>
+                                       Text="Беляков Виктор"
+                                       Visibility="Collapsed"/>
+                            <Button x:Name="addClients"
+                                   Style="{StaticResource btnStyleSmall }"
+                                         Width="180"
+                                         Height="35"
+                                         Content="+ Добавить гостя"/>
                         </StackPanel>
 
+                        <StackPanel Orientation="Horizontal" x:Name="containerRadioBtnSearchClients">
+                            <RadioButton x:Name="radioSearchBtn" 
+                                Style="{StaticResource btnStyleCategory}"
+                                         Width="135"
+                                         Height="35"
+                                         Content="Найти гостя"
+                                         IsChecked="True" 
+                                         Click="RadioButton_Click"/>
+
+                            <RadioButton x:Name="radioPassBtn"
+                                         Style="{StaticResource btnStyleCategory}"
+                                         Margin="20 0"
+                                         Width="135"
+                                         Height="35"
+                                         Content="Пропустить"
+                                         Click="RadioButton_Click"/>
+                        </StackPanel>
+
+                        <Border Margin="0 30" CornerRadius="10" Background="#F5F9FA" 
+                                x:Name="SearchClientsBox"
+                                BorderBrush="#ADADAD"
+                                BorderThickness="0.5" 
+                                Height="190"
+                                Width="290" HorizontalAlignment="Left">
+
+                            <StackPanel Margin="20">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="/Images/IconsImage/search.png" Width="20"/>
+                                    <TextBlock Style="{StaticResource textblockSemiBoold}"
+                                               Text="Найти гостя" FontSize="20" Margin="10 0 0 0"/>
+                                </StackPanel>
+
+                                <TextBlock Style="{StaticResource textblock}"
+                                               Text="По номеру телефона"
+                                           FontSize="15"/>
+                                <maskBox:MaskedTextBox Style="{StaticResource pcaholderText}"  
+                                                       Mask="+7 (###) ###-##-##"
+                                                       Margin="0 10"/>
+                                <Button Style="{StaticResource btnStyle}" Content="Найти гостя" Height="35"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Button Style="{StaticResource btnStyle}" 
+                                Width="135" 
+                                Height="35" 
+                                HorizontalAlignment="Right" 
+                                Content="Далее"
+                                Click="Button_Click"/>
+                    </StackPanel>
+
+                    <StackPanel x:Name="Menu"  
+                                Margin="0 25">
+
+                        <TextBlock Style="{StaticResource textblock}"
+                                   FontFamily="/Fonts/#Montserrat Alternates SemiBold"
+                                   Text="Меню ресторана"
+                                   FontSize="20"/>
+
+                        <StackPanel x:Name="foodCategoryBox" Orientation="Vertical" Margin="0 25">
+                            <!-- First Row -->
+                            <StackPanel Orientation="Horizontal">
+                                <RadioButton x:Name="allBtn"
+                                Style="{StaticResource btnStyleCategory}"
+                                Content="Все"
+                                Width="50" 
+                                Height="35"/>
+
+                                <RadioButton x:Name="startersBtn"
+                                Style="{StaticResource btnStyleCategory}" 
+                                Content="Закуски" 
+                                Width="100" 
+                                Height="35"
+                                Margin="10 0"/>
+
+                                <RadioButton x:Name="saladsBtn"
+                                Style="{StaticResource btnStyleCategory}" 
+                                Content="Салаты" 
+                                Width="100" 
+                                Height="35"/>
+
+                                <RadioButton x:Name="soupsBtn"
+                                Style="{StaticResource btnStyleCategory}" 
+                                Content="Супы" 
+                                Width="80" 
+                                Height="35"
+                                Margin="10 0"/>
+
+                                <RadioButton x:Name="sushiBtn"
+                                Style="{StaticResource btnStyleCategory}" 
+                                Content="Суши и Сашими" 
+                                Width="160" 
+                                Height="35"/>       
+                                <RadioButton x:Name="mainDishesBtn"
+                                    Style="{StaticResource btnStyleCategory}" 
+                                    Content="Основные блюда" 
+                                    Width="160" 
+                                    Height="35" Margin="10 0"/>
+                            </StackPanel>
+
+                            <!-- Second Row -->
+                            <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
+
+
+                                <RadioButton x:Name="dessertsBtn"
+                                Style="{StaticResource btnStyleCategory}" 
+                                Content="Десерты" 
+                                Width="100" 
+                                Height="35"    />
+
+                                <RadioButton x:Name="noAlkoBtn"
+                                Style="{StaticResource btnStyleCategory}" 
+                                Content="Безалкогольные напитки" 
+                                Width="230" 
+                                Height="35" Margin="10 0"    />
+
+                                <RadioButton x:Name="alkoBtn"
+                                Style="{StaticResource btnStyleCategory}" 
+                                Content="Алкогольные напитки" 
+                                Width="230" 
+                                Height="35"   />
+                            </StackPanel>
+                        </StackPanel>
                     </StackPanel>
 
                 </StackPanel>

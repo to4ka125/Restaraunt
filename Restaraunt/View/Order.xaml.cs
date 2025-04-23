@@ -39,24 +39,29 @@ namespace Restaraunt.View
 
             SolidColorBrush completedColor = (SolidColorBrush)(new BrushConverter().ConvertFrom("#F85D5D")); // Цвет для завершенных шагов
             SolidColorBrush currentColor = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FDC5C5")); // Цвет для текущего шага
+            SolidColorBrush colorText = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFF")); // Цвет для текущего шага
 
             var steps = new[] { step1, step2, step3, step4, step5 };
+            var stepsText = new[] { step1Text, step2Text, step3Text, step4Text, step5Text };
 
             for (int i = 0; i < steps.Length; i++)
             {
-                if (i == step)
+                if (i <= step)
                 {
-                    steps[i].Fill = completedColor; 
+                    steps[i].Fill = completedColor;
+                    stepsText[i].Foreground = colorText;
                 }
-                else if (i == step+1)
+                else if (i == step + 1)
                 {
                     steps[i].Fill = currentColor;
+                    stepsText[i].Foreground = colorText;
                 }
             }
         }
 
         public void TablesPopulateGrid()
         {
+      
             TablesConteiner.Children.Clear();
             TablesConteiner.RowDefinitions.Clear();
             TablesConteiner.ColumnDefinitions.Clear();
@@ -82,7 +87,7 @@ namespace Restaraunt.View
             {
                 var tables = new Tables
                 {
-                    Margin = new Thickness(0, 10, 50, 10),
+                    Margin = new Thickness(0, 10, 45, 10),
                 };
 
                 tables.MouseDoubleClick += Tables_MouseDoubleClick;
@@ -104,6 +109,27 @@ namespace Restaraunt.View
         {
             SafeData.step = 0;
             TablesPopulateGrid();
+        }
+
+        private void RadioButton_Click(object sender, RoutedEventArgs e)
+        {
+            var radioBtn = sender as RadioButton;
+
+            radioBtn.IsChecked = true;
+            if (radioBtn.Name == "radioSearchBtn")
+            {
+                SearchClientsBox.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                SearchClientsBox.Visibility = Visibility.Hidden;
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            SafeData.step = 2;
+            PhaseElips();
         }
     }
 }

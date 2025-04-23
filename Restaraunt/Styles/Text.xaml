@@ -73,4 +73,11 @@
         <Setter Property="Foreground" Value="#333"/>
         <Setter Property="FontFamily" Value="/Fonts/#Montserrat Alternates"/>
     </Style>
+
+    <Style x:Key="textblockSemiBoold" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="#333"/>
+        <Setter Property="FontFamily" Value="/Fonts/#Montserrat Alternates SemiBold"/>
+    </Style>
+
+  
 </ResourceDictionary>
