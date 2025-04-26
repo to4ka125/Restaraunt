@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Restaraunt.Model"
              xmlns:btn="clr-namespace:Restaraunt.Utilits"
              mc:Ignorable="d" 
-             d:DesignHeight="200" d:DesignWidth="150">
+             d:DesignHeight="200" d:DesignWidth="150" Loaded="UserControl_Loaded">
             
     <Border Background="#F5F9FA" CornerRadius="5" BorderBrush="#ADADAD" BorderThickness="0.5">
         <Grid Margin="10" Width="130">
@@ -24,17 +24,23 @@
             </Grid.RowDefinitions>
 
             <!-- Изображение -->
-            <Image Grid.Row="0" Width="110" Height="80" Source="/Images/ImagesMenu/_H8HdXxs1pE.jpg"/>
+            <Image Grid.Row="0" Width="110" Height="80" 
+                   Source="{Binding Path=Source,RelativeSource={RelativeSource AncestorType=local:DishesBlock}}"/>
 
             <!-- Название блюда -->
             <TextBlock Grid.Row="1" 
-                   Text="Суши с тунцом"
+                   Text="{Binding Path=Tytle,RelativeSource={RelativeSource AncestorType= local:DishesBlock}}"
                    Style="{StaticResource textblockSemiBoold}" 
                    Margin="0 8 0 0"/>
 
+            <TextBlock Grid.Row="1" 
+                       x:Name="qId" Visibility="Collapsed"
+                   Text="{Binding Path=ID,RelativeSource={RelativeSource AncestorType= local:DishesBlock}}"
+                   Style="{StaticResource textblockSemiBoold}" 
+                   Margin="0 8 0 0"/>
             <!-- Описание -->
             <TextBlock Grid.Row="2" 
-                   Text="Вареная соевая фасоль" 
+                   Text="{Binding Path=Description, RelativeSource={RelativeSource AncestorType=local:DishesBlock}}" 
                    TextWrapping="Wrap"
                    Opacity="0.5" 
                    Style="{StaticResource textblock}"
@@ -43,22 +49,18 @@
             <!-- Цена (всегда внизу) -->
             <StackPanel Orientation="Horizontal" Grid.Row="4">
                 <TextBlock
-                   Text="650 руб." 
+                   Text="{Binding Path=Order,RelativeSource={RelativeSource AncestorType=local:DishesBlock}}" 
                    Style="{StaticResource textblockSemiBoold}" 
                    Margin="0 15"
                    FontSize="15"
                    VerticalAlignment="Bottom"/>
 
-                <StackPanel Margin="10 0" Orientation="Horizontal">
-                    <btn:Btn Style="{StaticResource BtnBText}">
-                        <TextBlock Style="{StaticResource textblockSemiBoold}" FontSize="24" Foreground="#F85D5D" Text="-"/>
-                    </btn:Btn>
+                <StackPanel Margin="10 0" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button x:Name="DellIngredients_Click" Style="{StaticResource BtnBText}" Content="-"  Click="DellIngredients_Click_1"/>
 
-                    <TextBlock x:Name="count" Text="0" VerticalAlignment="Center" Margin="5 0"/>
+                    <TextBlock x:Name="qCount" Text="0" VerticalAlignment="Center" Margin="5 0"/>
 
-                    <btn:Btn Style="{StaticResource BtnBText}">
-                        <TextBlock Style="{StaticResource textblockSemiBoold}" FontSize="24" Foreground="#F85D5D" Text="+"/>
-                    </btn:Btn>
+                    <Button x:Name="AddIngredients" Style="{StaticResource BtnBText}" Content="+" Click="AddIngredients_Click" />
                 </StackPanel>
            
             </StackPanel>

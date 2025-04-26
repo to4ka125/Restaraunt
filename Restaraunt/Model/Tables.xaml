@@ -8,18 +8,23 @@
              d:DesignHeight="110" d:DesignWidth="210"
              Height="110"
              Width="210"
+             Loaded="UserControl_Loaded"
              >
-    <Border Background="#F5F9FA" CornerRadius="5" 
+    <Border x:Name="TablesBg" Background="#F5F9FA" CornerRadius="5" 
             BorderThickness="0.5"
-            BorderBrush="#ADADAD">
+            BorderBrush="#ADADAD"
+            Style="{StaticResource HoverBorder}">
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-            <TextBlock Text="Стол 1" Style="{StaticResource textblock}"
+            <TextBlock Text="{Binding Path=Tytle,RelativeSource={RelativeSource AncestorType=local:Tables}}"
+                       x:Name="qTytle"
+                       Style="{StaticResource textblock}"
                        FontSize="15" TextAlignment="Center"
                        FontFamily="/Restaraunt;component/Fonts/#Montserrat Alternates SemiBold"/>
 
             <TextBlock Style="{StaticResource textblock}"
+                       x:Name="qStatus"
                        FontSize="15" 
-                       Text="Свободен"/>
+                       Text="{Binding Path=status,RelativeSource={RelativeSource AncestorType=local:Tables}}"/>
         </StackPanel>
     </Border>
 </UserControl>

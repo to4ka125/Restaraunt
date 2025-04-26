@@ -72,7 +72,8 @@
 
                 <Border Grid.Column="0" BorderBrush="#ADADAD" BorderThickness="0 0 1 0">
                     <StackPanel>
-                        <Menu:Btn Style="{StaticResource BtnMenu}" IsChecked="True"  x:Name="Home">
+                        <Menu:Btn Style="{StaticResource BtnMenu}" IsChecked="True"   x:Name="Home"
+                                  Click="Btn_Click">
                             <Grid>
                                 <StackPanel Orientation="Horizontal">
                                     <Image Margin="20 0 0 0" Width="20" Source="/Images/IconsMenu/Home.png"/>
@@ -81,7 +82,28 @@
                             </Grid>
                         </Menu:Btn>
 
-                        <Menu:Btn Style="{StaticResource BtnMenu}" IsChecked="False"  x:Name="OrderAdd">
+                        <Menu:Btn Style="{StaticResource BtnMenu}"  x:Name="Users"
+                                     Click="Btn_Click">
+                            <Grid>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Margin="20 0 0 0" Width="20" Source="/Images/IconsMenu/Users.png"/>
+                                    <TextBlock VerticalAlignment="Center"  Margin="10 0" Style="{StaticResource textblock}" Text="Пользователи"/>
+                                </StackPanel>
+                            </Grid>
+                        </Menu:Btn>
+
+                        <Menu:Btn Style="{StaticResource BtnMenu}"  x:Name="Order"
+                                     Click="Btn_Click">
+                            <Grid>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Margin="20 0 0 0" Width="20" Source="/Images/IconsMenu/order.png"/>
+                                    <TextBlock VerticalAlignment="Center"  Margin="10 0" Style="{StaticResource textblock}" Text="Заказы"/>
+                                </StackPanel>
+                            </Grid>
+                        </Menu:Btn>
+
+                        <Menu:Btn Style="{StaticResource BtnMenu}" IsChecked="False"  x:Name="OrderAdd"
+                                     Click="Btn_Click">
                             <Grid>
                                 <StackPanel Orientation="Horizontal">
                                     <Image Margin="20 0 0 0" Width="20" Source="/Images/IconsMenu/orderAdd.png"/>
@@ -92,8 +114,8 @@
                     </StackPanel>
                 </Border>
 
-                <StackPanel Grid.Column="1" Margin="15">
-                    <uc:Order/>
+                <StackPanel Grid.Column="1" Margin="15" x:Name="container">
+                    <uc:User/>
                 </StackPanel>
             </Grid>
         </Grid>

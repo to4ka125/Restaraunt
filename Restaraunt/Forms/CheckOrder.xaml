@@ -1,0 +1,85 @@
+﻿<Window x:Class="Restaraunt.Forms.CheckOrder"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Restaraunt.Forms"
+        xmlns:btn="clr-namespace:Restaraunt.Utilits"
+        mc:Ignorable="d"
+        Title="CheckOrder" 
+        Height="500" Width="360"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize" AllowsTransparency="True" 
+        WindowStyle="None" Background="Transparent" Loaded="Window_Loaded"
+        >
+    <Border CornerRadius="5" Background="#FFFFFF">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Кнопка закрытия в правом верхнем углу -->
+            <Button Grid.Row="0" HorizontalAlignment="Right" Margin="5" 
+                Style="{StaticResource BtnImage}" Click="Button_Click"/>
+
+            <!-- Основное содержимое -->
+            <StackPanel Grid.Row="1" Margin="25 15">
+                <TextBlock Style="{StaticResource textblockSemiBoold}"
+                       FontSize="20"
+                       Text="Добавленные блюда"/>
+
+                <StackPanel Margin="0 25" Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource textblock}"
+                           FontSize="18" Opacity="0.8"
+                           Text="Стол"/>
+                    <TextBlock x:Uid="idTables"
+                           Style="{StaticResource textblock}"
+                           FontSize="18" Opacity="0.8"
+                           Text="1" Margin="5 0 0 0"/>
+                </StackPanel>
+
+                <DataGrid IsReadOnly="True"
+                      x:Name="MenuData"
+                        ScrollViewer.CanContentScroll="True"
+                        ScrollViewer.VerticalScrollBarVisibility="Auto"
+                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                      Style="{StaticResource SafeDataGridStyle}">
+                    <!-- Ваши колонки -->
+                </DataGrid>
+            </StackPanel>
+
+            <!-- Нижняя часть с итогами и кнопками -->
+            <StackPanel Grid.Row="2" Margin="25 15">
+                <!-- Итоговая строка -->
+                <Grid Margin="0 0 0 15">
+                    <TextBlock Text="Итого: " 
+                           Style="{StaticResource textblock}" 
+                           FontSize="18"
+                           HorizontalAlignment="Left"/>
+                    <TextBlock Text="650 руб." 
+                           x:Name="TotalPrice" 
+                           Style="{StaticResource textblock}" 
+                           FontSize="18"
+                           HorizontalAlignment="Right"/>
+                </Grid>
+
+                <!-- Кнопки -->
+                <StackPanel Orientation="Horizontal" 
+                        HorizontalAlignment="Center"
+                        Margin="0 15 0 0">
+                    <Button x:Name="AddOrderBtn" 
+                        Margin="0 0 10 0" 
+                        Style="{StaticResource btnStyle}" 
+                        Height="35" Width="135"
+                        Content="Добавить" Click="AddOrderBtn_Click"/>
+
+                    <Button x:Name="ClearBtn" 
+                        Style="{StaticResource btnStyleSmall}" 
+                        Height="35" Width="135"
+                        Content="Очистить" Click="ClearBtn_Click"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>

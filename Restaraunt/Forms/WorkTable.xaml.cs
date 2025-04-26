@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Restaraunt.View;
 
 namespace Restaraunt.Forms
 {
@@ -22,6 +23,31 @@ namespace Restaraunt.Forms
         public WorkTable()
         {
             InitializeComponent();
+        }
+
+
+        private void Btn_Click(object sender, RoutedEventArgs e)
+        {
+            var radioButton = sender as RadioButton;
+
+            container.Children.Clear();
+
+            switch (radioButton.Name)
+            {
+                case "Users":
+                    User u = new User();
+                    container.Children.Add(u);
+                    break;
+                case "Order":
+                    OrderView oV = new OrderView();
+                    container.Children.Add(oV);
+                    break;
+
+                case "OrderAdd":
+                    Order oA = new Order();
+                    container.Children.Add(oA);
+                    break;
+            }
         }
     }
 }

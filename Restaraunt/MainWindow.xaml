@@ -15,7 +15,7 @@
         ResizeMode="NoResize">
     <Border CornerRadius="5" Background="#F5F9FA">
             <Grid>
-            <Button Style="{StaticResource BtnClose}" Width="25" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="10"/>
+            <Button Style="{StaticResource BtnClose}" Width="25" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="10" Click="Button_Click_1"/>
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                     <TextBlock FontSize="35"
                            TextAlignment="Center"

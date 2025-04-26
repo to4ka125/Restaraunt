@@ -31,5 +31,16 @@ namespace Restaraunt
             WorkTable wT = new WorkTable();
             wT.Show();
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Вы действительно хотите выйти из приложения?",
+                   "Подтверждение выхода",
+                   MessageBoxButton.YesNo,
+                   MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            {
+                Application.Current.Shutdown();
+            }
+        }
     }
 }

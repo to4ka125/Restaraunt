@@ -26,6 +26,51 @@ namespace Restaraunt.Model
             InitializeComponent();
         }
 
-      
+        public  string Tytle 
+        {
+            get => (string)GetValue(TytleProperty);
+            set => SetValue(TytleProperty, value);
+        }
+
+        public string Status
+        {
+            get => (string)GetValue(StatusProperty);
+            set => SetValue(StatusProperty,value);
+        }
+        public static readonly DependencyProperty TytleProperty = DependencyProperty.Register("tytle", typeof(string), typeof(Tables));
+        public static readonly DependencyProperty StatusProperty= DependencyProperty.Register("status",typeof(string),typeof(Tables));
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+
+            SolidColorBrush occupiedColor = (SolidColorBrush)new BrushConverter().ConvertFrom("#F85D5D");
+            SolidColorBrush freelyColor = (SolidColorBrush)new BrushConverter().ConvertFrom("#4FCC8B");
+            SolidColorBrush reservedColor = (SolidColorBrush)new BrushConverter().ConvertFrom("#ffdd00");
+            SolidColorBrush tytleTextColot = (SolidColorBrush)new BrushConverter().ConvertFrom("#fff");
+
+            switch (qStatus.Text)
+            {
+                case "занят":
+                    TablesBg.Background = occupiedColor;
+                    qTytle.Foreground = tytleTextColot;
+                    qStatus.Foreground = tytleTextColot;
+                    qStatus.Opacity = 0.8;
+                    break;
+
+                case "резерв":
+                    TablesBg.Background = reservedColor;
+                    qTytle.Foreground = tytleTextColot;
+                    qStatus.Foreground = tytleTextColot;
+                    qStatus.Opacity = 0.8;
+                    break; 
+
+                case "свободно":
+                    TablesBg.Background = freelyColor;
+                    qTytle.Foreground = tytleTextColot;
+                    qStatus.Foreground = tytleTextColot;
+                    qStatus.Opacity = 0.8;
+                    break;
+            }
+        }
     }
 }

@@ -14,6 +14,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Restaraunt.Model;
 using Restaraunt.Utilits;
+using MySql.Data.MySqlClient;
+using System.Data;
+using Restaraunt.Forms;
 
 namespace Restaraunt.View
 {
@@ -22,16 +25,20 @@ namespace Restaraunt.View
     /// </summary>
     public partial class Order : UserControl
     {
+        private string statusTables = "0";
+
         public Order()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Метод для окраски шагов
+        /// </summary>
         public void PhaseElips()
         {
             int step = SafeData.step;
 
-            // Сброс цвета всех эллипсов
             step2.Fill = Brushes.Transparent;
             step3.Fill = Brushes.Transparent;
             step4.Fill = Brushes.Transparent;
@@ -59,50 +66,189 @@ namespace Restaraunt.View
             }
         }
 
+        /// <summary>
+        /// Метод для загрузки столов
+        /// </summary>
         public void TablesPopulateGrid()
         {
-      
+            DataTable dt = new DataTable();
+            string query;
+
+            if (statusTables == "0")
+            {
+                query = @"SELECT CONCAT('Стол ', table_id) AS table_name, 
+                                                      status FROM restaurant.tables;";
+            }
+            else
+            {
+                query = $@"SELECT CONCAT('Стол ', table_id) AS table_name, 
+                                                      status FROM restaurant.tables where  status ='{statusTables}';";
+            }
+
+            using (MySqlConnection con = new MySqlConnection(MySqlCon.con))
+            {
+                try
+                {
+                    con.Open();
+                    MySqlDataAdapter da = new MySqlDataAdapter(query, con);
+                    da.Fill(dt);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка: " + ex.Message);
+                    return;
+                }
+            }
+
             TablesConteiner.Children.Clear();
             TablesConteiner.RowDefinitions.Clear();
             TablesConteiner.ColumnDefinitions.Clear();
 
+            if (dt.Rows.Count == 0)
+            {
+                MessageBox.Show("Нет данных о столах");
+                return;
+            }
+
             int columnCount = 3;
-            int rowCount = (8 + columnCount - 1) / columnCount;
+            int rowCount = (int)Math.Ceiling((double)dt.Rows.Count / columnCount);
 
             for (int i = 0; i < columnCount; i++)
             {
-                var columnDefinition = new ColumnDefinition
+                TablesConteiner.ColumnDefinitions.Add(new ColumnDefinition
                 {
                     Width = new GridLength(1, GridUnitType.Star)
-                };
-                TablesConteiner.ColumnDefinitions.Add(columnDefinition);
+                });
             }
 
             for (int i = 0; i < rowCount; i++)
             {
-                TablesConteiner.RowDefinitions.Add(new RowDefinition());
+                TablesConteiner.RowDefinitions.Add(new RowDefinition
+                {
+                    Height = GridLength.Auto
+                });
             }
 
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < dt.Rows.Count; i++)
             {
-                var tables = new Tables
+                var table = new Tables
                 {
-                    Margin = new Thickness(0, 10, 45, 10),
+                    Tytle = dt.Rows[i]["table_name"].ToString(),
+                    Status = dt.Rows[i]["status"].ToString(),
+                    Margin = new Thickness(10),
+                    HorizontalAlignment = HorizontalAlignment.Stretch,
+                    VerticalAlignment = VerticalAlignment.Stretch
                 };
 
-                tables.MouseDoubleClick += Tables_MouseDoubleClick;
-                Grid.SetRow(tables, i / columnCount);
-                Grid.SetColumn(tables, i % columnCount);
-                TablesConteiner.Children.Add(tables);
+                table.MouseDoubleClick += Tables_MouseDoubleClick;
+                Grid.SetRow(table, i / columnCount);
+                Grid.SetColumn(table, i % columnCount);
+                TablesConteiner.Children.Add(table);
             }
         }
 
         private void Tables_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            SafeData.step = 1;
-            AddTables.Visibility = Visibility.Collapsed;
-            ChoosingPaymentMethod.Visibility = Visibility.Visible;
-            PhaseElips();
+            if (sender is Tables selectedTable)
+            {
+                if (selectedTable.Status == "свободно")
+                {
+                    SafeData.step = 1;
+                    SafeData.tablesId = selectedTable.Tytle.Split(' ')[1].ToString();
+                    AddTables.Visibility = Visibility.Collapsed;
+                    ChoosingPaymentMethod.Visibility = Visibility.Visible;
+                    PhaseElips();
+                }
+                else
+                {
+                    MessageBox.Show("Выберите свободный стол", "Сообщение пользователю", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+        }
+        /// <summary>
+        /// Метод для загрузки менюы
+        /// </summary>
+        private void LoadedMenu()
+        {
+            DataTable dt = new DataTable();
+            string query;
+            ImageSource image;
+
+            if (SafeData.categoriesId == "0")
+            {
+                query = @"SELECT menu_id, name,description, concat_ws(' ', price, 'р.') as 'price', Image FROM Menu 
+                 WHERE terminalStatus = 'Показать'";
+            }
+            else
+            {
+                query = $@"SELECT menu_id, name, description, price, Image FROM Menu 
+                  WHERE category_id = '{SafeData.categoriesId}' 
+                  AND terminalStatus = 'Показать'";
+            }
+
+            using (MySqlConnection con = new MySqlConnection(MySqlCon.con))
+            {
+                try
+                {
+                    con.Open();
+                    MySqlDataAdapter da = new MySqlDataAdapter(query, con);
+                    da.Fill(dt);
+
+                    menuContainer.Children.Clear();
+                    menuContainer.RowDefinitions.Clear();
+                    menuContainer.ColumnDefinitions.Clear();
+
+
+                    if (dt.Rows.Count == 0)
+                    {
+                        MessageBox.Show("Нет данных о меню", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Information);
+                        return;
+                    }
+                    int columnCount = 4;
+                    int rowCount = (int)Math.Ceiling((double)dt.Rows.Count / columnCount);
+
+                    for (int i = 0; i < columnCount; i++)
+                    {
+                        menuContainer.ColumnDefinitions.Add(new ColumnDefinition
+                        {
+                            Width = new GridLength(1, GridUnitType.Star)
+                        });
+                    }
+
+                    for (int i = 0; i < rowCount; i++)
+                    {
+                        menuContainer.RowDefinitions.Add(new RowDefinition
+                        {
+                            Height = GridLength.Auto
+                        });
+                    }
+
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        image = new BitmapImage(new Uri($"/Images/ImagesMenu/{dt.Rows[i]["Image"]}", UriKind.RelativeOrAbsolute));
+                        var dishes = new DishesBlock
+                        {
+                            Source = image,
+                            Tytle = dt.Rows[i]["name"].ToString(),
+                            ID = dt.Rows[i]["menu_id"].ToString(),
+                            Description = dt.Rows[i]["description"].ToString(),
+                            Order = dt.Rows[i]["price"].ToString(),
+                            Margin = new Thickness(10),
+                            HorizontalAlignment = HorizontalAlignment.Stretch,
+                            VerticalAlignment = VerticalAlignment.Stretch
+                        };
+
+                        Grid.SetRow(dishes, i / columnCount);
+                        Grid.SetColumn(dishes, i % columnCount);
+                        menuContainer.Children.Add(dishes);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка: " + ex.Message);
+                    return;
+                }
+            }
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -111,6 +257,11 @@ namespace Restaraunt.View
             TablesPopulateGrid();
         }
 
+        /// <summary>
+        /// Метод скрытия формы товаров
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RadioButton_Click(object sender, RoutedEventArgs e)
         {
             var radioBtn = sender as RadioButton;
@@ -125,11 +276,115 @@ namespace Restaraunt.View
                 SearchClientsBox.Visibility = Visibility.Hidden;
             }
         }
-
+        
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             SafeData.step = 2;
+            Menu.Visibility = Visibility.Visible;
+            ChoosingPaymentMethod.Visibility = Visibility.Collapsed;
             PhaseElips();
+            LoadedMenu();
+        }
+
+        /// <summary>
+        /// Метод для сортирови блюд
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RadioButton_Click_1(object sender, RoutedEventArgs e)
+        {
+            var radioBtn = sender as RadioButton;
+            SafeData.categoriesId = radioBtn.Uid;
+            LoadedMenu();
+        }
+
+        /// <summary>
+        /// Метод открытия формы чека
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            CheckOrder cO = new CheckOrder();
+            cO.ShowDialog();
+        }
+
+        /// <summary>
+        /// Метод для сортировки столов
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RadioButton_Click_2(object sender, RoutedEventArgs e)
+        {
+            var radioBtn = sender as RadioButton;
+
+            switch (radioBtn.Uid)
+            {
+                case "all":
+                    statusTables = "0";
+                    break;
+                case "Freely":
+                    statusTables = "свободно";
+                    break;
+                case "Reserve":
+                    statusTables = "резерв";
+                    break;
+                case "Occupied":
+                    statusTables = "занят";
+                    break;
+            }
+            TablesPopulateGrid();
+        }
+
+        /// <summary>
+        /// Метод выбора способа оплаты
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RadioButton_Click_3(object sender, RoutedEventArgs e)
+        {
+            var radioBtn = sender as RadioButton;
+            SafeData.idpayment_method = radioBtn.Uid;
+        }
+
+        /// <summary>
+        /// Метод для поиска гостя
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            if (phoneNumber.Text == null)
+            {
+                MessageBox.Show("Введите номер телефона для поиска", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            string searchPhone = phoneNumber.Text;
+
+            using (MySqlConnection con = new MySqlConnection(MySqlCon.con))
+            {
+                con.Open();
+                MySqlDataAdapter da = new MySqlDataAdapter($@"SELECT concat_ws(' ',first_name, last_name) 
+                                                              FROM restaurant.customers where phone = '{searchPhone}';", con);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+
+                if (dt.Rows.Count > 1)
+                {
+                    qPhoneNumber.Text = dt.Rows[0][0].ToString();
+                    qPhoneNumber.Visibility = Visibility.Visible;
+                    addClients.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    MessageBox.Show("Гостя с данным номером телефона не существует", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                    qPhoneNumber.Visibility = Visibility.Collapsed;
+                    phoneNumber.Text = null;
+                    addClients.Visibility = Visibility.Visible;
+                }
+            }
+
         }
     }
 }
