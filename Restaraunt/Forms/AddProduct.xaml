@@ -1,0 +1,91 @@
+﻿<Window x:Class="Restaraunt.Forms.AddProduct"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Restaraunt.Forms"
+        mc:Ignorable="d"
+        Title="AddProduct" Height="360" Width="360" 
+        WindowStartupLocation="CenterScreen" WindowStyle="None"
+        ResizeMode="NoResize"
+        AllowsTransparency="True"
+        Background="Transparent" Loaded="Window_Loaded"
+        >
+
+    <Border
+        CornerRadius="5" Background="#FFFFFF"
+        >
+        <Grid  Margin="25 15">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Кнопка закрытия в правом верхнем углу -->
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+
+                <TextBlock Style="{StaticResource textblockSemiBoold}"
+                       FontSize="20"
+                     >Добавление нового <LineBreak/>продукта</TextBlock>
+
+                <Button Grid.Column="1" HorizontalAlignment="Right" 
+                Style="{StaticResource BtnImage}" Click="Button_Click"/>
+
+            </Grid>
+
+            <StackPanel Grid.Row="1" HorizontalAlignment="Center">
+
+                <TextBox x:Name="qNameProduct" Style="{StaticResource pcaholderText}" 
+                         PreviewTextInput="qNameProduct_PreviewTextInput"
+                         Width="310"
+                          Height="45"
+                         Padding="13"
+                         Tag="Введите название продукта" Margin="0 20 0 0"/>
+
+                <TextBox x:Name="qСountProduct" Style="{StaticResource pcaholderText}" 
+                         PreviewTextInput="qСountProduct_PreviewTextInput"
+                         Width="310"
+                        Height="45"
+                         Padding="13"
+                         Margin="0 10"
+                         Tag="Введите количество на складе"/>
+
+                <TextBox x:Name="qPrice" Style="{StaticResource pcaholderText}" 
+                         Width="310"
+                           Height="45"
+                         Padding="13"
+                         Tag="Введите цену за кг"
+                         PreviewTextInput="qPrice_PreviewTextInput"/>
+                
+                <ComboBox x:Name="qSupliers" Style="{StaticResource ComboBox}" Height="45" Padding="13" Tag="Выберите поставщика" Margin="0 10 0 0"/>
+            </StackPanel>
+            <Grid Grid.Row="2" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button x:Name="ClearProduct"
+                            Grid.Column="0"
+                        Style="{StaticResource btnStyleSmall}" 
+                        Height="35" Width="135"
+                        Content="Отичистить" Click="ClearProduct_Click"/>
+
+                <StackPanel Grid.Column="1">
+                    <Button x:Name="AddProductBtn" HorizontalAlignment="Right"
+      
+                        Style="{StaticResource btnStyle}" 
+                        Height="35" Width="135"
+                        Content="Добавить" Click="AddProduct_Click"/>
+                </StackPanel>
+
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

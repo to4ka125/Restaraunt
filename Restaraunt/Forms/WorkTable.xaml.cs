@@ -41,11 +41,19 @@ namespace Restaraunt.Forms
                 case "Order":
                     OrderView oV = new OrderView();
                     container.Children.Add(oV);
+                    break;  
+                case "Dishes":
+                    Dishes d = new Dishes();
+                    container.Children.Add(d);
                     break;
 
                 case "OrderAdd":
                     Order oA = new Order();
                     container.Children.Add(oA);
+                    break;    
+                case "Products":
+                    Products p = new Products();
+                    container.Children.Add(p);
                     break;
             }
         }

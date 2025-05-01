@@ -69,6 +69,84 @@
         </Setter>
     </Style>
 
+    <Style x:Key="pcaholderTextSearchBox" TargetType="TextBox">
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="Background" Value="#fff"/>
+        <Setter Property="FontFamily" Value="/Fonts/#Montserrat Alternates"/>
+        <Setter Property="Padding" Value="15"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Border CornerRadius="10"
+                            Background="#fff"
+                            BorderBrush="#ADADAD"
+                            BorderThickness="0.5"
+                            >
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <ScrollViewer Grid.Column="0" x:Name="PART_ContentHost"/>
+                            <TextBlock Grid.Column="0" x:Name="textBlock" Text="{Binding Tag, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                       Padding="{TemplateBinding Padding}" 
+                                       FontSize="{TemplateBinding FontSize}"
+                                       FontFamily="{TemplateBinding FontFamily}"
+                                       IsHitTestVisible="False"
+                                       Opacity="0.6"
+                                       Visibility="Collapsed"/>
+
+                            <Image Grid.Column="1"
+                                   Source="/Images/IconsImage/search.png" 
+                                   Width="20"
+                                   Height="20"
+                                   VerticalAlignment="Center"
+                                   Margin="10 0"/>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Text" Value="">
+                            <Setter TargetName="textBlock" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="pcaholderTextBoxNoBorder" TargetType="TextBox">
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="FontFamily" Value="/Fonts/#Montserrat Alternates"/>
+        <Setter Property="Padding" Value="12"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Border>
+
+                        <Grid>
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                            <TextBlock x:Name="textBlock" Text="{Binding Tag, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                       Padding="{TemplateBinding Padding}" 
+                                       FontSize="{TemplateBinding FontSize}"
+                                       FontFamily="{TemplateBinding FontFamily}"
+                                       IsHitTestVisible="False"
+                                       Opacity="0.6"
+                                       Visibility="Collapsed"/>
+
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Text" Value="">
+                            <Setter TargetName="textBlock" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="textblock" TargetType="TextBlock">
         <Setter Property="Foreground" Value="#333"/>
         <Setter Property="FontFamily" Value="/Fonts/#Montserrat Alternates"/>

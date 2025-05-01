@@ -1,0 +1,82 @@
+﻿<UserControl x:Class="Restaraunt.View.Products"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Restaraunt.View"
+             mc:Ignorable="d" 
+                d:DesignHeight="630" d:DesignWidth="800"  Style="{StaticResource Page_Style}" Loaded="UserControl_Loaded"
+           >
+    <Border Background="#FFFFFF"
+            CornerRadius="10"
+            BorderThickness="0.5"
+            BorderBrush="#ADADAD">
+        <Grid Margin="25 15">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="410"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Style="{StaticResource textblock}"
+                       Grid.Row="0"
+                                   FontFamily="/Fonts/#Montserrat Alternates SemiBold"
+                                   Text="Продукты"
+                                   FontSize="20"/>
+            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0 10 0 0">
+              
+                    <TextBox TextChanged="searchBox_TextChanged" Style="{StaticResource pcaholderTextSearchBox}"  Width="350"
+                             x:Name="searchBox" Tag="Введите для поиска" Height="50"/>
+
+
+                <ComboBox Style="{StaticResource ComboBox}" 
+                          Tag="Сортировка"
+                          SelectionChanged="Sorting_SelectionChanged"
+                          Margin="20 0 0 0" Width="200" x:Name="Sorting">
+                    <ComboBoxItem  Content="По возврастанию"/>
+                    <ComboBoxItem  Content="По убыванию"/>
+                </ComboBox>
+            </StackPanel>
+            
+            <DataGrid   IsReadOnly="True" Grid.Row="2" Margin="0 10"
+                        x:Name="dataGrid"
+                        ScrollViewer.CanContentScroll="True"
+                        ScrollViewer.VerticalScrollBarVisibility="Auto"
+                        ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                        Style="{StaticResource SafeDataGridStyle}">
+            </DataGrid>
+
+            <StackPanel  Grid.Row="3" 
+                        Orientation="Horizontal" HorizontalAlignment="Left" 
+                         Margin="0 20 0 0">
+                <Button  x:Name="LeftBtn" Click="LeftBtn_Click" 
+                    Style="{StaticResource PaginationButtonStyle}" Content="←" Margin="0 0 10 0"/>
+                <StackPanel Orientation="Horizontal" x:Name="paginationBar"/>
+                <Button x:Name="RightBtn" Click="RightBtn_Click" 
+                    Style="{StaticResource PaginationButtonStyle}" Margin="0 0 10 0" Content="→"/>
+            </StackPanel>
+            <StackPanel Grid.Row="4"
+                        Orientation="Horizontal"
+                        Margin="0 10 0 0">
+           
+
+                <Button  x:Name="AddBtn"
+                    Content="Добавить" 
+                Width="180" 
+                Height="40"
+                Margin="0 0 10 0"
+                Style="{StaticResource btnStyle}"
+                        />
+
+                <Button  x:Name="ReportBtn"
+                    Content="Сформировать Отчет" 
+                Width="210" 
+                Height="40"
+                Margin="10 0"
+                Style="{StaticResource btnStyle}"
+                        />
+            </StackPanel>
+        </Grid>
+    </Border>
+</UserControl>

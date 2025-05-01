@@ -37,7 +37,7 @@
                
 
             </StackPanel>
-            <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0 10">
+            <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0 10 0 0">
                 
                 <RadioButton x:Uid="all" Style="{StaticResource btnStyleCategory}"
                                          Click="RadioButton_Click" IsChecked="True"
@@ -76,6 +76,33 @@
                         ScrollViewer.VerticalScrollBarVisibility="Auto"
                         ScrollViewer.HorizontalScrollBarVisibility="Auto"
                         Style="{StaticResource SafeDataGridStyle}">
+                <DataGrid.Resources>
+                     <Style TargetType="DataGridCell">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Статус}" Value="Отменен">
+                                <Setter Property="Background" Value="#ffa799"/>
+                                <Setter Property="Foreground" Value="#333"/>
+                            </DataTrigger>
+
+                            <DataTrigger Binding="{Binding Статус}" Value="В обработке">
+                                <Setter Property="Background" Value="#fcfbb1"/>
+                                <Setter Property="Foreground" Value="#333"/>
+                            </DataTrigger>
+
+                            <DataTrigger Binding="{Binding Статус}" Value="Завершен">
+                                <Setter Property="Background" Value="#ccffcc"/>
+                                <Setter Property="Foreground" Value="#333"/>
+                            </DataTrigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#0078d7"/>
+                                <Setter Property="Foreground" Value="#333"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+
+
+                </DataGrid.Resources>
             </DataGrid>
             <StackPanel Grid.Row="4"
                         Orientation="Horizontal"

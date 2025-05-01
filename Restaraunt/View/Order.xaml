@@ -8,6 +8,7 @@
              xmlns:maskBox="clr-namespace:Xceed.Wpf.Toolkit.Obselete;assembly=Xceed.Wpf.Toolkit"
              mc:Ignorable="d" 
              d:DesignHeight="630" d:DesignWidth="800"
+             Style="{StaticResource Page_Style}"
              Loaded="UserControl_Loaded">
     <Border Background="#FFFFFF"
             CornerRadius="10"

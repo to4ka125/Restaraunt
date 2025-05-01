@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Restaraunt.Forms"
         xmlns:uc="clr-namespace:Restaraunt.View"
-        xmlns:Menu="clr-namespace:Restaraunt.Utilits"
+         xmlns:Menu="clr-namespace:Restaraunt.Utilits"
         mc:Ignorable="d"
         Title="WorkTable" Height="720" Width="1080" WindowStartupLocation="CenterScreen" 
         ResizeMode="CanResizeWithGrip"
@@ -82,6 +82,17 @@
                             </Grid>
                         </Menu:Btn>
 
+                        <Menu:Btn Style="{StaticResource BtnMenu}" x:Name="Dishes"
+                                  Click="Btn_Click">
+                            <Grid>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Margin="20 0 0 0" Width="20" Source="/Images/IconsMenu/restaurant.png"/>
+                                    <TextBlock VerticalAlignment="Center"  Margin="10 0" Style="{StaticResource textblock}" Text="Блюда"/>
+                                </StackPanel>
+                            </Grid>
+                        </Menu:Btn>
+
+
                         <Menu:Btn Style="{StaticResource BtnMenu}"  x:Name="Users"
                                      Click="Btn_Click">
                             <Grid>
@@ -101,21 +112,33 @@
                                 </StackPanel>
                             </Grid>
                         </Menu:Btn>
+                        
+                        <Menu:Btn Style="{StaticResource BtnMenu}"  x:Name="Products"
+                                     Click="Btn_Click">
+                            <Grid>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Margin="20 0 0 0" Width="20" Source="/Images/IconsMenu/box.png"/>
+                                    <TextBlock VerticalAlignment="Center"  Margin="10 0" Style="{StaticResource textblock}" Text="Склад"/>
+                                </StackPanel>
+                            </Grid>
+                        </Menu:Btn>
 
-                        <Menu:Btn Style="{StaticResource BtnMenu}" IsChecked="False"  x:Name="OrderAdd"
+                        <Menu:Btn Style="{StaticResource BtnMenu}"  x:Name="OrderAdd"
                                      Click="Btn_Click">
                             <Grid>
                                 <StackPanel Orientation="Horizontal">
                                     <Image Margin="20 0 0 0" Width="20" Source="/Images/IconsMenu/orderAdd.png"/>
-                                    <TextBlock VerticalAlignment="Center"  Margin="10 0" Style="{StaticResource textblock}" Text="Добавить заказ"/>
+                                    <TextBlock VerticalAlignment="Center"  Margin="10 0" Style="{StaticResource textblock}" Text="Заказы"/>
                                 </StackPanel>
                             </Grid>
                         </Menu:Btn>
+
+            
                     </StackPanel>
                 </Border>
 
                 <StackPanel Grid.Column="1" Margin="15" x:Name="container">
-                    <uc:User/>
+                    <uc:Products/>
                 </StackPanel>
             </Grid>
         </Grid>

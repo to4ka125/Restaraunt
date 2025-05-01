@@ -58,7 +58,7 @@
             </StackPanel>
 
             <Button Grid.Row="2"
-                    Style="{StaticResource btnStyle}" Height="50" Width="180" Content="Добавить" 
+                    Style="{StaticResource btnStyle}" Height="35" Width="180" Content="Добавить" 
                     Margin="0 30"
                     />
         </Grid>

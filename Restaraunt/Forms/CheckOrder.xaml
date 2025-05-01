@@ -68,16 +68,18 @@
                 <StackPanel Orientation="Horizontal" 
                         HorizontalAlignment="Center"
                         Margin="0 15 0 0">
-                    <Button x:Name="AddOrderBtn" 
-                        Margin="0 0 10 0" 
-                        Style="{StaticResource btnStyle}" 
-                        Height="35" Width="135"
-                        Content="Добавить" Click="AddOrderBtn_Click"/>
+                 
 
                     <Button x:Name="ClearBtn" 
                         Style="{StaticResource btnStyleSmall}" 
                         Height="35" Width="135"
                         Content="Очистить" Click="ClearBtn_Click"/>
+
+                    <Button x:Name="AddOrderBtn" 
+                        Margin="10 0 0 0" 
+                        Style="{StaticResource btnStyle}" 
+                        Height="35" Width="135"
+                        Content="Добавить" Click="AddOrderBtn_Click"/>
                 </StackPanel>
             </StackPanel>
         </Grid>

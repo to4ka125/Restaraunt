@@ -23,10 +23,12 @@ namespace Restaraunt.View
     /// </summary>
     public partial class OrderView : UserControl
     {
-        string query = @"SELECT order_id As 'Номер заказа', concat(us.lastName,' ',Left(us.name,1),'.') AS 'ФИО', o.table_number As 'Номер стола',
-                         o.status As 'Статус', o.order_time As 'Дата заказа', Concat (total_price, ' ₽') As 'Стоимость заказа' From orders o
-                         inner Join users us On us.user_id  = o.user_id";
+      //  string query = @"SELECT order_id As 'Номер заказа', concat(us.lastName,' ',Left(us.name,1),'.') AS 'ФИО', o.table_number As 'Номер стола',
+      //                   o.status As 'Статус', o.order_time As 'Дата заказа', Concat (total_price, ' ₽') As 'Стоимость заказа' From orders o
+       //                  inner Join users us On us.user_id  = o.user_id";
         string id;
+
+        string status="all";
 
         public OrderView()
         {
@@ -35,7 +37,7 @@ namespace Restaraunt.View
 
         private void filteringAndSorting()
         {
-            query = @"SELECT order_id As 'Номер заказа', us.name As 'Имя официанта', 
+            string query = @"SELECT order_id As 'Номер заказа', us.name As 'Имя официанта', 
                          us.lastName As 'Фамилия официанта', o.table_number As 'Номер стола',
                          o.status As 'Статус', o.order_time As 'Дата заказа', Concat (total_price, ' ₽') As 'Стоимость заказа' From orders o
                          inner Join users us On us.user_id  = o.user_id";
@@ -75,31 +77,46 @@ namespace Restaraunt.View
                 query += $" (o.order_time  LIKE '%{selectedTime}%')";
             }
 
-            UpdateDataGridView(query);
+            UpdateDataGridView();
         }
 
-        private void UpdateDataGridView(string query)
+        private void UpdateDataGridView()
         {
-            DataTable dataTable = new DataTable();
+            DataTable dt = new DataTable();
+            string query;
+
+            if (status == "all")
+            {
+                query = @"SELECT order_id As 'Номер заказа', concat(us.lastName, ' ', Left(us.name, 1), '.') AS 'ФИО', o.table_number As 'Номер стола',
+                         o.status As 'Статус', o.order_time As 'Дата заказа', Concat (total_price, ' ₽') As 'Стоимость заказа' From orders o
+                         inner Join users us On us.user_id  = o.user_id";
+            }
+            else
+            {
+                query = $@"SELECT order_id As 'Номер заказа', concat(us.lastName, ' ', Left(us.name, 1), '.') AS 'ФИО', o.table_number As 'Номер стола',
+                         o.status As 'Статус', o.order_time As 'Дата заказа', Concat (total_price, ' ₽') As 'Стоимость заказа' From orders o
+                         inner Join users us On us.user_id  = o.user_id where o.status= '{status}'";
+            }
+
             using (MySqlConnection connection = new MySqlConnection(MySqlCon.con))
             {
                 MySqlDataAdapter dataAdapter = new MySqlDataAdapter(query, connection);
                 connection.Open();
                 try
                 {
-                    dataAdapter.Fill(dataTable);
+                    dataAdapter.Fill(dt);
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Ошибка при извлечении данных: {ex.Message}");
                 }
             }
-            dataGrid.ItemsSource = dataTable.DefaultView;
+            dataGrid.ItemsSource = dt.DefaultView;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            UpdateDataGridView(query);
+            UpdateDataGridView();
         }
 
         private void datePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
@@ -109,7 +126,24 @@ namespace Restaraunt.View
 
         private void RadioButton_Click(object sender, RoutedEventArgs e)
         {
+            var radioBtn = sender as RadioButton;
 
+            switch (radioBtn.Uid)
+            {
+                case "all":
+                    status = "all";
+                    break;
+                case "Processing":
+                    status = "В обработке";
+                    break;
+                case "Cancelled":
+                    status = "Отменен";
+                    break;
+                case "Completed":
+                    status = "Завершен";
+                    break;
+            }
+            UpdateDataGridView();
         }
     }
 }

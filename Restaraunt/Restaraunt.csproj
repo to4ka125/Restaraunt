@@ -125,6 +125,15 @@
     <Compile Include="Forms\AddClients.xaml.cs">
       <DependentUpon>AddClients.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Forms\AddDishes.xaml.cs">
+      <DependentUpon>AddDishes.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AddProduct.xaml.cs">
+      <DependentUpon>AddProduct.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AddUsers.xaml.cs">
+      <DependentUpon>AddUsers.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Forms\CheckOrder.xaml.cs">
       <DependentUpon>CheckOrder.xaml</DependentUpon>
     </Compile>
@@ -141,16 +150,34 @@
     <Compile Include="Utilits\Btn.cs" />
     <Compile Include="Utilits\MySqlCon.cs" />
     <Compile Include="Utilits\SafeData.cs" />
+    <Compile Include="View\Dishes.xaml.cs">
+      <DependentUpon>Dishes.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Order.xaml.cs">
       <DependentUpon>Order.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\OrderView.xaml.cs">
       <DependentUpon>OrderView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Products.xaml.cs">
+      <DependentUpon>Products.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\User.xaml.cs">
       <DependentUpon>User.xaml</DependentUpon>
     </Compile>
     <Page Include="Forms\AddClients.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\AddDishes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\AddProduct.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\AddUsers.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -198,11 +225,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Dishes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Order.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\OrderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Products.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -339,6 +374,18 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\IconsMenu\order.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IconsMenu\box.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IconsMenu\restaurant.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IconsImage\addImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IconsImage\refresh.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
