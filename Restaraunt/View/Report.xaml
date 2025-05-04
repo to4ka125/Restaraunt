@@ -1,0 +1,152 @@
+﻿<UserControl x:Class="Restaraunt.View.Report"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Restaraunt.View"
+            xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+          
+             mc:Ignorable="d" 
+     d:DesignHeight="630" d:DesignWidth="800"  Loaded="UserControl_Loaded"
+             Style="{StaticResource Page_Style}"
+           >
+    <Border Background="#FFFFFF"
+            CornerRadius="10"
+            BorderThickness="0.5"
+            BorderBrush="#ADADAD">
+        <Grid Margin="25 15">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Style="{StaticResource textblock}"
+                       Grid.Row="0"
+                                   FontFamily="/Fonts/#Montserrat Alternates SemiBold"
+                                   Text="Отчеты"
+                                   FontSize="20" Grid.ColumnSpan="2"/>
+
+            <Grid Grid.Row="1" Margin="0 20 0 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" 
+                        CornerRadius="10"
+                        BorderThickness="0.5"
+                        BorderBrush="#ADADAD" 
+                        Width="340"
+                        Height="250">
+                    <StackPanel Margin="15">
+                        <TextBlock Style="{StaticResource textblockSemiBoold}"
+                               FontSize="15" Text="Прибыль"
+                                   />
+                        <Border CornerRadius="10" Background="#FFEFEF"  Height="80" Margin="0 15">
+                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <TextBlock 
+                                    Style="{StaticResource textblock}" 
+                                    Text="Общая прибыль" 
+                                    FontSize="18"
+                                    Foreground="#F85D5D"/>
+                                <TextBlock
+                                    x:Name="qNetProfit"
+                                    Style="{StaticResource textblockSemiBoold}" 
+                                    Text="150000 р."
+                                    HorizontalAlignment="Center" 
+                                    FontSize="24" 
+                                    Foreground="#F85D5D"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border  HorizontalAlignment="Left"
+                            CornerRadius="10"
+                            Background="#FFEFEF"
+                            Width="180"
+                            Height="90">
+                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <TextBlock Style="{StaticResource textblock}" 
+                                           FontSize="16"
+                                           Foreground="#F85D5D"
+                                           Text="Чистая прибыль"
+                                          />
+                                <TextBlock Style="{StaticResource textblockSemiBoold}"
+                                           x:Name="qClearProfit"
+                                           FontSize="20"
+                                           Foreground="#F85D5D"
+                                           HorizontalAlignment="Center"
+                                           Text="120000 р."/>
+                            </StackPanel>
+                        </Border>
+
+                    </StackPanel>
+
+                </Border>
+
+                <Border Grid.Column="1"
+                        Margin="20 0 0 0"
+                        CornerRadius="10"
+                        BorderThickness="0.5"
+                        BorderBrush="#ADADAD"
+                        Width="365"
+                        Height="250">
+                    <StackPanel Margin="15">
+                        <TextBlock Style="{StaticResource textblockSemiBoold}"
+                               FontSize="15" Text="Топ 5 блюд"
+                                   />
+                        <Grid Margin="0 15 0 0">
+                            <StackPanel HorizontalAlignment="Left">
+                                <lvc:PieChart Width="280" Height="180" x:Name="diagramm" LegendLocation="Right">
+                                    <lvc:PieChart.Series>
+                                        <lvc:PieSeries Foreground="#fff"  Values="10" DataLabels="True"/>
+                                        <lvc:PieSeries   Values="10" DataLabels="True"/>
+                                        <lvc:PieSeries      Values="10" DataLabels="True"/>
+                                        <lvc:PieSeries   Values="10" DataLabels="True"/>
+                                        <lvc:PieSeries   Values="10" DataLabels="True"/>
+                                    </lvc:PieChart.Series>
+                                </lvc:PieChart>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Row="2" Margin="0 20 0 20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0"
+                        CornerRadius="10"
+                        BorderThickness="0.5"
+                        BorderBrush="#ADADAD" 
+                        Width="250"
+                        Height="220">
+                    <StackPanel Margin="15">
+                        <TextBlock Style="{StaticResource textblockSemiBoold}"
+                               FontSize="15" Text="Средний чек"
+                                   />
+                        <Border CornerRadius="10" Background="#FFEFEF"  Height="80" Margin="0 15">
+                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <TextBlock
+                                    x:Name="qAvgPrice"
+                                    Style="{StaticResource textblockSemiBoold}" 
+                                    Text="150000 р."
+                                    HorizontalAlignment="Center" 
+                                    FontSize="24" 
+                                    Foreground="#F85D5D"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- Измененная часть - кнопки прижаты к низу -->
+            <StackPanel Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Bottom">
+                <Button Style="{StaticResource btnStyle}" Content="Сохранить" Height="35" Width="150"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+</UserControl>

@@ -1,21 +1,21 @@
-﻿<Window x:Class="Restaraunt.Forms.AddUsers"
+﻿<Window x:Class="Restaraunt.Forms.EditUser"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:btn="clr-namespace:Restaraunt.Utilits"
-        xmlns:maskBox="http://schemas.xceed.com/wpf/xaml/toolkit"
-        
-     
         xmlns:local="clr-namespace:Restaraunt.Forms"
+        xmlns:maskBox="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="AddUsers"  Height="560" Width="360" 
+        Title="EditUser"
+        Height="560" Width="360" 
         WindowStartupLocation="CenterScreen" WindowStyle="None"
-        Loaded="Window_Loaded"
         ResizeMode="NoResize"
         AllowsTransparency="True"
         Background="Transparent"
+        Loaded="Window_Loaded"
         >
+    
 
     <Border
         CornerRadius="5" Background="#FFFFFF"
@@ -37,7 +37,7 @@
 
                 <TextBlock Style="{StaticResource textblockSemiBoold}"
                        FontSize="20"
-                     >Добавление нового <LineBreak/>пользователя</TextBlock>
+                     >Изменение  <LineBreak/> пользователя</TextBlock>
 
                 <Button Grid.Column="1" HorizontalAlignment="Right" 
                 Style="{StaticResource BtnImage}" Click="Button_Click"/>
@@ -69,7 +69,7 @@
                          Tag="Введите почту (не обязательно)"/>
 
 
-                
+
                 <maskBox:MaskedTextBox Style="{StaticResource pcaholderText}"  
                                        PreviewTextInput="qPhone_PreviewTextInput"
                                        Width="310"    Height="45"
@@ -89,7 +89,7 @@
                            Height="45"
                          Padding="13"
                          Tag="Введите пароль" Margin="0 10 0 0 "  PreviewTextInput="qLogin_PreviewTextInput"/>
-                
+
                 <btn:Btn Style="{StaticResource BtnBackText}" Click="Btn_Click" Margin="0 5 0 0">
                     <StackPanel Orientation="Horizontal">
                         <Image Width="15" Source="/Images/IconsImage/refresh.png" />
@@ -105,26 +105,26 @@
                 </ComboBox>
             </StackPanel>
 
-                <Grid Grid.Row="2" >
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+            <Grid Grid.Row="2" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-                    <Button x:Name="ClearUser"
+                <Button x:Name="ClearUser"
                             Grid.Column="0"
                         Style="{StaticResource btnStyleSmall}" 
                         Height="35" Width="135"
-                        Content="Отичистить" Click="ClearDishes_Click"/>
+                        Content="Отичистить" Click="ClearUser_Click"/>
 
-                    <StackPanel Grid.Column="1">
-                        <Button x:Name="AddUser" HorizontalAlignment="Right"
+                <StackPanel Grid.Column="1">
+                    <Button x:Name="AddUser" HorizontalAlignment="Right"
       
                         Style="{StaticResource btnStyle}" 
                         Height="35" Width="135"
                         Content="Добавить" Click="AddUser_Click"/>
-                    </StackPanel>
-                </Grid>
+                </StackPanel>
             </Grid>
+        </Grid>
     </Border>
 </Window>

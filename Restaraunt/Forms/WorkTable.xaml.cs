@@ -41,7 +41,13 @@ namespace Restaraunt.Forms
                 case "Order":
                     OrderView oV = new OrderView();
                     container.Children.Add(oV);
-                    break;  
+                    break;
+
+                case "Report":
+                    Report r = new Report();
+                    container.Children.Add(r);
+                    break;
+
                 case "Dishes":
                     Dishes d = new Dishes();
                     container.Children.Add(d);

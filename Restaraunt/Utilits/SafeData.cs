@@ -16,5 +16,16 @@ namespace Restaraunt.Utilits
 
         public static string idpayment_method;
 
+        public static string userId="4";
+
+        internal static bool dishesAddBool;
+
+        public static string menuId;
+
+        public static string orderId;
+
+        public static string userIdEdit;
+
+        public static string product_id;
     }
 }

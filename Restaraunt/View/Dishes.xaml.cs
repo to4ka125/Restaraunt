@@ -13,6 +13,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -140,11 +141,49 @@ namespace Restaraunt.View
         {
             filteringAndSorting();
         }
-
+        
         private void AddBtn_Click(object sender, RoutedEventArgs e)
         {
+            Blur.workTable.Effect = blurEffect;
+            Blur.workTable.IsEnabled = false;
+            Blur.workTable.Opacity = 0.5;
             AddDishes aD = new AddDishes();
             aD.ShowDialog();
+            Blur.workTable.Effect = null;
+            Blur.workTable.IsEnabled = true;
+            Blur.workTable.Opacity = 1;
+        }
+
+        private void dataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
+        }
+        BlurEffect blurEffect = new BlurEffect
+        {
+            Radius = 5
+        };
+
+        private void dataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+            if (dataGrid.SelectedItem != null)
+            {
+                var selectedRow = dataGrid.SelectedItem as DataRowView;
+
+                if (selectedRow != null)
+                {
+                    SafeData.menuId = selectedRow[0].ToString();
+                    ViewMenuIngredient vMi = new ViewMenuIngredient();
+
+                    Blur.workTable.Effect = blurEffect;
+                    Blur.workTable.IsEnabled = false;
+                    Blur.workTable.Opacity = 0.5;
+                    vMi.ShowDialog();
+                    Blur.workTable.Effect = null;
+                    Blur.workTable.IsEnabled = true;
+                    Blur.workTable.Opacity = 1;
+                }
+            }
         }
     }
 }

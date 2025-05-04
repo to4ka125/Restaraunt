@@ -1,17 +1,15 @@
-﻿<Window x:Class="Restaraunt.Forms.AddClients"
+﻿<Window x:Class="Restaraunt.Forms.EditProduct"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Restaraunt.Forms"
-        xmlns:maskBox ="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="AddClients" 
-        Height="400" Width="360" 
+        Title="EditProduct"    Height="360" Width="360" 
         WindowStartupLocation="CenterScreen" WindowStyle="None"
         ResizeMode="NoResize"
         AllowsTransparency="True"
-        Background="Transparent"
+        Background="Transparent" Loaded="Window_Loaded"
         >
 
     <Border
@@ -34,59 +32,57 @@
 
                 <TextBlock Style="{StaticResource textblockSemiBoold}"
                        FontSize="20"
-                     >Добавление нового <LineBreak/>клиента</TextBlock>
+                     >Изменение продукта</TextBlock>
 
                 <Button Grid.Column="1" HorizontalAlignment="Right" 
                 Style="{StaticResource BtnImage}" Click="Button_Click"/>
 
             </Grid>
 
+            <StackPanel Grid.Row="1" HorizontalAlignment="Center">
 
-            <StackPanel Grid.Row="1" >
-              
-                
-                <TextBox x:Name="qName" Style="{StaticResource pcaholderText}" 
+                <TextBox x:Name="qNameProduct" Style="{StaticResource pcaholderText}" 
+                         PreviewTextInput="qNameProduct_PreviewTextInput"
                          Width="310"
-                         Height="50" 
-                         Tag="Введите имя" Margin="0 20 0 0"/>
+                          Height="45"
+                         Padding="13"
+                         Tag="Введите название продукта" Margin="0 20 0 0"/>
 
-                <TextBox x:Name="qLastName" Style="{StaticResource pcaholderText}" 
+                <TextBox x:Name="qСountProduct" Style="{StaticResource pcaholderText}" 
+                         PreviewTextInput="qСountProduct_PreviewTextInput"
                          Width="310"
-                         Height="50" 
-                         Margin="0 20"
-                         Tag="Введите фамилию"/>
+                        Height="45"
+                         Padding="13"
+                         Margin="0 10"
+                         Tag="Введите количество на складе"/>
 
-                <TextBox x:Name="qEmail" Style="{StaticResource pcaholderText}" 
+                <TextBox x:Name="qPrice" Style="{StaticResource pcaholderText}" 
                          Width="310"
-                         Height="50" 
-                         Tag="Введите почту"/>
+                           Height="45"
+                         Padding="13"
+                         Tag="Введите цену за кг"
+                         PreviewTextInput="qPrice_PreviewTextInput"/>
 
-                <maskBox:MaskedTextBox Style="{StaticResource pcaholderText}"  
-                                       Width="310"
-                                                       x:Name="qPhone"
-                                                       Mask="+7 (###) ###-##-##"
-                                                       Margin="0 10"/>
-
+                <ComboBox x:Name="qSupliers" Style="{StaticResource ComboBox}" Height="45" Padding="13" Tag="Выберите поставщика" Margin="0 10 0 0"/>
             </StackPanel>
-
             <Grid Grid.Row="2" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Button x:Name="ClearClientBtn"
+                <Button x:Name="ClearProduct"
                             Grid.Column="0"
                         Style="{StaticResource btnStyleSmall}" 
                         Height="35" Width="135"
-                        Content="Отичистить" Click="ClearClientBtn_Click"/>
+                        Content="Отичистить" Click="ClearProduct_Click"/>
 
                 <StackPanel Grid.Column="1">
-                    <Button x:Name="AddClientBtn" HorizontalAlignment="Right"
+                    <Button x:Name="AddProductBtn" HorizontalAlignment="Right"
       
                         Style="{StaticResource btnStyle}" 
                         Height="35" Width="135"
-                        Content="Добавить" Click="AddClientBtn_Click"/>
+                        Content="Изменить" Click="AddProductBtn_Click"/>
                 </StackPanel>
 
             </Grid>

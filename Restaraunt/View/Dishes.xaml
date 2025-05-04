@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Restaraunt.View"
              mc:Ignorable="d" 
-               d:DesignHeight="630" d:DesignWidth="800"  Loaded="UserControl_Loaded"
+               d:DesignHeight="630" d:DesignWidth="800"  Loaded="UserControl_Loaded" Style="{StaticResource Page_Style}"
            >
     <Border Background="#FFFFFF"
             CornerRadius="10"
@@ -124,7 +124,7 @@
                                 Height="35"   />
                 </StackPanel>
             </StackPanel>
-            <DataGrid   IsReadOnly="True" Grid.Row="3" Margin="0,9.8,1,9.6"
+            <DataGrid   IsReadOnly="True" Grid.Row="3" Margin="0,9.8,1,9.6" SelectionChanged="dataGrid_SelectionChanged" MouseDoubleClick="dataGrid_MouseDoubleClick"
                         x:Name="dataGrid"
                         ScrollViewer.CanContentScroll="True"
                         ScrollViewer.VerticalScrollBarVisibility="Auto"

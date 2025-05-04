@@ -33,7 +33,7 @@
                     <TextBlock Style="{StaticResource textblock}"
                            FontSize="18" Opacity="0.8"
                            Text="Стол"/>
-                    <TextBlock x:Uid="idTables"
+                    <TextBlock x:Name="idTables"
                            Style="{StaticResource textblock}"
                            FontSize="18" Opacity="0.8"
                            Text="1" Margin="5 0 0 0"/>

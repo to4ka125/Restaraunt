@@ -3,6 +3,7 @@ using Restaraunt.Utilits;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -104,11 +105,26 @@ namespace Restaraunt.Forms
             }
         }
 
-        private string GetHashPass(object password)
+        public static string GetHashPass(string password)
         {
-            throw new NotImplementedException();
-        }
 
+            byte[] bytesPass = Encoding.UTF8.GetBytes(password);
+
+            SHA256Managed hashstring = new SHA256Managed();
+
+            byte[] hash = hashstring.ComputeHash(bytesPass);
+
+            string hashPasswd = string.Empty;
+
+            foreach (byte x in hash)
+            {
+                hashPasswd += String.Format("{0:x2}", x);
+            }
+
+            hashstring.Dispose();
+
+            return hashPasswd;
+        }
         private void ClearDishes_Click(object sender, RoutedEventArgs e)
         {
             qName.Clear();
@@ -163,6 +179,21 @@ namespace Restaraunt.Forms
             {
                 textBlock.Visibility = Visibility.Visible;
             }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Btn_Click(object sender, RoutedEventArgs e)
+        {
+            string Passwd = CreatePassword(10);
+            MessageBox.Show($"Сгенерированный пароль: {Passwd}",
+               "Пароль сгенерирован",
+               MessageBoxButton.OK,
+               MessageBoxImage.Information);
+            qPassword.Password = Passwd;
         }
     }
 }

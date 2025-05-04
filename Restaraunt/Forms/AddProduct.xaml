@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Restaraunt.Forms"
         mc:Ignorable="d"
-        Title="AddProduct" Height="360" Width="360" 
+        Title="AddProduct" 
+        Height="360" Width="360" 
         WindowStartupLocation="CenterScreen" WindowStyle="None"
         ResizeMode="NoResize"
         AllowsTransparency="True"
@@ -42,6 +43,7 @@
             <StackPanel Grid.Row="1" HorizontalAlignment="Center">
 
                 <TextBox x:Name="qNameProduct" Style="{StaticResource pcaholderText}" 
+                          IsReadOnly="True"
                          PreviewTextInput="qNameProduct_PreviewTextInput"
                          Width="310"
                           Height="45"
@@ -57,13 +59,14 @@
                          Tag="Введите количество на складе"/>
 
                 <TextBox x:Name="qPrice" Style="{StaticResource pcaholderText}" 
+                          IsReadOnly="True"
                          Width="310"
                            Height="45"
                          Padding="13"
                          Tag="Введите цену за кг"
                          PreviewTextInput="qPrice_PreviewTextInput"/>
-                
-                <ComboBox x:Name="qSupliers" Style="{StaticResource ComboBox}" Height="45" Padding="13" Tag="Выберите поставщика" Margin="0 10 0 0"/>
+
+                <ComboBox  IsReadOnly="True" x:Name="qSupliers" Style="{StaticResource ComboBox}" Height="45" Padding="13" Tag="Выберите поставщика" Margin="0 10 0 0"/>
             </StackPanel>
             <Grid Grid.Row="2" >
                 <Grid.ColumnDefinitions>

@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Restaraunt.Utilits;
 
 namespace Restaraunt.Forms
 {
@@ -40,7 +41,7 @@ namespace Restaraunt.Forms
             {
                 AddOrderBtn.IsEnabled = false;
             }
-
+            idTables.Text = SafeData.tablesId;
             DataTable dataTable = new DataTable();
             decimal totalPrice = 0;
 
@@ -99,11 +100,76 @@ namespace Restaraunt.Forms
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Close();
+            SafeData.dishesAddBool = false;
         }
 
         private void AddOrderBtn_Click(object sender, RoutedEventArgs e)
         {
-            //Дописать код в дальнейшем
+            int maxOrder_id;
+            using (MySqlConnection con = new MySqlConnection(MySqlCon.con))
+            {
+                con.Open();
+
+
+                using (MySqlCommand cmd = new MySqlCommand($@"Insert into Orders (user_id,
+                                                             table_number,idpayment_method, status,order_time,total_price)
+                                                              Values ('{SafeData.userId}','{SafeData.tablesId}','{SafeData.idpayment_method}',
+                                                             'В обработке',
+                                                             '{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}',
+                                                             '{TotalPrice.Text.Replace(',', '.')}') ", con))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+
+
+
+                using (MySqlCommand cmd = new MySqlCommand("SELECT MAX(order_id) FROM Orders", con))
+                {
+                    MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    maxOrder_id = int.Parse(dt.Rows[0].ItemArray[0].ToString());
+                }
+
+
+                foreach (var item in Basket.basket)
+                {
+                    string menuId = item.Key;
+                    int quantity = item.Value;
+                    using (MySqlCommand cmd = new MySqlCommand($@"INSERT INTO `restaurant`.`Order_Items` (`order_id`, `menu_id`, `quantity`)
+                                                                  Values ('{maxOrder_id}','{menuId}','{quantity}')", con))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+
+                    for (int i = 0; i < quantity; i++)
+                    {
+                        using (MySqlCommand cmd = new MySqlCommand($@"
+                        UPDATE Products p
+                        JOIN Menu_Ingredients mn ON p.product_id = mn.product_id
+                        SET p.quantity = p.quantity - mn.quantity
+                        WHERE mn.menu_id = '{menuId}'", con))
+                        {
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+
+                MessageBox.Show("Ваш заказ успешно сформирован!",
+                "Успех",
+                MessageBoxButton.OK,
+                MessageBoxImage.Information);
+
+
+                SafeData.dishesAddBool = true;
+                SafeData.idpayment_method = null;
+                SafeData.tablesId = null;
+                Basket.basket.Clear();
+                InitializeComponent();
+                this.Close();
+            }
 
         }
     }

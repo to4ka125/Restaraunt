@@ -93,6 +93,17 @@
                         </Menu:Btn>
 
 
+                        <Menu:Btn Style="{StaticResource BtnMenu}" x:Name="Report"
+                                  Click="Btn_Click">
+                            <Grid>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Margin="20 0 0 0" Width="20" Source="/Images/IconsMenu/clipboard.png"/>
+                                    <TextBlock VerticalAlignment="Center"  Margin="10 0" Style="{StaticResource textblock}" Text="Отчеты"/>
+                                </StackPanel>
+                            </Grid>
+                        </Menu:Btn>
+
+
                         <Menu:Btn Style="{StaticResource BtnMenu}"  x:Name="Users"
                                      Click="Btn_Click">
                             <Grid>
@@ -128,7 +139,7 @@
                             <Grid>
                                 <StackPanel Orientation="Horizontal">
                                     <Image Margin="20 0 0 0" Width="20" Source="/Images/IconsMenu/orderAdd.png"/>
-                                    <TextBlock VerticalAlignment="Center"  Margin="10 0" Style="{StaticResource textblock}" Text="Заказы"/>
+                                    <TextBlock VerticalAlignment="Center"  Margin="10 0" Style="{StaticResource textblock}" Text="Добавить Заказ"/>
                                 </StackPanel>
                             </Grid>
                         </Menu:Btn>
@@ -138,7 +149,7 @@
                 </Border>
 
                 <StackPanel Grid.Column="1" Margin="15" x:Name="container">
-                    <uc:Products/>
+                    <uc:Report/>
                 </StackPanel>
             </Grid>
         </Grid>

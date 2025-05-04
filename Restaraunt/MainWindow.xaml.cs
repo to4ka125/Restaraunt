@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Restaraunt.Forms;
+using Restaraunt.Utilits;
 
 namespace Restaraunt
 {
@@ -28,8 +29,8 @@ namespace Restaraunt
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            WorkTable wT = new WorkTable();
-            wT.Show();
+            Blur.workTable = new WorkTable();
+            Blur.workTable.Show();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)

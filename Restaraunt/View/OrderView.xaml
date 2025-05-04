@@ -75,6 +75,8 @@
                         ScrollViewer.CanContentScroll="True"
                         ScrollViewer.VerticalScrollBarVisibility="Auto"
                         ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                        SelectionChanged="dataGrid_SelectionChanged"
+                        MouseDoubleClick="dataGrid_MouseDoubleClick"
                         Style="{StaticResource SafeDataGridStyle}">
                 <DataGrid.Resources>
                      <Style TargetType="DataGridCell">
@@ -129,7 +131,7 @@
                 Width="180" 
                 Height="40"
                 Margin="10 0"
-                Style="{StaticResource btnStyle}"
+                Style="{StaticResource btnStyle}" Click="completeBtn_Click"
                         />
 
                 <Button  x:Name="cancelBtn"

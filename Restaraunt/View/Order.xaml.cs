@@ -17,6 +17,7 @@ using Restaraunt.Utilits;
 using MySql.Data.MySqlClient;
 using System.Data;
 using Restaraunt.Forms;
+using System.Windows.Media.Effects;
 
 namespace Restaraunt.View
 {
@@ -27,6 +28,10 @@ namespace Restaraunt.View
     {
         private string statusTables = "0";
 
+        BlurEffect blurEffect = new BlurEffect
+        {
+            Radius = 5
+        };
         public Order()
         {
             InitializeComponent();
@@ -305,8 +310,24 @@ namespace Restaraunt.View
         /// <param name="e"></param>
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
+
+            Blur.workTable.Effect = blurEffect;
+            Blur.workTable.IsEnabled = false;
+            Blur.workTable.Opacity = 0.5;
             CheckOrder cO = new CheckOrder();
             cO.ShowDialog();
+            Blur.workTable.Effect = null;
+            Blur.workTable.IsEnabled = true;
+            Blur.workTable.Opacity = 1;
+
+            if (SafeData.dishesAddBool)
+            {
+                TablesPopulateGrid();
+                SafeData.step = 0;
+                PhaseElips();
+                AddTables.Visibility = Visibility.Visible;
+                Menu.Visibility = Visibility.Visible;
+            }
         }
 
         /// <summary>
@@ -345,6 +366,8 @@ namespace Restaraunt.View
         {
             var radioBtn = sender as RadioButton;
             SafeData.idpayment_method = radioBtn.Uid;
+
+       
         }
 
         /// <summary>

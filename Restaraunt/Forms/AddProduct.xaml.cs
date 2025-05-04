@@ -90,6 +90,7 @@ namespace Restaraunt.Forms
             qСountProduct.Clear();
             qPrice.Clear();
             qSupliers.SelectedItem = null;
+            MessageBox.Show("Поля успешно очищенны!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
