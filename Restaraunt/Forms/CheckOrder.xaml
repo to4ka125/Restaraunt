@@ -10,7 +10,7 @@
         Height="500" Width="360"
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize" AllowsTransparency="True" 
         WindowStyle="None" Background="Transparent" Loaded="Window_Loaded"
-        >
+         Icon="/Images/logo.ico">
     <Border CornerRadius="5" Background="#FFFFFF">
         <Grid>
             <Grid.RowDefinitions>
@@ -43,7 +43,7 @@
                       x:Name="MenuData"
                         ScrollViewer.CanContentScroll="True"
                         ScrollViewer.VerticalScrollBarVisibility="Auto"
-                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                        ScrollViewer.HorizontalScrollBarVisibility="Auto"
                       Style="{StaticResource SafeDataGridStyle}">
                     <!-- Ваши колонки -->
                 </DataGrid>

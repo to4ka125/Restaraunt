@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using Restaraunt.Forms;
 using Restaraunt.Utilits;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -109,6 +111,45 @@ namespace Restaraunt.View
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             UpdateDataGrid();
+        }
+        BlurEffect blurEffect = new BlurEffect
+        {
+            Radius = 5
+        };
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Blur.workTable.Effect = blurEffect;
+            Blur.workTable.IsEnabled = false;
+            Blur.workTable.Opacity = 0.5;
+            AddUsers aU = new AddUsers();
+            aU.ShowDialog();
+            UpdateDataGrid();
+            Blur.workTable.Effect = null;
+            Blur.workTable.IsEnabled = true;
+            Blur.workTable.Opacity = 1;
+        }
+
+        private void EditBtnClick_Click(object sender, RoutedEventArgs e)
+        {
+            if (dataGrid.SelectedItem != null)
+            {
+                var selectedRow = dataGrid.SelectedItem as DataRowView;
+
+                if (selectedRow != null)
+                {
+                    SafeData.userIdEdit = selectedRow[0].ToString();
+
+                    Blur.workTable.Effect = blurEffect;
+                    Blur.workTable.IsEnabled = false;
+                    Blur.workTable.Opacity = 0.5;
+                    EditUser eU = new EditUser();
+                    eU.ShowDialog();
+                    UpdateDataGrid();
+                    Blur.workTable.Effect = null;
+                    Blur.workTable.IsEnabled = true;
+                    Blur.workTable.Opacity = 1;
+                }
+            }
         }
     }
 }

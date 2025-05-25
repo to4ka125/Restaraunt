@@ -28,6 +28,7 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+    
     <Style x:Key="Page_Style"
            TargetType="{x:Type UserControl}">
 

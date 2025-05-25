@@ -15,8 +15,7 @@
         ResizeMode="NoResize"
         AllowsTransparency="True"
         Background="Transparent"
-        >
-
+         Icon="/Images/logo.ico">
     <Border
         CornerRadius="5" Background="#FFFFFF"
         >

@@ -273,12 +273,22 @@ namespace Restaraunt.Forms
                 }
 
                 MessageBox.Show("🎉 Блюдо успешно добавлено!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                ClearBox();
             }
         }
 
         private void ClearDishes_Click(object sender, RoutedEventArgs e)
         {
+            ClearBox();
+        }
 
+        private void ClearBox()
+        {
+            qCategoriesBox.SelectedItem = null;
+            qDescription.Clear();
+            qName.Clear();
+            qPrice.Clear();
+     
         }
     }
 }

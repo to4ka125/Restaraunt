@@ -76,6 +76,7 @@ namespace Restaraunt.View
         /// </summary>
         public void TablesPopulateGrid()
         {
+            UpdateTableReservationStatus();
             DataTable dt = new DataTable();
             string query;
 
@@ -138,7 +139,7 @@ namespace Restaraunt.View
             {
                 var table = new Tables
                 {
-                    Tytle = dt.Rows[i]["table_name"].ToString(),
+                    Title = dt.Rows[i]["table_name"].ToString(),
                     Status = dt.Rows[i]["status"].ToString(),
                     Margin = new Thickness(10),
                     HorizontalAlignment = HorizontalAlignment.Stretch,
@@ -151,7 +152,52 @@ namespace Restaraunt.View
                 TablesConteiner.Children.Add(table);
             }
         }
+        public void UpdateTableReservationStatus()
+        {
+            string updateQuery = @"UPDATE restaurant.tables t
+            SET status = 'резерв'
+            WHERE EXISTS (
+                SELECT 1 
+                FROM restaurant.reservations r
+                WHERE r.table_id = t.table_number
+                AND r.status = 'Активна'
+                AND CURRENT_DATE = DATE(r.reservation_time)
+            );
+            
+          
+            UPDATE restaurant.tables t 
+            SET status = 'свободно'
+            WHERE EXISTS ( 
+               SELECT 1
+               FROM restaurant.reservations r
+               WHERE r.table_id = t.table_number
+               AND r.status = 'Завершена'
+               AND CURRENT_DATE = DATE(r.reservation_time)
+               AND t.status = 'резерв');
 
+           UPDATE restaurant.tables t
+           SET t.status = 'свободно'
+           WHERE t.table_id > 0 
+           AND NOT EXISTS (
+               SELECT 1 
+               FROM restaurant.reservations r
+               WHERE r.table_id = t.table_id
+               AND CURRENT_DATE = DATE(r.reservation_time)
+               )AND t.status != 'занят';";
+            using (MySqlConnection con = new MySqlConnection(MySqlCon.con))
+            {
+                try
+                {
+                    con.Open();
+                    MySqlCommand cmd = new MySqlCommand(updateQuery, con);
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка при обновлении статусов столов: " + ex.Message);
+                }
+            }
+        }
         private void Tables_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (sender is Tables selectedTable)
@@ -159,7 +205,7 @@ namespace Restaraunt.View
                 if (selectedTable.Status == "свободно")
                 {
                     SafeData.step = 1;
-                    SafeData.tablesId = selectedTable.Tytle.Split(' ')[1].ToString();
+                    SafeData.tablesId = selectedTable.Title.Split(' ')[1].ToString();
                     AddTables.Visibility = Visibility.Collapsed;
                     ChoosingPaymentMethod.Visibility = Visibility.Visible;
                     PhaseElips();
@@ -263,7 +309,7 @@ namespace Restaraunt.View
         }
 
         /// <summary>
-        /// Метод скрытия формы товаров
+        /// Метод скрытия формы поиск гостя
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -275,20 +321,47 @@ namespace Restaraunt.View
             if (radioBtn.Name == "radioSearchBtn")
             {
                 SearchClientsBox.Visibility = Visibility.Visible;
+                SafeData.isCustomerBoolCheck = true;
             }
             else
             {
                 SearchClientsBox.Visibility = Visibility.Hidden;
+                SafeData.isCustomerBoolCheck = false;
             }
         }
         
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             SafeData.step = 2;
+            if(SafeData.isCustomerBoolCheck)
+            {
+                SafeData.customer_id = GetIdCustomer(qPhoneNumber.Text);
+            }
+            else
+            {
+                SafeData.customer_id = null;
+            }
             Menu.Visibility = Visibility.Visible;
             ChoosingPaymentMethod.Visibility = Visibility.Collapsed;
             PhaseElips();
             LoadedMenu();
+        }
+
+        private string GetIdCustomer (string name)
+        {
+            using (MySqlConnection con = new MySqlConnection(MySqlCon.con))
+            {
+                con.Open();
+                MySqlCommand cmd = new MySqlCommand($@"SELECT customer_id FROM restaurant.customers where concat_ws(' ',first_name,last_name) = '{name}';",con);
+
+
+                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                string id = dt.Rows[0][0].ToString();
+
+                return id;
+            }
         }
 
         /// <summary>
@@ -366,7 +439,6 @@ namespace Restaraunt.View
         {
             var radioBtn = sender as RadioButton;
             SafeData.idpayment_method = radioBtn.Uid;
-
        
         }
 
@@ -393,8 +465,9 @@ namespace Restaraunt.View
                 DataTable dt = new DataTable();
                 da.Fill(dt);
 
-                if (dt.Rows.Count > 1)
+                if (dt.Rows.Count != 0)
                 {
+                    MessageBox.Show("Гостя с данным номером телефона найден", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
                     qPhoneNumber.Text = dt.Rows[0][0].ToString();
                     qPhoneNumber.Visibility = Visibility.Visible;
                     addClients.Visibility = Visibility.Collapsed;

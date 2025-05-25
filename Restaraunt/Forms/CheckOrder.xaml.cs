@@ -93,7 +93,7 @@ namespace Restaraunt.Forms
         private void ClearBtn_Click(object sender, RoutedEventArgs e)
         {
             Basket.basket.Clear();
-            MessageBox.Show("Корзина отчищенна","Сообщение пользователю",MessageBoxButton.OK,MessageBoxImage.Information);
+            MessageBox.Show("Корзина отчищенна", "Сообщение пользователю", MessageBoxButton.OK, MessageBoxImage.Information);
             Close();
         }
 
@@ -110,13 +110,37 @@ namespace Restaraunt.Forms
             {
                 con.Open();
 
+                string customerIdValue = string.IsNullOrEmpty(SafeData.customer_id)
+                    ? "NULL"
+                    : $"'{SafeData.customer_id}'";
+                                
+                string query = $@"
+                    INSERT INTO Orders (
+                        user_id,
+                        table_number,
+                        idpayment_method,
+                        { (string.IsNullOrEmpty(SafeData.customer_id) ? "" : "customer_id,") }
+                        status,
+                        order_time,
+                        total_price
+                    ) 
+                    VALUES (
+                        '{SafeData.userId}',
+                        '{SafeData.tablesId}',
+                        '{SafeData.idpayment_method}',
+                        { (string.IsNullOrEmpty(SafeData.customer_id) ? "" : $"'{SafeData.customer_id}',") }
+                        'В обработке',
+                        '{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}',
+                        '{TotalPrice.Text.Replace(',', '.')}'
+                    )";
 
-                using (MySqlCommand cmd = new MySqlCommand($@"Insert into Orders (user_id,
-                                                             table_number,idpayment_method, status,order_time,total_price)
-                                                              Values ('{SafeData.userId}','{SafeData.tablesId}','{SafeData.idpayment_method}',
-                                                             'В обработке',
-                                                             '{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}',
-                                                             '{TotalPrice.Text.Replace(',', '.')}') ", con))
+                using (MySqlCommand cmd = new MySqlCommand(query, con))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+
+                using (MySqlCommand cmd = new MySqlCommand($@"Update tables set  status = 'занят' Where table_id ='{SafeData.tablesId}'", con))
                 {
                     cmd.ExecuteNonQuery();
                 }

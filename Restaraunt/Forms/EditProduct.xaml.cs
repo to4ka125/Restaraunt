@@ -2,9 +2,11 @@
 using Restaraunt.Utilits;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -80,17 +82,49 @@ namespace Restaraunt.Forms
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            using (MySqlConnection con = new MySqlConnection(MySqlCon.con))
+            {
+                con.Open();
+                using (MySqlCommand cmd = new MySqlCommand($@"SELECT 
+                                                                p.name AS 'Product Name', 
+                                                                p.quantity AS 'Quantity', 
+                                                               concat(p.unit_price, ' р.')AS 'Unit Price', 
+                                                                CONCAT(p.supplier_id, '-', s.name) AS 'Supplier Info'
+                                                                FROM 
+                                                                    products p
+                                                                INNER JOIN 
+                                                                    supplier s ON s.supplier_id = p.supplier_id
+                                                                WHERE 
+                                                                    p.product_id ='{SafeData.product_id}'", con))
+                {
+                    MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
 
+                    qNameProduct.Text = dt.Rows[0].ItemArray[0].ToString();
+                    qСountProduct.Text = dt.Rows[0].ItemArray[1].ToString();
+                    qPrice.Text = dt.Rows[0].ItemArray[2].ToString();
+                    qSupliers.Text = dt.Rows[0].ItemArray[3].ToString();
+
+                    qNameProduct.IsEnabled = false;
+                    qPrice.IsEnabled = false;
+                    qSupliers.IsEnabled = false;
+                }
+            }
         }
 
         private void qNameProduct_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-
+            if (Regex.IsMatch(e.Text, @"^[0-9\W]$")) { e.Handled = true; }
+            if (Regex.IsMatch(e.Text, @"^[_]$")) { e.Handled = true; }
         }
 
         private void qСountProduct_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-
+            if (Regex.IsMatch(e.Text, @"^[^0-9.,]$"))
+            {
+                e.Handled = true;
+            }
         }
 
         private void qPrice_PreviewTextInput(object sender, TextCompositionEventArgs e)

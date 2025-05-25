@@ -1,0 +1,82 @@
+﻿<UserControl x:Class="Restaraunt.View.Import"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Restaraunt.View"
+             mc:Ignorable="d" 
+               d:DesignHeight="630" d:DesignWidth="800"  Style="{StaticResource Page_Style}" Loaded="UserControl_Loaded"
+           >
+    <Border Background="#FFFFFF"
+            CornerRadius="10"
+            BorderThickness="0.5"
+            BorderBrush="#ADADAD">
+        <Grid Margin="25 15">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Style="{StaticResource textblock}"
+                       Grid.Row="0"
+                                   FontFamily="/Fonts/#Montserrat Alternates SemiBold"
+                                   Text="Панель локального администратора"
+                                   FontSize="20"/>
+
+            <Grid Grid.Row="1" Margin="0 10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <Border Grid.Column="0" 
+                        CornerRadius="10"
+                        BorderThickness="0.5"
+                        BorderBrush="#ADADAD" 
+                        Width="340"
+                        Height="250">
+                    <StackPanel Margin="15" >
+                        <TextBlock Style="{StaticResource textblockSemiBoold}"
+                               FontSize="15" Text="Импорт данных"
+                                   Margin="0 0 0 15"
+                                   />
+                        <ComboBox x:Name="tablesName" Style="{StaticResource ComboBox}"
+                                  Width="250" Height="45"
+                                  Tag="Выберите таблицу"/>
+
+                        <Button Style="{StaticResource btnStyle}" Height="35" Content="Выбрать файл"
+                                Margin="0 10" Click="Button_Click" Width="250"/>
+
+                        <StackPanel Orientation="Horizontal" Margin="30 0">
+                            <TextBlock Style="{StaticResource textblock}" Text="Выбранный файл: "/>
+                            <TextBlock Style="{StaticResource textblock}" 
+                                       x:Name="FileName" Text="not selected"
+                                       Opacity="0.7"/>
+                        </StackPanel>
+
+                        <Button Style="{StaticResource btnStyle}" Height="35" Width="250" Content="Импортировать"
+                                Margin="0 10" Click="Button_Click_1"/>
+
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="1" 
+                        CornerRadius="10"
+                        BorderThickness="0.5"
+                        BorderBrush="#ADADAD" 
+                        Width="340"
+                        Height="250">
+                    <StackPanel Margin="15" >
+                        <TextBlock Style="{StaticResource textblockSemiBoold}"
+                               FontSize="15" Text="Востановление структуры БД"
+                                   Margin="0 0 0 80"
+                                   />
+
+                        <Button Style="{StaticResource btnStyle}"
+                                Height="35" Width="250" Content="Востановить структуру" VerticalAlignment="Center" HorizontalAlignment="Center" Click="Button_Click_2"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+        </Grid>
+    </Border>
+</UserControl>

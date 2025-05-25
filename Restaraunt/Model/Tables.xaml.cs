@@ -26,19 +26,23 @@ namespace Restaraunt.Model
             InitializeComponent();
         }
 
-        public  string Tytle 
+        public string Title
         {
-            get => (string)GetValue(TytleProperty);
-            set => SetValue(TytleProperty, value);
+            get => (string)GetValue(TitleProperty);
+            set => SetValue(TitleProperty, value);
         }
 
         public string Status
         {
             get => (string)GetValue(StatusProperty);
-            set => SetValue(StatusProperty,value);
+            set => SetValue(StatusProperty, value);
         }
-        public static readonly DependencyProperty TytleProperty = DependencyProperty.Register("tytle", typeof(string), typeof(Tables));
-        public static readonly DependencyProperty StatusProperty= DependencyProperty.Register("status",typeof(string),typeof(Tables));
+
+        public static readonly DependencyProperty TitleProperty =
+            DependencyProperty.Register("Title", typeof(string), typeof(Tables));
+
+        public static readonly DependencyProperty StatusProperty =
+            DependencyProperty.Register("Status", typeof(string), typeof(Tables));
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {

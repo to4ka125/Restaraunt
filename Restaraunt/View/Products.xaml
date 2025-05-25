@@ -38,13 +38,18 @@
                     <ComboBoxItem  Content="По убыванию"/>
                 </ComboBox>
             </StackPanel>
-            
+
             <DataGrid   IsReadOnly="True" Grid.Row="2" Margin="0 10"
                         x:Name="dataGrid"
                         ScrollViewer.CanContentScroll="True"
                         ScrollViewer.VerticalScrollBarVisibility="Auto"
                         ScrollViewer.HorizontalScrollBarVisibility="Auto"
                         Style="{StaticResource SafeDataGridStyle}">
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Изменить" x:Name="EditBtnClick" Click="EditBtnClick_Click"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
             </DataGrid>
 
             <StackPanel  Grid.Row="3" 

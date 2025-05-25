@@ -243,6 +243,54 @@
         </Setter>
     </Style>
 
+    <Style x:Key="btnStyleReport" TargetType="RadioButton">
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RadioButton">
+                    <Border x:Name="border"
+                    CornerRadius="{Binding CornerRadius,RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                    BorderBrush="#ADADAD"
+                    BorderThickness="1"
+                    Background="#fff">
+                        <Grid>
+                            <TextBlock x:Name="textBlock"
+                               Text="{Binding Content, RelativeSource={RelativeSource Mode=TemplatedParent}}" 
+                               Foreground="#ADADAD"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontFamily="/Restaraunt;component/Fonts/#Montserrat Alternates"/>
+                        </Grid>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="#F85D5D"/>
+                            <Setter TargetName="border" Property="BorderThickness" Value="0"/>
+                            <Setter TargetName="textBlock" Property="Foreground" Value="#FFFFFF"/>
+                        </Trigger>
+
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="#F85D5D"/>
+                            <Setter TargetName="textBlock" Property="Foreground" Value="#fff"/>
+                            <Setter TargetName="border" Property="BorderThickness" Value="0"/>
+                        </Trigger>
+
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="False"/>
+                                <Condition Property="IsChecked" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="border" Property="Background" Value="#fff"/>
+                            <Setter TargetName="textBlock" Property="Foreground" Value="#ADADAD"/>
+                            <Setter TargetName="border" Property="BorderThickness" Value="1"/>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="BtnBText" TargetType="Button">
         <Setter Property="VerticalAlignment"
                 Value="Center"/>

@@ -1,13 +1,11 @@
-﻿<Window x:Class="Restaraunt.Forms.AddClients"
+﻿<Window x:Class="Restaraunt.Forms.AddSupliers"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Restaraunt.Forms"
-        xmlns:maskBox ="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:local="clr-namespace:Restaraunt.Forms" xmlns:maskBox="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="AddClients" 
-        Height="400" Width="360" 
+        Title="AddSupliers"  Height="550" Width="360" 
         WindowStartupLocation="CenterScreen" WindowStyle="None"
         ResizeMode="NoResize"
         AllowsTransparency="True"
@@ -34,7 +32,7 @@
 
                 <TextBlock Style="{StaticResource textblockSemiBoold}"
                        FontSize="20"
-                     >Добавление нового <LineBreak/>клиента</TextBlock>
+                     >Добавление нового <LineBreak/>поставщика</TextBlock>
 
                 <Button Grid.Column="1" HorizontalAlignment="Right" 
                 Style="{StaticResource BtnImage}" Click="Button_Click"/>
@@ -43,20 +41,21 @@
 
 
             <StackPanel Grid.Row="1" >
-
+                <TextBox x:Name="qTytle" Style="{StaticResource pcaholderText}" 
+                         Width="310"
+                         Height="50" 
+                         Tag="Введите наименование" Margin="0 20 0 0" PreviewTextInput="qTytle_PreviewTextInput"/>
 
                 <TextBox x:Name="qName" Style="{StaticResource pcaholderText}" 
                          Width="310"
                          Height="50" 
-                         Tag="Введите имя" Margin="0 20 0 0" 
-                         PreviewTextInput="qName_PreviewTextInput"/>
+                         Tag="Введите имя" Margin="0 20 0 0" PreviewTextInput="qName_PreviewTextInput"/>
 
                 <TextBox x:Name="qLastName" Style="{StaticResource pcaholderText}" 
                          Width="310"
                          Height="50" 
-                         PreviewTextInput="qName_PreviewTextInput"
                          Margin="0 20"
-                         Tag="Введите фамилию"/>
+                         Tag="Введите фамилию" PreviewTextInput="qLastName_PreviewTextInput"/>
 
                 <TextBox x:Name="qEmail" Style="{StaticResource pcaholderText}" 
                          Width="310"
@@ -68,7 +67,10 @@
                                                        x:Name="qPhone"
                                                        Mask="+7 (###) ###-##-##"
                                                        Margin="0 10"/>
-
+                <TextBox x:Name="qAdress" Style="{StaticResource pcaholderText}" 
+                         Width="310"
+                         Height="50" 
+                         Tag="Введите адрессс"/>
             </StackPanel>
 
             <Grid Grid.Row="2" >

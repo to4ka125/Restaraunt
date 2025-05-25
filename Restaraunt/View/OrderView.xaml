@@ -139,7 +139,7 @@
                 Width="180" 
                 Height="40"
                 Margin="10 0"
-                Style="{StaticResource btnStyle}"
+                Style="{StaticResource btnStyle}" Click="cancelBtn_Click"
                         />
             </StackPanel>
         </Grid>

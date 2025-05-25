@@ -348,9 +348,33 @@ namespace Restaraunt.View
             Blur.workTable.Opacity = 0.5;
             AddProduct aP = new AddProduct();
             aP.ShowDialog();
+            UpdateDataGridView(query, currentPage);
             Blur.workTable.Effect = null;
             Blur.workTable.IsEnabled = true;
             Blur.workTable.Opacity = 1;
+        }
+
+        private void EditBtnClick_Click(object sender, RoutedEventArgs e)
+        {
+            if (dataGrid.SelectedItem != null)
+            {
+                var selectedRow = dataGrid.SelectedItem as DataRowView;
+
+                if (selectedRow != null)
+                {
+                    SafeData.product_id = selectedRow[0].ToString();
+
+                    Blur.workTable.Effect = blurEffect;
+                    Blur.workTable.IsEnabled = false;
+                    Blur.workTable.Opacity = 0.5;
+                    EditProduct eP = new EditProduct();
+                    eP.ShowDialog();
+                    UpdateDataGridView(query, currentPage);
+                    Blur.workTable.Effect = null;
+                    Blur.workTable.IsEnabled = true;
+                    Blur.workTable.Opacity = 1;
+                }
+            }
         }
     }
 }

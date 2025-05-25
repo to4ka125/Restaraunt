@@ -11,7 +11,7 @@
         AllowsTransparency="True"
         Background="Transparent"
         Loaded="Window_Loaded"
-        >
+       Icon="/Images/logo.ico">
 
     <Border
         CornerRadius="5" Background="#FFFFFF"

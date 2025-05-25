@@ -40,9 +40,22 @@
                         Width="340"
                         Height="250">
                     <StackPanel Margin="15">
-                        <TextBlock Style="{StaticResource textblockSemiBoold}"
+                        <Grid >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Style="{StaticResource textblockSemiBoold}"
                                FontSize="15" Text="Прибыль"
+                                        VerticalAlignment="Center"
                                    />
+                            <StackPanel Orientation="Horizontal" Grid.Column="1">
+                                <RadioButton x:Name="rbAll" Style="{StaticResource btnStyleReport}" Content="Все" Width="50" IsChecked="True" Click="PeriodRadioButton_Click"/>
+                                <RadioButton x:Name="rb7Days" Style="{StaticResource btnStyleReport}" Content="7д" Width="50" Height="30" Click="PeriodRadioButton_Click"/>
+                                <RadioButton x:Name="rb30Days" Style="{StaticResource btnStyleReport}" Content="30д" Width="50" Click="PeriodRadioButton_Click"/>
+                            </StackPanel>
+                        </Grid>
+                      
                         <Border CornerRadius="10" Background="#FFEFEF"  Height="80" Margin="0 15">
                             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <TextBlock 
@@ -92,9 +105,24 @@
                         Width="365"
                         Height="250">
                     <StackPanel Margin="15">
-                        <TextBlock Style="{StaticResource textblockSemiBoold}"
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0" Style="{StaticResource textblockSemiBoold}"
                                FontSize="15" Text="Топ 5 блюд"
                                    />
+
+                            <StackPanel Orientation="Horizontal" Grid.Column="1">
+                                <RadioButton x:Name="rbTopFiveAll" Style="{StaticResource btnStyleReport}" Content="Все" Width="50" IsChecked="True" Click="PeriodDiagrammRadioButton_Click"/>
+                                <RadioButton x:Name="rbTopFiveAll7Days" Style="{StaticResource btnStyleReport}" Content="7д" Width="50" Height="30" Click="PeriodDiagrammRadioButton_Click"/>
+                                <RadioButton x:Name="rbTopFiveAll30Days" Style="{StaticResource btnStyleReport}" Content="30д" Width="50" Click="PeriodDiagrammRadioButton_Click"/>
+                            </StackPanel>
+
+                        </Grid>
+                     
                         <Grid Margin="0 15 0 0">
                             <StackPanel HorizontalAlignment="Left">
                                 <lvc:PieChart Width="280" Height="180" x:Name="diagramm" LegendLocation="Right">
@@ -145,7 +173,7 @@
 
             <!-- Измененная часть - кнопки прижаты к низу -->
             <StackPanel Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Bottom">
-                <Button Style="{StaticResource btnStyle}" Content="Сохранить" Height="35" Width="150"/>
+                <Button Style="{StaticResource btnStyle}" Content="Сохранить" Height="35" Width="150" Visibility="Hidden"/>
             </StackPanel>
         </Grid>
     </Border>

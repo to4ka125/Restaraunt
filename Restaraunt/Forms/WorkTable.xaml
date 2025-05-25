@@ -11,7 +11,8 @@
         ResizeMode="CanResizeWithGrip"
         WindowStyle="None"
         AllowsTransparency="False"
-        Background="Transparent">
+        Background="Transparent" Loaded="Window_Loaded"
+         Icon="/Images/logo.ico">
     <Border CornerRadius="5" Background="#F5F9FA">
         <Grid>
             <Grid.RowDefinitions>
@@ -55,12 +56,12 @@
                                        Style="{StaticResource textblock}"/>
                         </StackPanel>
                
-                            <Image Source="/Images/IconsUsers/Admin.png"
+                            <Image Source="/Images/IconsUsers/Admin.png" x:Name="icon"
                                Width="25"
                               
                                Margin="5 2 5 0"/>
       
-                        <Button Style="{StaticResource BtnClose}"/>
+                        <Button Style="{StaticResource BtnClose}" Click="Button_Click"/>
                     </StackPanel>
                 </Border>
             </Grid>
@@ -134,6 +135,16 @@
                             </Grid>
                         </Menu:Btn>
 
+                        <Menu:Btn Style="{StaticResource BtnMenu}"  x:Name="TableReserv"
+                                     Click="Btn_Click">
+                            <Grid>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Margin="20 0 0 0" Width="20" Source="/Images/IconsMenu/tableReserv.png"/>
+                                    <TextBlock VerticalAlignment="Center"  Margin="10 0" Style="{StaticResource textblock}" Text="Бронирование столика"/>
+                                </StackPanel>
+                            </Grid>
+                        </Menu:Btn>
+
                         <Menu:Btn Style="{StaticResource BtnMenu}"  x:Name="OrderAdd"
                                      Click="Btn_Click">
                             <Grid>
@@ -144,7 +155,39 @@
                             </Grid>
                         </Menu:Btn>
 
-            
+                        <Menu:Btn Style="{StaticResource BtnMenu}"  x:Name="Import"
+                                     Click="Btn_Click">
+                            <Grid>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Margin="20 0 0 0" Width="20" Source="/Images/IconsMenu/download.png"/>
+                                    <TextBlock VerticalAlignment="Center"  Margin="10 0" Style="{StaticResource textblock}"
+                                               Text="Импорт данных"/>
+                                </StackPanel>
+                            </Grid>
+                        </Menu:Btn>
+
+                        <Menu:Btn Style="{StaticResource BtnMenu}"  x:Name="Clients"
+                                     Click="Btn_Click">
+                            <Grid>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Margin="20 0 0 0" Width="20" Source="/Images/IconsMenu/clients.png"/>
+                                    <TextBlock VerticalAlignment="Center"  Margin="10 0" Style="{StaticResource textblock}"
+                                               Text="Клиенты"/>
+                                </StackPanel>
+                            </Grid>
+                        </Menu:Btn>
+
+                        <Menu:Btn Style="{StaticResource BtnMenu}"  x:Name="Suplier"
+                                     Click="Btn_Click">
+                            <Grid>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Margin="20 0 0 0" Width="20" Source="/Images/IconsMenu/Supliers.png"/>
+                                    <TextBlock VerticalAlignment="Center"  Margin="10 0" Style="{StaticResource textblock}"
+                                               Text="Поставщики"/>
+                                </StackPanel>
+                            </Grid>
+                        </Menu:Btn>
+
                     </StackPanel>
                 </Border>
 

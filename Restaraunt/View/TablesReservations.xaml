@@ -1,0 +1,91 @@
+﻿<UserControl x:Class="Restaraunt.View.TablesReservations"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Restaraunt.View"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d" 
+               d:DesignHeight="630" d:DesignWidth="800"
+             Style="{StaticResource Page_Style}"
+             Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <sys:Double x:Key="MaxDateValue">31</sys:Double>
+    </UserControl.Resources>
+    <Border Background="#FFFFFF"
+            CornerRadius="10"
+            BorderThickness="0.5"
+            BorderBrush="#ADADAD">
+        <Grid Margin="25 15">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+        
+
+            <Grid Grid.Row="0">
+                <StackPanel>
+                    <StackPanel x:Name="AddTables" Visibility="Visible" 
+                        Margin="0 25" >
+                        <TextBlock Style="{StaticResource textblock}"
+                                   FontFamily="/Fonts/#Montserrat Alternates SemiBold"
+                                   Text="Выбрать стол"
+                                   FontSize="20"/>
+                        <DatePicker x:Name="qDate" FontSize="15"  Width="200" HorizontalAlignment="Left"
+                            FontFamily="/Restaraunt;component/Fonts/#Montserrat Alternates"
+                            DisplayDateStart="{x:Static sys:DateTime.Today}" SelectedDateChanged="qDate_SelectedDateChanged"
+                            BorderThickness="0"  Margin="0 10 0 0"/>
+                        <StackPanel Orientation="Horizontal" Margin="0 25">
+                           
+                            <RadioButton x:Uid="all" Style="{StaticResource btnStyleCategory}"
+                                         Click="RadioButton_Click" IsChecked="True"
+                                    Content="Все"
+                                    Width="50" 
+                                    Height="35"/>
+
+                            <RadioButton 
+                                    x:Uid="Freely"
+                                    Style="{StaticResource btnStyleCategory}" 
+                                    Content="Свободно" 
+                                    Width="100" 
+                                    Height="35"
+                                    Margin="20 0"
+                                             Click="RadioButton_Click"/>
+
+                            <RadioButton Style="{StaticResource btnStyleCategory}" 
+                                    x:Uid="Reserve"
+                                    Content="Резерв" 
+                                    Width="70" 
+                                    Height="35"             
+                                    Click="RadioButton_Click"
+                                   />
+
+                            <RadioButton Style="{StaticResource btnStyleCategory}"
+                                         x:Uid="Occupied"
+                                    Content="Занято"
+                                    Width="100"
+                                    Height="35"  Margin="20 0"
+                                                      Click="RadioButton_Click"/>
+
+                        </StackPanel>
+
+
+
+                        <Grid x:Name="TablesConteiner">
+
+                        </Grid>
+                    </StackPanel>
+
+                   
+           
+
+              
+
+            
+        
+
+             
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>

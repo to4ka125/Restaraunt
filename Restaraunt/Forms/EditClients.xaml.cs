@@ -1,10 +1,8 @@
 ﻿using MySql.Data.MySqlClient;
-using Restaraunt.Utilits;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,31 +12,40 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Restaraunt.Utilits;
+using System.Data;
+using System.Text.RegularExpressions;
 
 namespace Restaraunt.Forms
 {
     /// <summary>
-    /// Interaction logic for AddClients.xaml
+    /// Interaction logic for EditClients.xaml
     /// </summary>
-    public partial class AddClients : Window
+    public partial class EditClients : Window
     {
-        public AddClients()
+        public EditClients()
         {
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Close();
-        }
+            using (MySqlConnection con = new MySqlConnection(MySqlCon.con))
+            {
+                con.Open();
 
-        private void ClearClientBtn_Click(object sender, RoutedEventArgs e)
-        {
-            qName.Clear();
-            qLastName.Clear();
-            qEmail.Clear();
-            qPhone.Clear();
-            MessageBox.Show("Поля успешно очищенны!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                MySqlDataAdapter da = new MySqlDataAdapter($@"SELECT * FROM restaurant.customers 
+                                                              where customer_id = '{SafeData.customer_id}'",con);
+                DataTable dt = new DataTable();
+
+                da.Fill(dt);
+
+                qName.Text = dt.Rows[0][1].ToString();
+                qLastName.Text = dt.Rows[0][2].ToString();
+                qEmail.Text = dt.Rows[0][3].ToString();
+                qPhone.Text = dt.Rows[0][4].ToString();
+
+            }
         }
 
         private void AddClientBtn_Click(object sender, RoutedEventArgs e)
@@ -57,10 +64,10 @@ namespace Restaraunt.Forms
             using (MySqlConnection con = new MySqlConnection(MySqlCon.con))
             {
                 con.Open();
-                MySqlCommand cmd = new MySqlCommand($@"Insert into restaurant.customers (first_name,last_name,email,phone,registration_date) 
-                Values ('{name}','{lastName}','{email}','{phone}','{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}')",con);
+                MySqlCommand cmd = new MySqlCommand($@"Update  customers set (first_name ='{name}',
+                                                    last_name='{lastName}', email='{email}','phone='{phone}')",con);
                 cmd.ExecuteNonQuery();
-                MessageBox.Show("Клиент успешно добавлен!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Данные о Клиенте успешно измененны!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 qName.Clear();
                 qLastName.Clear();
@@ -70,15 +77,28 @@ namespace Restaraunt.Forms
             }
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void ClearClientBtn_Click(object sender, RoutedEventArgs e)
+        {
+            qName.Clear();
+            qLastName.Clear();
+            qEmail.Clear();
+            qPhone.Clear();
+        }
         private void qName_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             if (Regex.IsMatch(e.Text, @"^[0-9a-zA-Z\W]$")) { e.Handled = true; }
-         
+
         }
 
         private void qEmail_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-         //   if (Regex.IsMatch(e.Text, @"^[]$")) { e.Handled = true; }
+            if (Regex.IsMatch(e.Text, @"^[0-9\W]$")) { e.Handled = true; }
         }
+    
     }
 }

@@ -51,23 +51,7 @@ namespace Restaraunt.View
 
             bool hasWhereClause = false;
 /*
-            if (Filtering.SelectedItem != null)
-            {
-                string selectedStatusValue = (Filtering.SelectedItem as ComboBoxItem)?.Content.ToString();
-                if (!string.IsNullOrEmpty(selectedStatusValue))
-                {
-                    if (!hasWhereClause)
-                    {
-                        query += " WHERE";
-                        hasWhereClause = true;
-                    }
-                    else
-                    {
-                        query += " AND";
-                    }
-                    query += $" o.status = '{selectedStatusValue}'";
-                }
-            }
+          
 */
             if (!string.IsNullOrEmpty(datePicker.Text))
             {
@@ -90,27 +74,43 @@ namespace Restaraunt.View
         private void UpdateDataGridView()
         {
             System.Data.DataTable dt = new System.Data.DataTable();
-            string query;
+            string baseQuery = @"SELECT order_id As 'Номер заказа', 
+                    concat(us.lastName, ' ', Left(us.name, 1), '.') AS 'ФИО', 
+                    o.table_number As 'Номер стола',
+                    o.status As 'Статус', 
+                    o.order_time As 'Дата заказа', 
+                    Concat(total_price, ' ₽') As 'Стоимость заказа' 
+                    FROM orders o
+                    INNER JOIN users us ON us.user_id = o.user_id";
 
-            if (status == "all")
+            List<string> whereConditions = new List<string>();
+
+            // Фильтр по статусу
+            if (status != "all" && !string.IsNullOrEmpty(status))
             {
-                query = @"SELECT order_id As 'Номер заказа', concat(us.lastName, ' ', Left(us.name, 1), '.') AS 'ФИО', o.table_number As 'Номер стола',
-                         o.status As 'Статус', o.order_time As 'Дата заказа', Concat (total_price, ' ₽') As 'Стоимость заказа' From orders o
-                         inner Join users us On us.user_id  = o.user_id";
+                whereConditions.Add($"o.status = '{MySqlHelper.EscapeString(status)}'");
             }
-            else
+
+            // Фильтр по дате
+            if (datePicker.SelectedDate != null)
             {
-                query = $@"SELECT order_id As 'Номер заказа', concat(us.lastName, ' ', Left(us.name, 1), '.') AS 'ФИО', o.table_number As 'Номер стола',
-                         o.status As 'Статус', o.order_time As 'Дата заказа', Concat (total_price, ' ₽') As 'Стоимость заказа' From orders o
-                         inner Join users us On us.user_id  = o.user_id where o.status= '{status}'";
+                string selectedDate = datePicker.SelectedDate.Value.ToString("yyyy-MM-dd");
+                whereConditions.Add($"DATE(o.order_time) = '{MySqlHelper.EscapeString(selectedDate)}'");
+            }
+            
+            // Собираем окончательный запрос
+            string finalQuery = baseQuery;
+            if (whereConditions.Count > 0)
+            {
+                finalQuery += " WHERE " + string.Join(" AND ", whereConditions);
             }
 
             using (MySqlConnection connection = new MySqlConnection(MySqlCon.con))
             {
-                MySqlDataAdapter dataAdapter = new MySqlDataAdapter(query, connection);
-                connection.Open();
                 try
                 {
+                    connection.Open();
+                    MySqlDataAdapter dataAdapter = new MySqlDataAdapter(finalQuery, connection);
                     dataAdapter.Fill(dt);
                 }
                 catch (Exception ex)
@@ -118,17 +118,32 @@ namespace Restaraunt.View
                     MessageBox.Show($"Ошибка при извлечении данных: {ex.Message}");
                 }
             }
+
             dataGrid.ItemsSource = dt.DefaultView;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            cancelBtn.IsEnabled = false;
+            completeBtn.IsEnabled = false;
+
+            switch (SafeData.role)
+            {
+                case "Шеф":
+                    cancelBtn.Visibility = Visibility.Collapsed;
+                    completeBtn.Visibility = Visibility.Collapsed;
+                    break;
+                case "Официант":
+                    completeBtn.Visibility = Visibility.Collapsed;
+                    break;
+            }
+            
             UpdateDataGridView();
         }
 
         private void datePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            UpdateDataGridView();
         }
 
         private void RadioButton_Click(object sender, RoutedEventArgs e)
@@ -155,6 +170,19 @@ namespace Restaraunt.View
 
         private void completeBtn_Click(object sender, RoutedEventArgs e)
         {
+            using (MySqlConnection con = new MySqlConnection(MySqlCon.con))
+            {
+                if (MessageBox.Show($"Заказ №{id} готов к выдаче?", "Подтвердите действие", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
+                {
+                    con.Open();
+                    using (MySqlCommand cmd = new MySqlCommand($"Update orders Set status = 'Завершен' where order_id ='{id}' ", con))
+                    {
+                        cmd.ExecuteNonQuery();
+                        UpdateDataGridView();
+                        MessageBox.Show("Данные о заказе обновленны");
+                    }
+                }
+            }
             GenerateCheck();
         }
 
@@ -301,7 +329,10 @@ namespace Restaraunt.View
 
                 if (selectedRow != null)
                 {
+                    cancelBtn.IsEnabled = true;
+                    completeBtn.IsEnabled = true;
                     SafeData.orderId = selectedRow[0].ToString();
+                    id = selectedRow[0].ToString();
                 }
             }
         }
@@ -322,12 +353,30 @@ namespace Restaraunt.View
                     Blur.workTable.Effect = blurEffect;
                     Blur.workTable.IsEnabled = false;
                     Blur.workTable.Opacity = 0.5;
-                    ViewMenuIngredient VmI = new ViewMenuIngredient();
+                    ViewOrderStructure VmI = new ViewOrderStructure();
                     VmI.ShowDialog();
                     Blur.workTable.Effect = null;
                     Blur.workTable.IsEnabled = true;
                     Blur.workTable.Opacity = 1;
                 }
+            }
+        }
+
+        private void cancelBtn_Click(object sender, RoutedEventArgs e)
+        {
+            using (MySqlConnection con = new MySqlConnection(MySqlCon.con))
+            {
+                if (MessageBox.Show($"Вы уверенны что хотите отменить заказ №{id}?", "Подтвердите действие", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
+                {
+                    con.Open();
+                    using (MySqlCommand cmd = new MySqlCommand($"Update orders Set status = 'Отменен' where order_id ='{id}' ", con))
+                    {
+                        cmd.ExecuteNonQuery();
+                        UpdateDataGridView();
+                        MessageBox.Show("Данные о заказе обновленны");
+                    }
+                }
+
             }
         }
     }

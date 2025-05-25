@@ -149,6 +149,7 @@ namespace Restaraunt.View
             Blur.workTable.Opacity = 0.5;
             AddDishes aD = new AddDishes();
             aD.ShowDialog();
+            UpdateDataGridView(query);
             Blur.workTable.Effect = null;
             Blur.workTable.IsEnabled = true;
             Blur.workTable.Opacity = 1;
@@ -158,6 +159,7 @@ namespace Restaraunt.View
         {
             
         }
+
         BlurEffect blurEffect = new BlurEffect
         {
             Radius = 5

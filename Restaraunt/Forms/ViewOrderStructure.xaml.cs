@@ -37,7 +37,7 @@ namespace Restaraunt.Forms
                                                            oi.quantity As 'Количество'
                                                                             FROM restaurant.order_items oi 
                                                                             inner join menu m on m.menu_id = oi.menu_id
-                                                                            where order_id = {SafeData.orderId}; ", con))
+                                                                            where order_id = '{SafeData.orderId}'; ", con))
                 {
                     MySqlDataAdapter da = new MySqlDataAdapter(cmd);
                     DataTable dt = new DataTable();

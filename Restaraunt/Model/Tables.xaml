@@ -15,7 +15,7 @@
             BorderBrush="#ADADAD"
             Style="{StaticResource HoverBorder}">
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-            <TextBlock Text="{Binding Path=Tytle,RelativeSource={RelativeSource AncestorType=local:Tables}}"
+            <TextBlock Text="{Binding Path=Title,RelativeSource={RelativeSource AncestorType=local:Tables}}"
                        x:Name="qTytle"
                        Style="{StaticResource textblock}"
                        FontSize="15" TextAlignment="Center"
@@ -24,7 +24,7 @@
             <TextBlock Style="{StaticResource textblock}"
                        x:Name="qStatus"
                        FontSize="15" 
-                       Text="{Binding Path=status,RelativeSource={RelativeSource AncestorType=local:Tables}}"/>
+                       Text="{Binding Path=Status,RelativeSource={RelativeSource AncestorType=local:Tables}}"/>
         </StackPanel>
     </Border>
 </UserControl>
