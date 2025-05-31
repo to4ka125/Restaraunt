@@ -142,7 +142,7 @@
                                 Margin="0 25">
                         <TextBlock Style="{StaticResource textblock}"
                                    FontFamily="/Fonts/#Montserrat Alternates SemiBold"
-                                   Text="Выбрать стол"
+                                   Text="Выбрать способ оплаты"
                                    FontSize="20"/>
                         <StackPanel Orientation="Horizontal" x:Name="paymentMethodContainer"
                                     Margin="0 25 0 20">
@@ -167,13 +167,12 @@
                         <StackPanel Margin="0 20" Orientation="Horizontal">
                             <TextBlock Style="{StaticResource textblock}" FontSize="15"
                                        x:Name="qPhoneNumber"
-                                       Text="Беляков Виктор"
                                        Visibility="Collapsed"/>
                             <Button x:Name="addClients"
                                    Style="{StaticResource btnStyleSmall }"
                                          Width="180"
                                          Height="35"
-                                         Content="+ Добавить гостя"/>
+                                         Content="+ Добавить гостя" Click="addClients_Click"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" x:Name="containerRadioBtnSearchClients">

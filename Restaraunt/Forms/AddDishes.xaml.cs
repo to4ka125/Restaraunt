@@ -161,9 +161,8 @@ namespace Restaraunt.Forms
                     }
                     catch (Exception ex)
                     {
-
+                        MessageBox.Show(ex.Message,"Ошибка",MessageBoxButton.OK,MessageBoxImage.Error);
                     }
-
                     image.Source = new BitmapImage(new Uri(openFileDialog.FileName));
                 }
             }
@@ -176,8 +175,10 @@ namespace Restaraunt.Forms
 
         private void AddDishes_Click(object sender, RoutedEventArgs e)
         {
-            if (qName.Text == null || qCategoriesBox.SelectedItem == null
-              || qDescription == null || qPrice.Text == null)
+            if (string.IsNullOrWhiteSpace(qName.Text) ||
+                qCategoriesBox.SelectedItem == null ||
+              string.IsNullOrWhiteSpace(qDescription.Text)||
+               string.IsNullOrWhiteSpace(qPrice.Text))
             {
                 MessageBox.Show("Пожалуйста, заполните все обязательные поля.", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;

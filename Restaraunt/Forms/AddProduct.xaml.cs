@@ -30,7 +30,10 @@ namespace Restaraunt.Forms
 
         private void AddProduct_Click(object sender, RoutedEventArgs e)
         {
-            if (qNameProduct.Text == null || qСountProduct.Text == null || qPrice.Text == null || qSupliers.SelectedItem == null)
+            if (string.IsNullOrWhiteSpace(qNameProduct.Text ) ||
+                string.IsNullOrWhiteSpace(qСountProduct.Text ) ||
+                string.IsNullOrWhiteSpace(qPrice.Text) || 
+                qSupliers.SelectedItem == null)
             {
                 MessageBox.Show("Пожалуйста, заполните все обязательные поля.", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;

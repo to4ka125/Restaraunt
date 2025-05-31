@@ -30,8 +30,11 @@ namespace Restaraunt.Forms
 
         private void AddClientBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (qName.Text == null || qLastName.Text == null || qPhone.Text == null || qAdress.Text == null || qTytle.Text == null)
-            {
+            if (string.IsNullOrWhiteSpace(qName.Text) ||
+                string.IsNullOrWhiteSpace(qLastName.Text) ||
+                string.IsNullOrWhiteSpace(qPhone.Text) ||
+                string.IsNullOrWhiteSpace(qAdress.Text) ||
+                string.IsNullOrWhiteSpace(qTytle.Text)) { 
                 MessageBox.Show("Пожалуйста, заполните все обязательные поля.", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }

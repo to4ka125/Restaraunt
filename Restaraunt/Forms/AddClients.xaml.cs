@@ -43,7 +43,9 @@ namespace Restaraunt.Forms
 
         private void AddClientBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (qName.Text == null || qLastName.Text == null || qPhone.Text == null)
+            if (string.IsNullOrWhiteSpace(qName.Text) ||
+                string.IsNullOrWhiteSpace(qLastName.Text) ||
+                string.IsNullOrWhiteSpace(qPhone.Text))
             {
                 MessageBox.Show("Пожалуйста, заполните все обязательные поля.", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
@@ -56,17 +58,38 @@ namespace Restaraunt.Forms
 
             using (MySqlConnection con = new MySqlConnection(MySqlCon.con))
             {
-                con.Open();
-                MySqlCommand cmd = new MySqlCommand($@"Insert into restaurant.customers (first_name,last_name,email,phone,registration_date) 
-                Values ('{name}','{lastName}','{email}','{phone}','{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}')",con);
-                cmd.ExecuteNonQuery();
-                MessageBox.Show("Клиент успешно добавлен!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                try
+                {
+                    con.Open();
 
-                qName.Clear();
-                qLastName.Clear();
-                qEmail.Clear();
-                qPhone.Clear();
+                    using (MySqlCommand checkCmd = new MySqlCommand($@"SELECT COUNT(*) FROM restaurant.customers WHERE phone = '{phone}'", con))
+                    {
+                        int phoneExists = Convert.ToInt32(checkCmd.ExecuteScalar());
 
+                        if (phoneExists > 0)
+                        {
+                            MessageBox.Show("Клиент с таким номером телефона уже существует!", "Ошибка",
+                                MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+                    }
+
+
+                    MySqlCommand cmd = new MySqlCommand($@"Insert into restaurant.customers (first_name,last_name,email,phone,registration_date) 
+                Values ('{name}','{lastName}','{email}','{phone}','{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}')", con);
+                    cmd.ExecuteNonQuery();
+                    MessageBox.Show("Клиент успешно добавлен!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    qName.Clear();
+                    qLastName.Clear();
+                    qEmail.Clear();
+                    qPhone.Clear();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Неожиданная ошибка: {ex.Message}", "Ошибка",
+                                      MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 

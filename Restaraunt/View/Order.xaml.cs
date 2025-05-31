@@ -397,6 +397,11 @@ namespace Restaraunt.View
             SafeData.step = 2;
             if(SafeData.isCustomerBoolCheck)
             {
+                if (string.IsNullOrWhiteSpace(qPhoneNumber.Text))
+                {
+                    MessageBox.Show("Выберете гостя", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
                 SafeData.customer_id = GetIdCustomer(qPhoneNumber.Text);
             }
             else
@@ -543,6 +548,11 @@ namespace Restaraunt.View
                     addClients.Visibility = Visibility.Visible;
                 }
             }
+
+        }
+
+        private void addClients_Click(object sender, RoutedEventArgs e)
+        {
 
         }
     }

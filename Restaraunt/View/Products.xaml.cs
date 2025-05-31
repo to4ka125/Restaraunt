@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using MySql.Data.MySqlClient;
 using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using Restaraunt.Forms;
 using Restaraunt.Utilits;
 using System;
@@ -266,74 +267,96 @@ namespace Restaraunt.View
         [Obsolete]
         private void ReportBtn_Click(object sender, RoutedEventArgs e)
         {
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-            string query = @"SELECT   products.product_id As 'Номер продукта', 
-                             products.name AS 'Наименование', 
-                             Concat(products.quantity, ' кг.') AS 'Остаток на складе', 
-                             CONCAT(products.unit_price, ' руб.') AS 'Цена за кг',
-                             supplier.name AS 'Поставщик'
-                             FROM
-                               products
-                               INNER JOIN
-                               supplier ON products.supplier_id = supplier.supplier_id WHERE products.quantity < 5";
+            // Правильная установка лицензии для EPPlus 8+
+            ExcelPackage.License.SetNonCommercialOrganization("<Your Noncommercial Organization>");
+            string query = @"SELECT products.product_id As 'Номер продукта', 
+                products.name AS 'Наименование', 
+                Concat(products.quantity, ' кг.') AS 'Остаток на складе', 
+                CONCAT(products.unit_price, ' руб.') AS 'Цена за кг',
+                supplier.name AS 'Поставщик'
+                FROM products
+                INNER JOIN supplier ON products.supplier_id = supplier.supplier_id 
+                WHERE products.quantity < 5";
 
-            using (MySqlConnection connection = new MySqlConnection(MySqlCon.con))
+            try
             {
-                MySqlCommand command = new MySqlCommand(query, connection);
-                MySqlDataAdapter adapter = new MySqlDataAdapter(command);
                 DataTable dataTable = new DataTable();
 
-                try
+                using (MySqlConnection connection = new MySqlConnection(MySqlCon.con))
                 {
                     connection.Open();
-                    adapter.Fill(dataTable);
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    {
+                        using (MySqlDataAdapter adapter = new MySqlDataAdapter(command))
+                        {
+                            adapter.Fill(dataTable);
+                        }
+                    }
                 }
-                catch (Exception ex)
+
+                if (dataTable.Rows.Count == 0)
                 {
-                    Console.WriteLine("Ошибка: " + ex.Message);
+                    MessageBox.Show("Нет продуктов с остатком менее 5 кг.", "Информация");
                     return;
                 }
+
                 using (ExcelPackage excelPackage = new ExcelPackage())
                 {
                     ExcelWorksheet worksheet = excelPackage.Workbook.Worksheets.Add("Отчет");
-                    string reportTitle = $"Отчет от {DateTime.Now.ToString("dd.MM.yyyy")}, продукты необходимые для закупки";
-                    worksheet.Cells[1, 1].Value = reportTitle;
+
+                    // Заголовок отчета
+                    worksheet.Cells[1, 1].Value = $"Отчет от {DateTime.Now:dd.MM.yyyy}, продукты для закупки";
                     worksheet.Cells[1, 1, 1, dataTable.Columns.Count].Merge = true;
                     worksheet.Cells[1, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
-
-                    worksheet.Cells[1, 1].Style.Font.Size = 16;
                     worksheet.Cells[1, 1].Style.Font.Bold = true;
+                    worksheet.Cells[1, 1].Style.Font.Size = 14;
 
+                    // Заголовки столбцов
                     for (int i = 0; i < dataTable.Columns.Count; i++)
                     {
                         worksheet.Cells[2, i + 1].Value = dataTable.Columns[i].ColumnName;
-                        worksheet.Cells[2, i + 1].Style.Font.Size = 14;
+                        worksheet.Cells[2, i + 1].Style.Font.Bold = true;
+                        worksheet.Cells[2, i + 1].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        worksheet.Cells[2, i + 1].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGray);
                     }
 
-                    for (int i = 0; i < dataTable.Rows.Count; i++)
+                    // Данные
+                    for (int row = 0; row < dataTable.Rows.Count; row++)
                     {
-                        for (int j = 0; j < dataTable.Columns.Count; j++)
+                        for (int col = 0; col < dataTable.Columns.Count; col++)
                         {
-                            worksheet.Cells[i + 3, j + 1].Value = dataTable.Rows[i][j];
-                            worksheet.Cells[i + 3, j + 1].Style.Font.Size = 12;
+                            worksheet.Cells[row + 3, col + 1].Value = dataTable.Rows[row][col];
                         }
                     }
+
+                    // Автоподбор ширины столбцов
                     worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
 
-                    SaveFileDialog saveFileDialog = new SaveFileDialog();
-                    saveFileDialog.Filter = "Excel Files (*.xlsx)|*.xlsx|All Files (*.*)|*.*";
-                    saveFileDialog.Title = "Сохранить отчет";
-                    saveFileDialog.FileName = $"Отчет_{DateTime.Now:dd-MM-yyyy}.xlsx";
-
+                    // Диалог сохранения файла
+                    SaveFileDialog saveFileDialog = new SaveFileDialog
+                    {
+                        Filter = "Excel файлы (*.xlsx)|*.xlsx",
+                        Title = "Сохранить отчет",
+                        FileName = $"Отчет_закупка_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx",
+                        DefaultExt = ".xlsx"
+                    };
 
                     if (saveFileDialog.ShowDialog() == true)
                     {
-                        string filePath = saveFileDialog.FileName;
-                        FileInfo fileInfo = new FileInfo(filePath);
+                        // Сохраняем файл
+                        FileInfo fileInfo = new FileInfo(saveFileDialog.FileName);
                         excelPackage.SaveAs(fileInfo);
-                        MessageBox.Show("Отчет сохранен: " + filePath);
+
+                        MessageBox.Show($"Отчет успешно сохранен:\n{saveFileDialog.FileName}",
+                                      "Готово",
+                                      MessageBoxButton.OK,
+                                      MessageBoxImage.Information);
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         BlurEffect blurEffect = new BlurEffect

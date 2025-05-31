@@ -50,8 +50,10 @@ namespace Restaraunt.Forms
         }
         private void AddUser_Click(object sender, RoutedEventArgs e)
         {
-            if (qName.Text == null || qLastName.Text == null
-             || qRole.SelectedItem == null || qLogin.Text == null)
+                     if (string.IsNullOrWhiteSpace(qName.Text) ||
+                string.IsNullOrWhiteSpace(qLastName.Text) ||
+                string.IsNullOrWhiteSpace(qLogin.Text) ||
+                qRole.SelectedItem == null)
             {
                 MessageBox.Show("Пожалуйста, заполните все обязательные поля.", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
