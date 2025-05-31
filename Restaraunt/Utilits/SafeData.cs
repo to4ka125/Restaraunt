@@ -38,6 +38,7 @@ namespace Restaraunt.Utilits
         public static string supliers_id;
 
 
+        public static bool isReservTable =false;
 
         public static bool captchaCheck = true;
 

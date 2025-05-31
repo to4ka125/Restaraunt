@@ -81,16 +81,13 @@ namespace Restaraunt.Forms
                 con.Open();
 
                 using (MySqlCommand cmd = new MySqlCommand($@"Insert into reservations 
-                (customer_id,table_id,reservation_time) Values('{idClient}','{idTable}','{date}')", con))
+                (customer_id,table_id,reservation_time,status) Values('{idClient}','{idTable}','{date}','Активна')", con))
                 {
                     cmd.ExecuteNonQuery();
                 }
 
 
-                using (MySqlCommand cmdUpdateTable = new MySqlCommand($@"Update tables set  status='резерв' where table_id= '{idTable}'",con))
-                {
-                    cmdUpdateTable.ExecuteNonQuery();
-                }
+               
                 MessageBox.Show("Столик забронирован!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                 Close();
             }

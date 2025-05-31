@@ -134,7 +134,7 @@ namespace Restaraunt.View
                     completeBtn.Visibility = Visibility.Collapsed;
                     break;
                 case "Официант":
-                    completeBtn.Visibility = Visibility.Collapsed;
+                    cancelBtn.Visibility = Visibility.Collapsed;
                     break;
             }
             

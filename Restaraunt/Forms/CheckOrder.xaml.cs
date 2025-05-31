@@ -146,6 +146,16 @@ namespace Restaraunt.Forms
                 }
 
 
+                if (SafeData.isReservTable)
+                {
+                    using (MySqlCommand cmd = new MySqlCommand($@"Update reservations set status = 'Завершена' Where table_id='{SafeData.tablesId}' 
+                                                                  And reservation_time =CURRENT_DATE",con))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                        SafeData.isReservTable = false;
+                }
+
 
 
                 using (MySqlCommand cmd = new MySqlCommand("SELECT MAX(order_id) FROM Orders", con))
