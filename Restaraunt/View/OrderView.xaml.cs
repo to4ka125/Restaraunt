@@ -172,6 +172,23 @@ namespace Restaraunt.View
         {
             using (MySqlConnection con = new MySqlConnection(MySqlCon.con))
             {
+                using (MySqlCommand checkCmd = new MySqlCommand(
+                $"SELECT status FROM restaurant.orders where order_id='{id}';", con))
+                {
+                    //Ошбика
+                    string currentStatus = checkCmd.ExecuteScalar()?.ToString();
+
+
+                    if (currentStatus != "В обработке")
+                    {
+                        MessageBox.Show($"Нельзя завершить заказ со статусом: {currentStatus}",
+                                      "Ошибка",
+                                      MessageBoxButton.OK,
+                                      MessageBoxImage.Warning);
+                        return;
+                    }
+                }
+
                 if (MessageBox.Show($"Заказ №{id} готов к выдаче?", "Подтвердите действие", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
                 {
                     con.Open();
@@ -354,7 +371,9 @@ namespace Restaraunt.View
                     Blur.workTable.IsEnabled = false;
                     Blur.workTable.Opacity = 0.5;
                     ViewOrderStructure VmI = new ViewOrderStructure();
+                    Timer.idleTimer.Stop();
                     VmI.ShowDialog();
+                    Timer.idleTimer.Start();
                     Blur.workTable.Effect = null;
                     Blur.workTable.IsEnabled = true;
                     Blur.workTable.Opacity = 1;
@@ -366,6 +385,21 @@ namespace Restaraunt.View
         {
             using (MySqlConnection con = new MySqlConnection(MySqlCon.con))
             {
+                using (MySqlCommand checkCmd = new MySqlCommand(
+                   $"SELECT status FROM restaurant.orders where order_id='{id}';", con))
+                {
+                    string currentStatus = checkCmd.ExecuteScalar()?.ToString();
+
+
+                    if (currentStatus != "В обработке")
+                    {
+                        MessageBox.Show($"Нельзя завершить заказ со статусом: {currentStatus}",
+                                      "Ошибка",
+                                      MessageBoxButton.OK,
+                                      MessageBoxImage.Warning);
+                        return;
+                    }
+                }
                 if (MessageBox.Show($"Вы уверенны что хотите отменить заказ №{id}?", "Подтвердите действие", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
                 {
                     con.Open();

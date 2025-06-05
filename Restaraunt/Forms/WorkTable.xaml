@@ -188,6 +188,17 @@
                             </Grid>
                         </Menu:Btn>
 
+                        <Menu:Btn Style="{StaticResource BtnMenu}"  x:Name="Settings"
+                                     Click="Btn_Click">
+                            <Grid>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Margin="20 0 0 0" Width="20" Source="/Images/IconsMenu/settings.png"/>
+                                    <TextBlock VerticalAlignment="Center"  Margin="10 0" Style="{StaticResource textblock}"
+                                               Text="Настройки"/>
+                                </StackPanel>
+                            </Grid>
+                        </Menu:Btn>
+
                     </StackPanel>
                 </Border>
 

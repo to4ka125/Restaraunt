@@ -170,7 +170,19 @@ namespace Restaraunt.Forms
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            ComboBoxItem();
+            using (MySqlConnection con = new MySqlConnection(MySqlCon.con))
+            {
+                con.Open();
+                MySqlCommand cmd = new MySqlCommand("SELECT * FROM restaurant.categories;",con);
+                MySqlDataReader dr = cmd.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    qCategoriesBox.Items.Add($"{dr.GetValue(0)} {dr.GetValue(1)}");
+                }
+                dr.Close();
+            }
+                ComboBoxItem();
         }
 
         private void AddDishes_Click(object sender, RoutedEventArgs e)

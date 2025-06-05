@@ -1,11 +1,11 @@
-﻿<UserControl x:Class="Restaraunt.View.Customer"
+﻿<UserControl x:Class="Restaraunt.View.SettingsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Restaraunt.View"
              mc:Ignorable="d" 
-                d:DesignHeight="630" d:DesignWidth="800" Loaded="UserControl_Loaded" Style="{StaticResource Page_Style}"
+               d:DesignHeight="630" d:DesignWidth="800" Loaded="UserControl_Loaded" Style="{StaticResource Page_Style}"
            >
     <Border Background="#FFFFFF"
             CornerRadius="10"
@@ -20,28 +20,26 @@
             <TextBlock Style="{StaticResource textblock}"
                        Grid.Row="0"
                                    FontFamily="/Fonts/#Montserrat Alternates SemiBold"
-                                   Text="Клиенты"
+                                   Text="Настройки"
                                    FontSize="20"/>
-            <DataGrid   IsReadOnly="True" Grid.Row="1" Margin="0 10"
-                        x:Name="dataGrid"
-                        ScrollViewer.CanContentScroll="True"
-                        ScrollViewer.VerticalScrollBarVisibility="Auto"
-                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                        Style="{StaticResource SafeDataGridStyle}">
-                <DataGrid.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Header="Изменить" x:Name="EditBtnClick" Click="EditBtnClick_Click"/>
-                    </ContextMenu>
-                </DataGrid.ContextMenu>
-            </DataGrid>
+
+            <StackPanel Grid.Row="1" Margin="0 20">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock FontSize="15" Style="{StaticResource textblock}" Opacity="0.8" Text="Время бездействия пользователя: "/>
+                    <TextBox FontSize="15" PreviewTextInput="TimeBox_PreviewTextInput"  
+                             MaxLength="2" x:Name="TimeBox" Style="{StaticResource pcaholderTextBoxNoBorder}" 
+                             Margin="5 0" Height="25" Tag="Задайте время бездействия"  Padding="0" />
+                </StackPanel>
+            </StackPanel>
+            
             <StackPanel Grid.Row="2"
                         Orientation="Horizontal"
                         Margin="0 10 0 0">
-                <Button Content="Добавить" 
+                <Button Content="Сохранить" 
                 Width="100" 
                 Height="40"
                 Margin="0 0 10 0"
-                Style="{StaticResource btnStyle}" Click="Button_Click" VerticalAlignment="Bottom"
+                Style="{StaticResource btnStyle}" Click="Button_Click"
                         />
             </StackPanel>
         </Grid>

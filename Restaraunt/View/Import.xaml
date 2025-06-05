@@ -68,16 +68,19 @@
                     <StackPanel Margin="15" >
                         <TextBlock Style="{StaticResource textblockSemiBoold}"
                                FontSize="15" Text="Востановление структуры БД"
-                                   Margin="0 0 0 80"
+                                   Margin="0 0 0 25"
                                    />
-
                         <Button Style="{StaticResource btnStyle}"
-                                Height="35" Width="250" Content="Востановить структуру" VerticalAlignment="Center" HorizontalAlignment="Center" Click="Button_Click_2"/>
+                                Height="35" Width="250" Content="Востановить структуру"  Click="Button_Click_2"/>
                     </StackPanel>
                 </Border>
             </Grid>
 
             <Grid Grid.Row="2" Margin=" 15 20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
                 <Border Grid.Column="0" 
                         CornerRadius="10"
                         BorderThickness="0.5"
@@ -92,6 +95,21 @@
                         <Button Style="{StaticResource btnStyle}" Height="35" Width="250" Content="Экспортировать"
                                 Margin="0 10" Click="Button_Click_3"/>
 
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="1" 
+                        CornerRadius="10"
+                        BorderThickness="0.5"
+                        BorderBrush="#ADADAD" 
+                        Width="340"
+                        Height="250">
+                    <StackPanel Margin="15" >
+                        <TextBlock Style="{StaticResource textblockSemiBoold}"
+                               FontSize="15" Text="Резервное воставноление"
+                                   Margin="0 0 0 25"
+                                   />
+                        <Button Style="{StaticResource btnStyle}"
+                                Height="35" Width="250" Content="Выбрать файл"  Click="Button_Click_4"/>
                     </StackPanel>
                 </Border>
             </Grid>

@@ -36,7 +36,9 @@ namespace Restaraunt.View
             Blur.workTable.IsEnabled = false;
             Blur.workTable.Opacity = 0.5;
             AddSupliers aS = new AddSupliers();
+            Timer.idleTimer.Stop();
             aS.ShowDialog();
+            Timer.idleTimer.Start();
             UpdateDataGrid();
             Blur.workTable.Effect = null;
             Blur.workTable.IsEnabled = true;
@@ -61,7 +63,9 @@ namespace Restaraunt.View
                     Blur.workTable.IsEnabled = false;
                     Blur.workTable.Opacity = 0.5;
                     EditSupliers eS = new EditSupliers();
+                    Timer.idleTimer.Stop();
                     eS.ShowDialog();
+                    Timer.idleTimer.Start();
                     UpdateDataGrid();
                     Blur.workTable.Effect = null;
                     Blur.workTable.IsEnabled = true;

@@ -139,7 +139,7 @@ namespace Restaraunt.View
                 con.Open();
 
                 MySqlCommand cmd = new MySqlCommand($@"Update restaurant.tables set status = 'свободно' where table_id ='{idTable}';
-                                                       Update restaurant.reservations set status = 'Отменена' where table_id='{idTable}'");
+                                                       Update restaurant.reservations set status = 'Отменена' where table_id='{idTable}'",con);
 
                 cmd.ExecuteNonQuery();
                 MessageBox.Show(
@@ -317,7 +317,9 @@ namespace Restaraunt.View
                     Blur.workTable.Opacity = 0.5;
                     AddReservations aR = new AddReservations();
                     SafeData.dateReservation = qDate.SelectedDate.Value.ToString("yyyy-MM-dd");
+                    Timer.idleTimer.Stop();
                     aR.ShowDialog();
+                    Timer.idleTimer.Start();
                     TablesPopulateGrid();
                     Blur.workTable.Effect = null;
                     Blur.workTable.IsEnabled = true;

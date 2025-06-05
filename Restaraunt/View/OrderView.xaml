@@ -31,6 +31,7 @@
                     <DatePicker   FontSize="12"  Padding="12"  Opacity="0.8" Name="datePicker"  
                                   IsDropDownOpen="False" SelectedDateFormat="Short"
                                 ToolTip="Выберите дату из календаря"  SelectedDateChanged="datePicker_SelectedDateChanged"
+                                  BorderThickness="0"
                                 />
               
              
@@ -135,11 +136,11 @@
                         />
 
                 <Button  x:Name="cancelBtn"
-                    Content="Отменить заказ" 
+                    Content="Отменить заказ"  
                 Width="180" 
                 Height="40"
                 Margin="10 0"
-                Style="{StaticResource btnStyle}" Click="cancelBtn_Click"
+                Style="{StaticResource btnStyle}" Click="cancelBtn_Click" VerticalAlignment="Top"
                         />
             </StackPanel>
         </Grid>

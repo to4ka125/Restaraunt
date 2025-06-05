@@ -221,6 +221,7 @@
     <Compile Include="Utilits\Discount.cs" />
     <Compile Include="Utilits\MySqlCon.cs" />
     <Compile Include="Utilits\SafeData.cs" />
+    <Compile Include="Utilits\Timer.cs" />
     <Compile Include="View\Customer.xaml.cs">
       <DependentUpon>Customer.xaml</DependentUpon>
     </Compile>
@@ -241,6 +242,9 @@
     </Compile>
     <Compile Include="View\Report.xaml.cs">
       <DependentUpon>Report.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Supplier.xaml.cs">
       <DependentUpon>Supplier.xaml</DependentUpon>
@@ -372,6 +376,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Report.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -551,6 +559,7 @@
     <Content Include="Backup\restaraunt.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Images\IconsMenu\settings.png" />
     <Resource Include="Images\logo.ico" />
     <Resource Include="Images\IconsMenu\Supliers.png" />
     <Resource Include="Images\IconsMenu\tableReserv.png" />

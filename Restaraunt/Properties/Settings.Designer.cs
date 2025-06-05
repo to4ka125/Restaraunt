@@ -50,12 +50,12 @@ namespace Restaraunt.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("30000")]
-        public int IdleTime {
+        public int blockingTime {
             get {
-                return ((int)(this["IdleTime"]));
+                return ((int)(this["blockingTime"]));
             }
             set {
-                this["IdleTime"] = value;
+                this["blockingTime"] = value;
             }
         }
     }

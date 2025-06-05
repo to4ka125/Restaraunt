@@ -92,7 +92,7 @@ namespace Restaraunt.View
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             string[] readText = File.ReadAllLines(fileName, Encoding.GetEncoding(1251));
-            string[] titleField = readText[0].Split(';').Select(field => field.Trim().Trim('"')).ToArray();
+            string[] titleField = readText[0].Split(',').Select(field => field.Trim().Trim('"')).ToArray();
             string tableName = tablesName.Text;
             string[] valField;
             string errorMsg = string.Empty;
@@ -279,8 +279,8 @@ namespace Restaraunt.View
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            string backupPath = "Backup\\restaraunt.sql"; // Дамп структуры базы данных
-            string databaseName = "restaurant"; // База данных
+            string backupPath = "Backup\\restaraunt.sql"; 
+            string databaseName = "restaurant";
 
             string conString = "host=127.0.0.1; uid=root;pwd=;";
             using (MySqlConnection con = new MySqlConnection(conString))
@@ -323,8 +323,8 @@ namespace Restaraunt.View
                 return;
             }
             string outputDirectory = folderBrowserDialog.SelectedPath;
-         //   try
-           // {
+          try
+            {
                 using (MySqlConnection con =new MySqlConnection(MySqlCon.con))
                 {
                     con.Open();
@@ -350,14 +350,14 @@ namespace Restaraunt.View
                     // Открываем папку с результатами
                     System.Diagnostics.Process.Start(outputDirectory);
                 }
-            //}
-            /*catch(Exception ex)
+            }
+            catch(Exception ex)
             {
                 MessageBox.Show($"Ошибка при экспорте: {ex.Message}",
                         "Ошибка",
                         MessageBoxButton.OK,
                         MessageBoxImage.Error);
-            }*/
+            }
             }
 
         private void ExportTableToCsv(MySqlConnection connection, string tableName, string outputDirectory)
@@ -403,6 +403,61 @@ namespace Restaraunt.View
                 return "\"" + value.Replace("\"", "\"\"") + "\"";
             }
             return value;
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            string conStr = "host=localhost;uid=root;pwd=;";
+
+            string defaultBackupPath = Path.Combine(
+      Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+      "reservCopy");
+
+            // Создаем диалог выбора файла
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                InitialDirectory = Directory.Exists(defaultBackupPath)
+                    ? defaultBackupPath
+                    : Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                Filter = "SQL файлы (*.sql)|*.sql|Все файлы (*.*)|*.*",
+                Title = "Выберите файл резервной копии",
+                DefaultExt = ".sql",
+                CheckFileExists = true,
+                CheckPathExists = true
+            };
+
+            // Показываем диалог
+            if (openFileDialog.ShowDialog() == true)
+            {
+                string selectedFilePath = openFileDialog.FileName;
+
+                // Здесь можно добавить обработку выбранного файла
+                MessageBox.Show($"Выбран файл: {selectedFilePath}",
+                              "Файл выбран",
+                              MessageBoxButton.OK,
+                              MessageBoxImage.Information);
+
+                // Пример: прочитать содержимое файла
+                try
+                {
+                    using (MySqlConnection con = new MySqlConnection(conStr))
+                    {
+                        con.Open();
+                        string script = File.ReadAllText(selectedFilePath);
+                        MySqlScript sqlScript = new MySqlScript(con, script);
+                        sqlScript.Execute();
+                        MessageBox.Show("Востановление структуры прошло успешно");
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка чтения файла: {ex.Message}",
+                                  "Ошибка",
+                                  MessageBoxButton.OK,
+                                  MessageBoxImage.Error);
+                }
+            }
         }
     }
 }

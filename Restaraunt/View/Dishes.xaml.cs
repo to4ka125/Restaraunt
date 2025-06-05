@@ -148,7 +148,9 @@ namespace Restaraunt.View
             Blur.workTable.IsEnabled = false;
             Blur.workTable.Opacity = 0.5;
             AddDishes aD = new AddDishes();
+            Timer.idleTimer.Stop();
             aD.ShowDialog();
+            Timer.idleTimer.Start();
             UpdateDataGridView(query);
             Blur.workTable.Effect = null;
             Blur.workTable.IsEnabled = true;
@@ -180,7 +182,9 @@ namespace Restaraunt.View
                     Blur.workTable.Effect = blurEffect;
                     Blur.workTable.IsEnabled = false;
                     Blur.workTable.Opacity = 0.5;
+                    Timer.idleTimer.Stop();
                     vMi.ShowDialog();
+                    Timer.idleTimer.Start();
                     Blur.workTable.Effect = null;
                     Blur.workTable.IsEnabled = true;
                     Blur.workTable.Opacity = 1;

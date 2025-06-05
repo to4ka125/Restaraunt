@@ -86,7 +86,7 @@
                             Grid.Column="0"
                         Style="{StaticResource btnStyleSmall}" 
                         Height="35" Width="135"
-                        Content="Отичистить" Click="ClearClientBtn_Click"/>
+                        Content="Отчистить" Click="ClearClientBtn_Click"/>
 
                 <StackPanel Grid.Column="1">
                     <Button x:Name="AddClientBtn" HorizontalAlignment="Left"

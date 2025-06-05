@@ -19,6 +19,9 @@ using System.Windows.Shapes;
 using MySql.Data.MySqlClient;
 using Restaraunt.Forms;
 using Restaraunt.Utilits;
+using System.IO;
+using Path = System.IO.Path;
+using System.Diagnostics;
 
 namespace Restaraunt
 {
@@ -180,7 +183,65 @@ namespace Restaraunt
                    MessageBoxButton.YesNo,
                    MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
+                CreateSqlDump();
                 Application.Current.Shutdown();
+            }
+        }
+        private void CreateSqlDump()
+        {
+            string server = "localhost";
+            string database = "restaurant";
+            string userId = "root";
+            string password = "";
+
+            string mysqldumpPath = @"C:\Program Files\MySQL\MySQL Server 8.0\bin\mysqldump.exe";
+
+            string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string backupDir = Path.Combine(documentsPath, "reservCopy");
+            string backupFile = Path.Combine(backupDir, $"backup_{DateTime.Now:yyyyMMdd_HHmmss}.sql");
+
+            try
+            {
+                if (!Directory.Exists(backupDir))
+                {
+                    Directory.CreateDirectory(backupDir);
+                    Console.WriteLine($"Создана папка: {backupDir}");
+                }
+
+                string args = $"--host={server} --user={userId} --password={password} " +
+                             $"--databases {database} --result-file=\"{backupFile}\" " +
+                             "--skip-lock-tables --single-transaction --routines --triggers";
+
+                ProcessStartInfo psi = new ProcessStartInfo
+                {
+                    FileName = mysqldumpPath,
+                    Arguments = args,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                };
+
+                using (Process process = new Process { StartInfo = psi })
+                {
+                    process.Start();
+                    string error = process.StandardError.ReadToEnd();
+                    process.WaitForExit();
+
+                    if (process.ExitCode != 0)
+                    {
+                        throw new Exception($"Ошибка mysqldump: {error}");
+                    }
+                }
+
+                MessageBox.Show($"Резервная копия сохранена в:\n{backupFile}", "Успех",
+                              MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ошибка: {ex.Message}");
+                MessageBox.Show($"Ошибка при создании резервной копии:\n{ex.Message}", "Ошибка",
+                              MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

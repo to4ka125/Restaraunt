@@ -122,7 +122,9 @@ namespace Restaraunt.View
             Blur.workTable.IsEnabled = false;
             Blur.workTable.Opacity = 0.5;
             AddUsers aU = new AddUsers();
+            Timer.idleTimer.Stop();
             aU.ShowDialog();
+            Timer.idleTimer.Start();
             UpdateDataGrid();
             Blur.workTable.Effect = null;
             Blur.workTable.IsEnabled = true;
@@ -143,7 +145,9 @@ namespace Restaraunt.View
                     Blur.workTable.IsEnabled = false;
                     Blur.workTable.Opacity = 0.5;
                     EditUser eU = new EditUser();
+                    Timer.idleTimer.Stop();
                     eU.ShowDialog();
+                    Timer.idleTimer.Start();
                     UpdateDataGrid();
                     Blur.workTable.Effect = null;
                     Blur.workTable.IsEnabled = true;

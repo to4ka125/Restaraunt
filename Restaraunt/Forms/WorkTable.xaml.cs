@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Restaraunt.Utilits;
 using Restaraunt.View;
+using System.Windows.Threading;
 
 namespace Restaraunt.Forms
 {
@@ -21,12 +22,53 @@ namespace Restaraunt.Forms
     /// </summary>
     public partial class WorkTable : Window
     {
+        private int idleTimeLimit;
         public WorkTable()
         {
             InitializeComponent();
+            InitializeIdleTimer();
+            this.MouseMove += new MouseEventHandler(Window_MouseMove);
+            this.KeyDown += new KeyEventHandler(Window_KeyDown);
         }
 
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            ResetIdleTimer();
+        }
 
+        private void Window_MouseMove(object sender, MouseEventArgs e)
+        {
+            ResetIdleTimer();
+        }
+
+        private void ResetIdleTimer()
+        {
+            // Сбрасываем таймер при активности
+            if (Timer.idleTimer.IsEnabled)
+            {
+                Timer.idleTimer.Stop();
+                Timer.idleTimer.Start();
+            }
+        }
+        private void InitializeIdleTimer()
+        {
+            // Устанавливаем время бездействия (например, 30 секунд)    
+            idleTimeLimit = Properties.Settings.Default.blockingTime;
+
+            Timer.idleTimer = new DispatcherTimer();
+            Timer.idleTimer.Interval = TimeSpan.FromMilliseconds(idleTimeLimit);
+            Timer.idleTimer.Tick += IdleTimer_Tick;
+            Timer.idleTimer.Start();
+        }
+
+        private void IdleTimer_Tick(object sender, EventArgs e)
+        {
+            // Блокируем систему и перенаправляем на форму авторизации
+            Timer.idleTimer.Stop();
+            this.IsEnabled = false;
+            MessageBox.Show("Система заблокирована из-за отсутствия активности. Пожалуйста, войдите снова.", "Блокировка системы", MessageBoxButton.OK, MessageBoxImage.Warning);
+            this.Close();
+        }
         private void Btn_Click(object sender, RoutedEventArgs e)
         {
             var radioButton = sender as RadioButton;
@@ -57,6 +99,11 @@ namespace Restaraunt.Forms
                 case "TableReserv":
                     TablesReservations tR = new TablesReservations();
                     container.Children.Add(tR);
+                    break;
+                
+                case "Settings":
+                    SettingsView sV = new SettingsView();
+                    container.Children.Add(sV);
                     break;
 
 
@@ -101,8 +148,9 @@ namespace Restaraunt.Forms
                 case "Администратор":
                     icon.Source = new BitmapImage(new Uri("/Images/IconUsers/Admin.png", UriKind.Relative));
                     Dishes.Visibility = Visibility.Collapsed;
-                   // Report.Visibility = Visibility.Collapsed;
-                   // Order.Visibility = Visibility.Collapsed;
+                    // Report.Visibility = Visibility.Collapsed;
+                    // Order.Visibility = Visibility.Collapsed;
+                    Settings.Visibility = Visibility.Collapsed;
                     Products.Visibility = Visibility.Collapsed;
                    // TableReserv.Visibility = Visibility.Collapsed;
                     OrderAdd.Visibility = Visibility.Collapsed;
@@ -111,6 +159,7 @@ namespace Restaraunt.Forms
                     Suplier.Visibility = Visibility.Collapsed;
                     break;
                 case "Менеджер":
+                    Settings.Visibility = Visibility.Collapsed;
                     icon.Source = new BitmapImage(new Uri("/Images/IconUsers/Manager.png", UriKind.Relative));
                     Dishes.Visibility = Visibility.Collapsed;
                     Users.Visibility = Visibility.Collapsed;
@@ -122,6 +171,7 @@ namespace Restaraunt.Forms
                     Clients.Visibility = Visibility.Collapsed;
                     break;
                 case "Шеф":
+                    Settings.Visibility = Visibility.Collapsed;
                     icon.Source = new BitmapImage(new Uri("/Images/IconUsers/Chef.png", UriKind.Relative));
                     OrderAdd.Visibility = Visibility.Collapsed;
                     Import.Visibility = Visibility.Collapsed;
@@ -132,6 +182,7 @@ namespace Restaraunt.Forms
                     Suplier.Visibility = Visibility.Collapsed;
                     break;
                 case "Официант":
+                    Settings.Visibility = Visibility.Collapsed;
                     Products.Visibility = Visibility.Collapsed;
                     TableReserv.Visibility = Visibility.Collapsed;
                     Dishes.Visibility = Visibility.Collapsed;
@@ -156,7 +207,7 @@ namespace Restaraunt.Forms
                     Products.Visibility = Visibility.Collapsed;
                     OrderAdd.Visibility = Visibility.Collapsed;
                     Order.Visibility = Visibility.Collapsed;
-                    icon.Source = new BitmapImage(new Uri("/Images/IconUsers/Waiter.png", UriKind.Relative));
+                    icon.Source = new BitmapImage(new Uri("/Images/IconUsers/Admin.png", UriKind.Relative));
                     break;
                 default:
 

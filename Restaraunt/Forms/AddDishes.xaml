@@ -61,7 +61,10 @@
                     <TextBox x:Name="qName" Style="{StaticResource pcaholderText}" Width="220" Tag="Наименование" FontSize="12" Padding="13" />
 
                     <ComboBox x:Name="qCategoriesBox" Style="{StaticResource ComboBox}" Width="220" Tag="Категория" Margin="0 15" Height="50"
-                              FontSize="12" Padding="13"/>
+                              FontSize="12" Padding="13">
+                        <ComboBoxItem Content=""/>
+
+                    </ComboBox>
 
                     <TextBox x:Name="qDescription" Style="{StaticResource pcaholderText}" Width="220" Tag="Описание" Height="100"
                              FontSize="12" Padding="13"
@@ -135,7 +138,7 @@
                             Grid.Column="0"
                         Style="{StaticResource btnStyleSmall}" 
                         Height="35" Width="135"
-                        Content="Отичистить" Click="ClearDishes_Click"/>
+                        Content="Отчистить" Click="ClearDishes_Click"/>
 
                     <StackPanel Grid.Column="1">
                         <Button x:Name="AddDishes1" HorizontalAlignment="Right"

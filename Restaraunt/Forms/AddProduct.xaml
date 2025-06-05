@@ -77,7 +77,7 @@
                             Grid.Column="0"
                         Style="{StaticResource btnStyleSmall}" 
                         Height="35" Width="135"
-                        Content="Отичистить" Click="ClearProduct_Click"/>
+                        Content="Отчистить" Click="ClearProduct_Click"/>
 
                 <StackPanel Grid.Column="1">
                     <Button x:Name="AddProductBtn" HorizontalAlignment="Right"

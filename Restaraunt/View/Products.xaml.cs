@@ -370,7 +370,9 @@ namespace Restaraunt.View
             Blur.workTable.IsEnabled = false;
             Blur.workTable.Opacity = 0.5;
             AddProduct aP = new AddProduct();
+            Timer.idleTimer.Stop();
             aP.ShowDialog();
+            Timer.idleTimer.Start();
             UpdateDataGridView(query, currentPage);
             Blur.workTable.Effect = null;
             Blur.workTable.IsEnabled = true;
@@ -391,7 +393,9 @@ namespace Restaraunt.View
                     Blur.workTable.IsEnabled = false;
                     Blur.workTable.Opacity = 0.5;
                     EditProduct eP = new EditProduct();
+                    Timer.idleTimer.Stop();
                     eP.ShowDialog();
+                    Timer.idleTimer.Start();
                     UpdateDataGridView(query, currentPage);
                     Blur.workTable.Effect = null;
                     Blur.workTable.IsEnabled = true;

@@ -455,7 +455,9 @@ namespace Restaraunt.View
             Blur.workTable.IsEnabled = false;
             Blur.workTable.Opacity = 0.5;
             CheckOrder cO = new CheckOrder();
+            Timer.idleTimer.Stop();
             cO.ShowDialog();
+            Timer.idleTimer.Start();
             Blur.workTable.Effect = null;
             Blur.workTable.IsEnabled = true;
             Blur.workTable.Opacity = 1;
@@ -553,7 +555,16 @@ namespace Restaraunt.View
 
         private void addClients_Click(object sender, RoutedEventArgs e)
         {
-
+            Blur.workTable.Effect = blurEffect;
+            Blur.workTable.IsEnabled = false;
+            Blur.workTable.Opacity = 0.5;
+            AddClients aC = new AddClients();
+            Timer.idleTimer.Stop();
+            aC.ShowDialog();
+            Timer.idleTimer.Start();
+            Blur.workTable.Effect = null;
+            Blur.workTable.IsEnabled = true;
+            Blur.workTable.Opacity = 1;
         }
     }
 }
