@@ -43,9 +43,9 @@ namespace Restaraunt.View
                     Blur.workTable.IsEnabled = false;
                     Blur.workTable.Opacity = 0.5;
                     EditClients eC = new EditClients();
-                    Timer.idleTimer.Stop();
+                 //   Timer.idleTimer.Stop();
                     eC.ShowDialog();
-                    Timer.idleTimer.Start();
+                 //   Timer.idleTimer.Start();
                     UpdateDataGrid();
                     Blur.workTable.Effect = null;
                     Blur.workTable.IsEnabled = true;
@@ -107,9 +107,9 @@ namespace Restaraunt.View
             Blur.workTable.IsEnabled = false;
             Blur.workTable.Opacity = 0.5;
             AddClients aC = new AddClients();
-            Timer.idleTimer.Stop();
+          //  Timer.idleTimer.Stop();
             aC.ShowDialog();
-            Timer.idleTimer.Start();
+         //   Timer.idleTimer.Start();
             UpdateDataGrid();
             Blur.workTable.Effect = null;
             Blur.workTable.IsEnabled = true;

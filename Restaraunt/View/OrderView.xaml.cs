@@ -172,6 +172,7 @@ namespace Restaraunt.View
         {
             using (MySqlConnection con = new MySqlConnection(MySqlCon.con))
             {
+                con.Open();
                 using (MySqlCommand checkCmd = new MySqlCommand(
                 $"SELECT status FROM restaurant.orders where order_id='{id}';", con))
                 {
@@ -191,7 +192,7 @@ namespace Restaraunt.View
 
                 if (MessageBox.Show($"Заказ №{id} готов к выдаче?", "Подтвердите действие", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
                 {
-                    con.Open();
+                 
                     using (MySqlCommand cmd = new MySqlCommand($"Update orders Set status = 'Завершен' where order_id ='{id}' ", con))
                     {
                         cmd.ExecuteNonQuery();
@@ -371,9 +372,9 @@ namespace Restaraunt.View
                     Blur.workTable.IsEnabled = false;
                     Blur.workTable.Opacity = 0.5;
                     ViewOrderStructure VmI = new ViewOrderStructure();
-                    Timer.idleTimer.Stop();
+                  //  Timer.idleTimer.Stop();
                     VmI.ShowDialog();
-                    Timer.idleTimer.Start();
+                 //   Timer.idleTimer.Start();
                     Blur.workTable.Effect = null;
                     Blur.workTable.IsEnabled = true;
                     Blur.workTable.Opacity = 1;
@@ -385,6 +386,7 @@ namespace Restaraunt.View
         {
             using (MySqlConnection con = new MySqlConnection(MySqlCon.con))
             {
+                con.Open();
                 using (MySqlCommand checkCmd = new MySqlCommand(
                    $"SELECT status FROM restaurant.orders where order_id='{id}';", con))
                 {
@@ -402,7 +404,7 @@ namespace Restaraunt.View
                 }
                 if (MessageBox.Show($"Вы уверенны что хотите отменить заказ №{id}?", "Подтвердите действие", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
                 {
-                    con.Open();
+                  
                     using (MySqlCommand cmd = new MySqlCommand($"Update orders Set status = 'Отменен' where order_id ='{id}' ", con))
                     {
                         cmd.ExecuteNonQuery();

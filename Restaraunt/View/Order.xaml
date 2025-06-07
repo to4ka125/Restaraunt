@@ -27,11 +27,7 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
 
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
+                
 
                     <ColumnDefinition Width="Auto"/>
 
@@ -68,24 +64,8 @@
 
                 <Rectangle Grid.Column="5" Height="1" Fill="#ADADAD" />
 
-                <Grid Grid.Column="6" Width="50" Height="50">
-                    <Ellipse   x:Name="step4" Width="50" Height="50"  StrokeThickness="1" Stroke="#ADADAD" />
-                    <TextBlock Text="4"  x:Name="step4Text" 
-                         HorizontalAlignment="Center" 
-                         VerticalAlignment="Center" 
-                         Foreground="#333" />
-                </Grid>
 
-                <Rectangle Grid.Column="7" Height="1" Fill="#ADADAD" />
-
-                <Grid Grid.Column="8" Width="50" Height="50">
-                    <Ellipse  x:Name="step5" Width="50" Height="50"  StrokeThickness="1" Stroke="#ADADAD" />
-                    <TextBlock Text="5" x:Name="step5Text" 
-                         HorizontalAlignment="Center" 
-                         VerticalAlignment="Center" 
-                         Foreground="#333" />
-                </Grid>
-
+            
             </Grid>
 
             <Grid Grid.Row="1">

@@ -22,6 +22,7 @@ using Restaraunt.Utilits;
 using System.IO;
 using Path = System.IO.Path;
 using System.Diagnostics;
+using Timer = Restaraunt.Utilits.Timer;
 
 namespace Restaraunt
 {
@@ -65,6 +66,7 @@ namespace Restaraunt
                     MessageBox.Show("Пройдите капчу");
                     Visibility=Visibility.Collapsed;
                     CaptchaMain cm = new CaptchaMain();
+                
                     cm.ShowDialog();
                     Visibility = Visibility.Visible;
                     CaptchaCheck(SafeData.captchaCheck);
@@ -109,7 +111,10 @@ namespace Restaraunt
                         MessageBoxImage.Information);
                         Blur.workTable = new WorkTable();
                         this.Visibility = Visibility.Collapsed;
+                        
+
                         Blur.workTable.ShowDialog();
+        
                         this.Visibility = Visibility.Visible;
                         qPassword.Clear();
                     }

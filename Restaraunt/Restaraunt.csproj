@@ -559,6 +559,7 @@
     <Content Include="Backup\restaraunt.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Images\IconsImage\filter.png" />
     <Resource Include="Images\IconsMenu\settings.png" />
     <Resource Include="Images\logo.ico" />
     <Resource Include="Images\IconsMenu\Supliers.png" />

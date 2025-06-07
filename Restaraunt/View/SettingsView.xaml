@@ -27,7 +27,7 @@
                 <StackPanel Orientation="Horizontal">
                     <TextBlock FontSize="15" Style="{StaticResource textblock}" Opacity="0.8" Text="Время бездействия пользователя: "/>
                     <TextBox FontSize="15" PreviewTextInput="TimeBox_PreviewTextInput"  
-                             MaxLength="2" x:Name="TimeBox" Style="{StaticResource pcaholderTextBoxNoBorder}" 
+                             MaxLength="5" x:Name="TimeBox" Style="{StaticResource pcaholderTextBoxNoBorder}" 
                              Margin="5 0" Height="25" Tag="Задайте время бездействия"  Padding="0" />
                 </StackPanel>
             </StackPanel>

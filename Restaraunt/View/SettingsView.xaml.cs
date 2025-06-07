@@ -35,7 +35,7 @@ namespace Restaraunt.View
         MessageBoxImage.Warning);
                 return;
             }
-            int time = int.Parse(TimeBox.Text) * 1000;
+            int time = int.Parse(TimeBox.Text);
             if (MessageBox.Show("Вы хотите сохранить изменения", "Предупреждение", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
             {
                 Properties.Settings.Default.blockingTime = time;
@@ -46,7 +46,7 @@ namespace Restaraunt.View
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            TimeBox.Text = (Properties.Settings.Default.blockingTime / 1000).ToString();
+            TimeBox.Text = (Properties.Settings.Default.blockingTime).ToString();
         }
 
         private void TimeBox_PreviewTextInput(object sender, TextCompositionEventArgs e)

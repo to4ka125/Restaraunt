@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using Restaraunt.Utilits;
 using Restaraunt.View;
 using System.Windows.Threading;
+using System.Runtime.InteropServices;
 
 namespace Restaraunt.Forms
 {
@@ -22,53 +23,40 @@ namespace Restaraunt.Forms
     /// </summary>
     public partial class WorkTable : Window
     {
-        private int idleTimeLimit;
+        private DispatcherTimer _inactivityTimer;
+        private readonly TimeSpan _inactivityTimeout = TimeSpan.FromSeconds(Properties.Settings.Default.blockingTime);
         public WorkTable()
         {
-            InitializeComponent();
-            InitializeIdleTimer();
-            this.MouseMove += new MouseEventHandler(Window_MouseMove);
-            this.KeyDown += new KeyEventHandler(Window_KeyDown);
+            InitializeComponent(); 
+            InitializeInactivityTimer();
+            EventManager.RegisterClassHandler(typeof(Window), Keyboard.KeyDownEvent, new KeyEventHandler(ResetInactivityTimer));
+            EventManager.RegisterClassHandler(typeof(Window), Mouse.MouseMoveEvent, new MouseEventHandler(ResetInactivityTimer));
+            EventManager.RegisterClassHandler(typeof(Window), Mouse.MouseDownEvent, new MouseButtonEventHandler(ResetInactivityTimer));
         }
-
-        private void Window_KeyDown(object sender, KeyEventArgs e)
+        private void InitializeInactivityTimer()
         {
-            ResetIdleTimer();
-        }
-
-        private void Window_MouseMove(object sender, MouseEventArgs e)
-        {
-            ResetIdleTimer();
-        }
-
-        private void ResetIdleTimer()
-        {
-            // Сбрасываем таймер при активности
-            if (Timer.idleTimer.IsEnabled)
+            _inactivityTimer = new DispatcherTimer
             {
-                Timer.idleTimer.Stop();
-                Timer.idleTimer.Start();
-            }
+                Interval = _inactivityTimeout
+            };
+            _inactivityTimer.Tick += OnInactivityTimeout;
+            _inactivityTimer.Start();
+            this.MouseMove += ResetInactivityTimer;
+            this.KeyDown += ResetInactivityTimer;
+            this.MouseDown += ResetInactivityTimer;
         }
-        private void InitializeIdleTimer()
+        private void ResetInactivityTimer(object sender, EventArgs e)
         {
-            // Устанавливаем время бездействия (например, 30 секунд)    
-            idleTimeLimit = Properties.Settings.Default.blockingTime;
-
-            Timer.idleTimer = new DispatcherTimer();
-            Timer.idleTimer.Interval = TimeSpan.FromMilliseconds(idleTimeLimit);
-            Timer.idleTimer.Tick += IdleTimer_Tick;
-            Timer.idleTimer.Start();
+            _inactivityTimer.Stop();
+            _inactivityTimer.Start();
         }
-
-        private void IdleTimer_Tick(object sender, EventArgs e)
+        private void OnInactivityTimeout(object sender, EventArgs e)
         {
-            // Блокируем систему и перенаправляем на форму авторизации
-            Timer.idleTimer.Stop();
-            this.IsEnabled = false;
-            MessageBox.Show("Система заблокирована из-за отсутствия активности. Пожалуйста, войдите снова.", "Блокировка системы", MessageBoxButton.OK, MessageBoxImage.Warning);
-            this.Close();
+            _inactivityTimer.Stop();
+            MessageBox.Show("Вы бездействовали слишком долго. Приложение будет закрыто.", "Внимание");
+            Close();
         }
+   
         private void Btn_Click(object sender, RoutedEventArgs e)
         {
             var radioButton = sender as RadioButton;

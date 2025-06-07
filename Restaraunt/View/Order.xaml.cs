@@ -46,15 +46,14 @@ namespace Restaraunt.View
 
             step2.Fill = Brushes.Transparent;
             step3.Fill = Brushes.Transparent;
-            step4.Fill = Brushes.Transparent;
-            step5.Fill = Brushes.Transparent;
+
 
             SolidColorBrush completedColor = (SolidColorBrush)(new BrushConverter().ConvertFrom("#F85D5D")); // Цвет для завершенных шагов
             SolidColorBrush currentColor = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FDC5C5")); // Цвет для текущего шага
             SolidColorBrush colorText = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFF")); // Цвет для текущего шага
 
-            var steps = new[] { step1, step2, step3, step4, step5 };
-            var stepsText = new[] { step1Text, step2Text, step3Text, step4Text, step5Text };
+            var steps = new[] { step1, step2, step3 };
+            var stepsText = new[] { step1Text, step2Text, step3Text };
 
             for (int i = 0; i < steps.Length; i++)
             {
@@ -455,9 +454,9 @@ namespace Restaraunt.View
             Blur.workTable.IsEnabled = false;
             Blur.workTable.Opacity = 0.5;
             CheckOrder cO = new CheckOrder();
-            Timer.idleTimer.Stop();
+          //  Timer.idleTimer.Stop();
             cO.ShowDialog();
-            Timer.idleTimer.Start();
+          //  Timer.idleTimer.Start();
             Blur.workTable.Effect = null;
             Blur.workTable.IsEnabled = true;
             Blur.workTable.Opacity = 1;
@@ -559,9 +558,9 @@ namespace Restaraunt.View
             Blur.workTable.IsEnabled = false;
             Blur.workTable.Opacity = 0.5;
             AddClients aC = new AddClients();
-            Timer.idleTimer.Stop();
+         //   Timer.idleTimer.Stop();
             aC.ShowDialog();
-            Timer.idleTimer.Start();
+         //   Timer.idleTimer.Start();
             Blur.workTable.Effect = null;
             Blur.workTable.IsEnabled = true;
             Blur.workTable.Opacity = 1;

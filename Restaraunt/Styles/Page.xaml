@@ -150,9 +150,30 @@
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Статус}" Value="Отменен">
+                            <Setter Property="Background" Value="#ffa799"/>
+                            <Setter Property="Foreground" Value="#333"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Статус}" Value="В обработке">
+                            <Setter Property="Background" Value="#fcfbb1"/>
+                            <Setter Property="Foreground" Value="#333"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Статус}" Value="Завершен">
+                            <Setter Property="Background" Value="#ccffcc"/>
+                            <Setter Property="Foreground" Value="#333"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding terminalStatus}" Value="Скрыть">
+                            <Setter Property="Background" Value="#ffa799"/>
+                            <Setter Property="Foreground" Value="#333"/>
+                        </DataTrigger>
+                    </Style.Triggers>
                 </Style>
             </Setter.Value>
         </Setter>
+
+       
+   
     </Style>
 
 

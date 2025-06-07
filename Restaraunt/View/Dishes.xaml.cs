@@ -148,18 +148,23 @@ namespace Restaraunt.View
             Blur.workTable.IsEnabled = false;
             Blur.workTable.Opacity = 0.5;
             AddDishes aD = new AddDishes();
-            Timer.idleTimer.Stop();
+         //   Timer.idleTimer.Stop();
             aD.ShowDialog();
-            Timer.idleTimer.Start();
+           // Timer.idleTimer.Start();
             UpdateDataGridView(query);
             Blur.workTable.Effect = null;
             Blur.workTable.IsEnabled = true;
             Blur.workTable.Opacity = 1;
         }
-
+        string dishesId;
         private void dataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+            if (dataGrid.SelectedItem!=null)
+            {
+                var row = dataGrid.SelectedItem as DataRowView;
+
+                dishesId = row[0].ToString();
+            }
         }
 
         BlurEffect blurEffect = new BlurEffect
@@ -182,14 +187,54 @@ namespace Restaraunt.View
                     Blur.workTable.Effect = blurEffect;
                     Blur.workTable.IsEnabled = false;
                     Blur.workTable.Opacity = 0.5;
-                    Timer.idleTimer.Stop();
+                   // Timer.idleTimer.Stop();
                     vMi.ShowDialog();
-                    Timer.idleTimer.Start();
+                   // Timer.idleTimer.Start();
                     Blur.workTable.Effect = null;
                     Blur.workTable.IsEnabled = true;
                     Blur.workTable.Opacity = 1;
                 }
             }
+        }
+
+        private void Btn_Click(object sender, RoutedEventArgs e)
+        {
+             query = @"SELECT 
+                         menu.menu_id, 
+                         menu.name AS 'Наименование', 
+                         menu.description AS 'Описание', 
+                         categories.name AS 'Категория',  
+                         CONCAT(menu.price, ' ₽') AS 'Цена',
+                         menu.terminalStatus
+
+                         FROM 
+                             menu
+                         INNER JOIN 
+                         categories ON menu.category_id = categories.category_id 
+                        ";
+            searchBox.Clear();
+            Sorting.Text=null;
+            UpdateDataGridView(query);
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateStatus("Показать");
+        }
+        public void UpdateStatus(string status)
+        {
+            using (MySqlConnection con = new MySqlConnection(MySqlCon.con))
+            {
+                con.Open();
+                MySqlCommand cmd = new MySqlCommand($@"Update menu set terminalStatus = '{status}' where  menu_id='{dishesId}'", con);
+                cmd.ExecuteNonQuery();
+                MessageBox.Show("Статус обновлен");
+                UpdateDataGridView(query);
+            }
+        }
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            UpdateStatus("Скрыть");
         }
     }
 }

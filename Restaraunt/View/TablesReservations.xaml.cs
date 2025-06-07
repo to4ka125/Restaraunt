@@ -317,9 +317,9 @@ namespace Restaraunt.View
                     Blur.workTable.Opacity = 0.5;
                     AddReservations aR = new AddReservations();
                     SafeData.dateReservation = qDate.SelectedDate.Value.ToString("yyyy-MM-dd");
-                    Timer.idleTimer.Stop();
+//Timer.idleTimer.Stop();
                     aR.ShowDialog();
-                    Timer.idleTimer.Start();
+                   // Timer.idleTimer.Start();
                     TablesPopulateGrid();
                     Blur.workTable.Effect = null;
                     Blur.workTable.IsEnabled = true;

@@ -370,9 +370,9 @@ namespace Restaraunt.View
             Blur.workTable.IsEnabled = false;
             Blur.workTable.Opacity = 0.5;
             AddProduct aP = new AddProduct();
-            Timer.idleTimer.Stop();
+        //    Timer.idleTimer.Stop();
             aP.ShowDialog();
-            Timer.idleTimer.Start();
+          //  Timer.idleTimer.Start();
             UpdateDataGridView(query, currentPage);
             Blur.workTable.Effect = null;
             Blur.workTable.IsEnabled = true;
@@ -393,15 +393,33 @@ namespace Restaraunt.View
                     Blur.workTable.IsEnabled = false;
                     Blur.workTable.Opacity = 0.5;
                     EditProduct eP = new EditProduct();
-                    Timer.idleTimer.Stop();
+                  //  Timer.idleTimer.Stop();
                     eP.ShowDialog();
-                    Timer.idleTimer.Start();
+                  //  Timer.idleTimer.Start();
                     UpdateDataGridView(query, currentPage);
                     Blur.workTable.Effect = null;
                     Blur.workTable.IsEnabled = true;
                     Blur.workTable.Opacity = 1;
                 }
             }
+        }
+
+        private void Btn_Click(object sender, RoutedEventArgs e)
+        {
+            Sorting.Text=null;
+            searchBox.Clear();
+            query = $@"SELECT 
+                             products.product_id, 
+                             products.name AS 'Наименование', 
+                             Concat( products.quantity,' кг.') AS 'Остаток на складе', 
+                             CONCAT( products.unit_price, ' руб.') AS 'Цена за кг',
+                             supplier.name AS 'Поставщик'                                                       
+                             FROM 
+                               products
+                               INNER JOIN 
+                               supplier ON products.supplier_id = supplier.supplier_id 
+                            ";
+            UpdateDataGridView(query, 1);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Restaraunt.Utilits;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +14,6 @@ namespace Restaraunt
     /// </summary>
     public partial class App : Application
     {
+     
     }
 }
