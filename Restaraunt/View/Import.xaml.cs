@@ -583,7 +583,8 @@ namespace Restaraunt.View
     
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            string backupPath = "Backup\\restaraunt.sql"; 
+            string backupDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Backup");
+            string backupPath = Path.Combine(backupDirectory, "restaurant.sql");
             string databaseName = "restaurant";
 
             string conString = "host=127.0.0.1; uid=root;pwd=;";

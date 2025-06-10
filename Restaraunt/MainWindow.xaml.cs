@@ -155,10 +155,6 @@ namespace Restaraunt
                 Thread.Sleep(10000);
       
             }
-            else
-            {
-                MessageBox.Show("Капча пройдена");
-            }
         }
         public static string GetHashPass(string password)
         {

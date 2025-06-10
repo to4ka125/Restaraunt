@@ -155,8 +155,7 @@ namespace Restaraunt.View
             string updateQuery;
             if (qDate.SelectedDate == null)
             {
-                updateQuery = @"
-UPDATE restaurant.tables t
+                updateQuery = @"UPDATE restaurant.tables t
 SET status = 'резерв'
 WHERE EXISTS (
     SELECT 1 
@@ -166,39 +165,24 @@ WHERE EXISTS (
     AND DATE(r.reservation_time) = CURRENT_DATE
 );
 
-
 UPDATE restaurant.tables t
-JOIN restaurant.reservations r ON r.table_id = t.table_number
+JOIN restaurant.reservations r ON r.table_id = t.table_number AND r.status = 'Завершена' AND DATE(r.reservation_time) = CURRENT_DATE
 SET t.status = 'свободно'
-WHERE r.status = 'Завершена'
-AND DATE(r.reservation_time) = CURRENT_DATE
-AND t.status = 'резерв';
-
+WHERE t.table_number > 0 AND t.status = 'резерв';
 
 UPDATE restaurant.tables t
 SET t.status = 'свободно'
-WHERE t.table_id > 0 
+WHERE t.table_number > 0 
 AND NOT EXISTS (
     SELECT 1 
     FROM restaurant.reservations r
-    WHERE r.table_id = t.table_id
+    WHERE r.table_id = t.table_number
     AND DATE(r.reservation_time) = CURRENT_DATE
 )
 AND t.status != 'занят';
 
-
 UPDATE restaurant.tables t
 SET status = CASE 
-
-    WHEN EXISTS (
-        SELECT 1 
-        FROM restaurant.reservations r
-        WHERE r.table_id = t.table_number
-        AND r.status = 'Активна'
-        AND DATE(r.reservation_time) = CURRENT_DATE
-    ) THEN t.status
-    
-    
     WHEN EXISTS (
         SELECT 1 
         FROM restaurant.orders o
@@ -207,7 +191,14 @@ SET status = CASE
         AND DATE(o.order_time) = CURRENT_DATE
     ) THEN 'занят'
     
-  
+    WHEN EXISTS (
+        SELECT 1 
+        FROM restaurant.reservations r
+        WHERE r.table_id = t.table_number
+        AND r.status = 'Активна'
+        AND DATE(r.reservation_time) = CURRENT_DATE
+    ) THEN 'резерв'
+    
     WHEN EXISTS (
         SELECT 1 
         FROM restaurant.orders o
@@ -216,15 +207,18 @@ SET status = CASE
         AND DATE(o.order_time) = CURRENT_DATE
     ) THEN 'свободно'
     
- 
     WHEN NOT EXISTS (
         SELECT 1
         FROM restaurant.orders o
         WHERE o.table_number = t.table_number
         AND DATE(o.order_time) = CURRENT_DATE
+    ) AND NOT EXISTS (
+        SELECT 1
+        FROM restaurant.reservations r
+        WHERE r.table_id = t.table_number
+        AND DATE(r.reservation_time) = CURRENT_DATE
     ) THEN 'свободно'
     
- 
     ELSE status
 END
 WHERE t.table_number > 0;";
@@ -243,39 +237,24 @@ WHERE EXISTS (
     AND DATE(r.reservation_time) = '{date}'
 );
 
-
 UPDATE restaurant.tables t
-JOIN restaurant.reservations r ON r.table_id = t.table_number
+JOIN restaurant.reservations r ON r.table_id = t.table_number AND r.status = 'Завершена' AND DATE(r.reservation_time) = CURRENT_DATE
 SET t.status = 'свободно'
-WHERE r.status = 'Завершена'
-AND DATE(r.reservation_time) = '{date}'
-AND t.status = 'резерв';
-
+WHERE t.table_number > 0 AND t.status = 'резерв';
 
 UPDATE restaurant.tables t
 SET t.status = 'свободно'
-WHERE t.table_id > 0 
+WHERE t.table_number > 0 
 AND NOT EXISTS (
     SELECT 1 
     FROM restaurant.reservations r
-    WHERE r.table_id = t.table_id
+    WHERE r.table_id = t.table_number
     AND DATE(r.reservation_time) = '{date}'
 )
 AND t.status != 'занят';
 
-
 UPDATE restaurant.tables t
 SET status = CASE 
-
-    WHEN EXISTS (
-        SELECT 1 
-        FROM restaurant.reservations r
-        WHERE r.table_id = t.table_number
-        AND r.status = 'Активна'
-        AND DATE(r.reservation_time) = '{date}'
-    ) THEN t.status
-    
-    
     WHEN EXISTS (
         SELECT 1 
         FROM restaurant.orders o
@@ -284,7 +263,14 @@ SET status = CASE
         AND DATE(o.order_time) = '{date}'
     ) THEN 'занят'
     
-  
+    WHEN EXISTS (
+        SELECT 1 
+        FROM restaurant.reservations r
+        WHERE r.table_id = t.table_number
+        AND r.status = 'Активна'
+        AND DATE(r.reservation_time) = '{date}'
+    ) THEN 'резерв'
+    
     WHEN EXISTS (
         SELECT 1 
         FROM restaurant.orders o
@@ -293,18 +279,23 @@ SET status = CASE
         AND DATE(o.order_time) = '{date}'
     ) THEN 'свободно'
     
- 
     WHEN NOT EXISTS (
         SELECT 1
         FROM restaurant.orders o
         WHERE o.table_number = t.table_number
         AND DATE(o.order_time) = '{date}'
+    ) AND NOT EXISTS (
+        SELECT 1
+        FROM restaurant.reservations r
+        WHERE r.table_id = t.table_number
+        AND DATE(r.reservation_time) = '{date}'
     ) THEN 'свободно'
     
- 
     ELSE status
 END
-WHERE t.table_number > 0;";
+WHERE t.table_number > 0;
+";
+
             }
 
 

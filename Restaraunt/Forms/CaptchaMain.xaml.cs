@@ -78,16 +78,17 @@ namespace Restaraunt.Forms
             {
                 MessageBox.Show("Капча пройдена");
                 SafeData.captchaCheck = true;
+                Close();
             }
             else
             {
                 MessageBox.Show("Капча не пройдена");
                 SafeData.captchaCheck = false;
-                //  Thread.Sleep(30000);
-                //MessageBox.Show("Форма заблокирован на 30 секунд");
+                 Thread.Sleep(10000);
+                MessageBox.Show("Форма заблокирован на 10 секунд");
             }
 
-            Close();
+           
         }
 
         private Bitmap GenerateCaptchaImage(string text)
