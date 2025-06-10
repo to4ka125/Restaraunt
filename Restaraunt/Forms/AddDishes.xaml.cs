@@ -8,6 +8,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -62,7 +63,7 @@ namespace Restaraunt.Forms
 
         private void SelectionChanged(ComboBox comboBox, TextBox textBox)
         {
-
+     
         }
 
         private void DellIngredients_Click(object sender, RoutedEventArgs e)
@@ -158,12 +159,13 @@ namespace Restaraunt.Forms
                     try
                     {
                         File.Copy(openFileDialog.FileName, destinationPath, true);
+                        image.Source = new BitmapImage(new Uri(openFileDialog.FileName));
                     }
                     catch (Exception ex)
                     {
                         MessageBox.Show(ex.Message,"Ошибка",MessageBoxButton.OK,MessageBoxImage.Error);
                     }
-                    image.Source = new BitmapImage(new Uri(openFileDialog.FileName));
+            
                 }
             }
         }
@@ -189,7 +191,7 @@ namespace Restaraunt.Forms
         {
             if (string.IsNullOrWhiteSpace(qName.Text) ||
                 qCategoriesBox.SelectedItem == null ||
-              string.IsNullOrWhiteSpace(qDescription.Text)||
+
                string.IsNullOrWhiteSpace(qPrice.Text))
             {
                 MessageBox.Show("Пожалуйста, заполните все обязательные поля.", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -215,7 +217,7 @@ namespace Restaraunt.Forms
             {
                 if (price < 150)
                 {
-                    MessageBox.Show("Цена блюда не может быть меньше  150 рублей . Пожалуйста, введите корректное значение.", "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Цена блюда не может быть меньше  150 рублей. Пожалуйста, введите корректное значение.", "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
             }
@@ -302,6 +304,20 @@ namespace Restaraunt.Forms
             qName.Clear();
             qPrice.Clear();
      
+        }
+
+        private void qName_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (Regex.IsMatch(e.Text, @"^[0-9\Wa-z]$")) { e.Handled = true; }
+
+        }
+
+        private void qPrice_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (Regex.IsMatch(e.Text, @"^[^0-9.,]$"))
+            {
+                e.Handled = true;
+            }
         }
     }
 }

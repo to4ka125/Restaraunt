@@ -60,7 +60,7 @@
                          Tag="Введите фамилию"
                          PreviewTextInput="qLastName_PreviewTextInput"/>
 
-                <TextBox x:Name="qEmail" Style="{StaticResource pcaholderText}" 
+                <TextBox x:Name="qEmail" Style="{StaticResource pcaholderText}"  PreviewTextInput="qEmail_PreviewTextInput"
                          Width="310"
                          Height="50" 
                          Tag="Введите почту"/>
@@ -86,7 +86,7 @@
                             Grid.Column="0"
                         Style="{StaticResource btnStyleSmall}" 
                         Height="35" Width="135"
-                        Content="Отчистить" Click="ClearClientBtn_Click"/>
+                        Content="Очистить" Click="ClearClientBtn_Click"/>
 
                 <StackPanel Grid.Column="1">
                     <Button x:Name="AddClientBtn" HorizontalAlignment="Left"

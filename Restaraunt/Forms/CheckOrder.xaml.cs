@@ -43,7 +43,7 @@ namespace Restaraunt.Forms
             }
             idTables.Text = SafeData.tablesId;
             DataTable dataTable = new DataTable();
-            decimal totalPrice = 0;
+            double totalPrice = 0;
 
             dataTable.Columns.Add("Наименование");
             dataTable.Columns.Add("Кол-во");
@@ -70,7 +70,7 @@ namespace Restaraunt.Forms
                         if (reader.Read())
                         {
                             string name = reader["name"].ToString();
-                            decimal price = Convert.ToDecimal(reader["price"]);
+                            double price = Convert.ToDouble(reader["price"]);
                             dataTable.Rows.Add(name, quantity, price);
                         }
                     }
@@ -79,14 +79,14 @@ namespace Restaraunt.Forms
 
             foreach (DataRow row in dataTable.Rows)
             {
-                decimal price = Convert.ToDecimal(row["Цена"]);
+                double price = Convert.ToDouble(row["Цена"]);
 
                 int quantity = Convert.ToInt32(row["Кол-во"]);
 
                 totalPrice += price * quantity;
 
             }
-            TotalPrice.Text = totalPrice.ToString();
+            TotalPrice.Text = Discount.DiscountFun(totalPrice).ToString();
             MenuData.ItemsSource = dataTable.DefaultView;
         }
 
@@ -105,16 +105,18 @@ namespace Restaraunt.Forms
 
         private void AddOrderBtn_Click(object sender, RoutedEventArgs e)
         {
-            int maxOrder_id;
-            using (MySqlConnection con = new MySqlConnection(MySqlCon.con))
+            try
             {
-                con.Open();
+                int maxOrder_id;
+                using (MySqlConnection con = new MySqlConnection(MySqlCon.con))
+                {
+                    con.Open();
 
-                string customerIdValue = string.IsNullOrEmpty(SafeData.customer_id)
-                    ? "NULL"
-                    : $"'{SafeData.customer_id}'";
-                                
-                string query = $@"
+                    string customerIdValue = string.IsNullOrEmpty(SafeData.customer_id)
+                        ? "NULL"
+                        : $"'{SafeData.customer_id}'";
+
+                    string query = $@"
                     INSERT INTO Orders (
                         user_id,
                         table_number,
@@ -130,80 +132,86 @@ namespace Restaraunt.Forms
                         '{SafeData.idpayment_method}',
                         { (string.IsNullOrEmpty(SafeData.customer_id) ? "" : $"'{SafeData.customer_id}',") }
                         'В обработке',
-                        '{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}',
+                        '{DateTime.Now.ToString("yyyy-MM-dd")}',
                         '{TotalPrice.Text.Replace(',', '.')}'
                     )";
 
-                using (MySqlCommand cmd = new MySqlCommand(query, con))
-                {
-                    cmd.ExecuteNonQuery();
-                }
-
-
-                using (MySqlCommand cmd = new MySqlCommand($@"Update tables set  status = 'занят' Where table_id ='{SafeData.tablesId}'", con))
-                {
-                    cmd.ExecuteNonQuery();
-                }
-
-
-                if (SafeData.isReservTable)
-                {
-                    using (MySqlCommand cmd = new MySqlCommand($@"Update reservations set status = 'Завершена' Where table_id='{SafeData.tablesId}' 
-                                                                  And reservation_time =CURRENT_DATE",con))
+                    using (MySqlCommand cmd = new MySqlCommand(query, con))
                     {
                         cmd.ExecuteNonQuery();
                     }
+
+
+                    using (MySqlCommand cmd = new MySqlCommand($@"Update tables set  status = 'занят' Where table_id ='{SafeData.tablesId}'", con))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+
+                    if (SafeData.isReservTable)
+                    {
+                        using (MySqlCommand cmd = new MySqlCommand($@"Update reservations set status = 'Завершена' Where table_id='{SafeData.tablesId}' 
+                                                                  And reservation_time =CURRENT_DATE", con))
+                        {
+                            cmd.ExecuteNonQuery();
+                        }
                         SafeData.isReservTable = false;
-                }
-
-
-
-                using (MySqlCommand cmd = new MySqlCommand("SELECT MAX(order_id) FROM Orders", con))
-                {
-                    MySqlDataAdapter da = new MySqlDataAdapter(cmd);
-                    DataTable dt = new DataTable();
-                    da.Fill(dt);
-                    maxOrder_id = int.Parse(dt.Rows[0].ItemArray[0].ToString());
-                }
-
-
-                foreach (var item in Basket.basket)
-                {
-                    string menuId = item.Key;
-                    int quantity = item.Value;
-                    using (MySqlCommand cmd = new MySqlCommand($@"INSERT INTO `restaurant`.`Order_Items` (`order_id`, `menu_id`, `quantity`)
-                                                                  Values ('{maxOrder_id}','{menuId}','{quantity}')", con))
-                    {
-                        cmd.ExecuteNonQuery();
                     }
 
 
-                    for (int i = 0; i < quantity; i++)
+
+                    using (MySqlCommand cmd = new MySqlCommand("SELECT MAX(order_id) FROM Orders", con))
                     {
-                        using (MySqlCommand cmd = new MySqlCommand($@"
+                        MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                        DataTable dt = new DataTable();
+                        da.Fill(dt);
+                        maxOrder_id = int.Parse(dt.Rows[0].ItemArray[0].ToString());
+                    }
+
+
+                    foreach (var item in Basket.basket)
+                    {
+                        string menuId = item.Key;
+                        int quantity = item.Value;
+                        using (MySqlCommand cmd = new MySqlCommand($@"INSERT INTO `restaurant`.`Order_Items` (`order_id`, `menu_id`, `quantity`)
+                                                                  Values ('{maxOrder_id}','{menuId}','{quantity}')", con))
+                        {
+                            cmd.ExecuteNonQuery();
+                        }
+
+
+                        for (int i = 0; i < quantity; i++)
+                        {
+                            using (MySqlCommand cmd = new MySqlCommand($@"
                         UPDATE Products p
                         JOIN Menu_Ingredients mn ON p.product_id = mn.product_id
                         SET p.quantity = p.quantity - mn.quantity
                         WHERE mn.menu_id = '{menuId}'", con))
-                        {
-                            cmd.ExecuteNonQuery();
+                            {
+                                cmd.ExecuteNonQuery();
+                            }
                         }
                     }
+
+                    MessageBox.Show("Ваш заказ успешно сформирован!",
+                    "Успех",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+
+
+                    SafeData.dishesAddBool = true;
+                    SafeData.idpayment_method = "1";
+                    SafeData.tablesId = null;
+                    Basket.basket.Clear();
+                    InitializeComponent();
+                    this.Close();
                 }
-
-                MessageBox.Show("Ваш заказ успешно сформирован!",
-                "Успех",
-                MessageBoxButton.OK,
-                MessageBoxImage.Information);
-
-
-                SafeData.dishesAddBool = true;
-                SafeData.idpayment_method = null;
-                SafeData.tablesId = null;
-                Basket.basket.Clear();
-                InitializeComponent();
-                this.Close();
             }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+      
 
         }
     }

@@ -428,7 +428,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Backup\restaraunt.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\IconsImage\Close-button.png" />
     <Resource Include="Images\IconsImage\power-button.png" />
@@ -556,9 +560,6 @@
     <Resource Include="Images\IconsMenu\download.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Backup\restaraunt.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Resource Include="Images\IconsImage\filter.png" />
     <Resource Include="Images\IconsMenu\settings.png" />
     <Resource Include="Images\logo.ico" />

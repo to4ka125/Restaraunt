@@ -62,7 +62,7 @@
                          Foreground="#333" />
                 </Grid>
 
-                <Rectangle Grid.Column="5" Height="1" Fill="#ADADAD" />
+      
 
 
             
@@ -129,6 +129,7 @@
                             <RadioButton Style="{StaticResource  btnStyleCategory}"
                                          Click="RadioButton_Click_3"
                                          x:Uid="1"
+                                         IsChecked="True"
                                          Content="Банковская карта"
                                          Width="180"
                                          Height="35"/>

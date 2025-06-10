@@ -161,7 +161,7 @@
                                 <StackPanel Orientation="Horizontal">
                                     <Image Margin="20 0 0 0" Width="20" Source="/Images/IconsMenu/download.png"/>
                                     <TextBlock VerticalAlignment="Center"  Margin="10 0" Style="{StaticResource textblock}"
-                                               Text="Импорт данных"/>
+                                               Text="Панель администратора"/>
                                 </StackPanel>
                             </Grid>
                         </Menu:Btn>
@@ -203,7 +203,7 @@
                 </Border>
 
                 <StackPanel Grid.Column="1" Margin="15" x:Name="container">
-                    <uc:Report/>
+                  
                 </StackPanel>
             </Grid>
         </Grid>

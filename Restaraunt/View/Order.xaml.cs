@@ -153,70 +153,79 @@ namespace Restaraunt.View
         }
         public void UpdateTableReservationStatus()
         {
-          string  updateQuery = @"UPDATE restaurant.tables t
-                                SET status = 'резерв'
-                                WHERE EXISTS (
-                                    SELECT 1 
-                                    FROM restaurant.reservations r
-                                    WHERE r.table_id = t.table_number
-                                    AND r.status = 'Активна'
-                                    AND DATE(r.reservation_time) = CURRENT_DATE
-                                );
-            
-             
-                          UPDATE restaurant.tables t
-	                    JOIN restaurant.reservations r ON r.table_id = t.table_number
-	                    SET t.status = 'свободно'
-	                    WHERE r.status = 'Завершена'
-	                    AND DATE(r.reservation_time) = CURRENT_DATE
-	                    AND t.status = 'резерв';
+          string  updateQuery = @"
+UPDATE restaurant.tables t
+SET status = 'резерв'
+WHERE EXISTS (
+    SELECT 1 
+    FROM restaurant.reservations r
+    WHERE r.table_id = t.table_number
+    AND r.status = 'Активна'
+    AND DATE(r.reservation_time) = CURRENT_DATE
+);
 
-                               UPDATE restaurant.tables t
-                               SET t.status = 'свободно'
-                               WHERE t.table_id > 0 
-                               AND NOT EXISTS (
-                                   SELECT 1 
-                                   FROM restaurant.reservations r
-                                   WHERE r.table_id = t.table_id
-                                   AND DATE(r.reservation_time) = CURRENT_DATE
-                                   )AND t.status != 'занят';
-          
-                        UPDATE restaurant.tables t
-                    SET status = CASE 
-                        WHEN EXISTS (
-                            SELECT 1 
-                            FROM restaurant.reservations r
-                            WHERE r.table_id = t.table_number
-                            AND r.status = 'Активна'
-                            AND DATE(r.reservation_time) = CURRENT_DATE
-                        ) THEN t.status  -- Не меняем статус, если есть активная резервация
+
+UPDATE restaurant.tables t
+JOIN restaurant.reservations r ON r.table_id = t.table_number
+SET t.status = 'свободно'
+WHERE r.status = 'Завершена'
+AND DATE(r.reservation_time) = CURRENT_DATE
+AND t.status = 'резерв';
+
+
+UPDATE restaurant.tables t
+SET t.status = 'свободно'
+WHERE t.table_id > 0 
+AND NOT EXISTS (
+    SELECT 1 
+    FROM restaurant.reservations r
+    WHERE r.table_id = t.table_id
+    AND DATE(r.reservation_time) = CURRENT_DATE
+)
+AND t.status != 'занят';
+
+
+UPDATE restaurant.tables t
+SET status = CASE 
+
+    WHEN EXISTS (
+        SELECT 1 
+        FROM restaurant.reservations r
+        WHERE r.table_id = t.table_number
+        AND r.status = 'Активна'
+        AND DATE(r.reservation_time) = CURRENT_DATE
+    ) THEN t.status
     
-                        WHEN EXISTS (
-                            SELECT 1 
-                            FROM restaurant.orders o
-                            WHERE o.table_number = t.table_number
-                            AND o.status IN ('Завершен', 'Отменен')
-                            AND DATE(o.order_time) = CURRENT_DATE
-                        ) THEN 'свободно'
     
-                        WHEN EXISTS (
-                            SELECT 1 
-                            FROM restaurant.orders o
-                            WHERE o.table_number = t.table_number
-                            AND o.status = 'В обработке'
-                            AND DATE(o.order_time) = CURRENT_DATE
-                        ) THEN 'занят'
+    WHEN EXISTS (
+        SELECT 1 
+        FROM restaurant.orders o
+        WHERE o.table_number = t.table_number
+        AND o.status = 'В обработке'
+        AND DATE(o.order_time) = CURRENT_DATE
+    ) THEN 'занят'
     
-                        WHEN NOT EXISTS (
-                            SELECT 1
-                            FROM restaurant.orders o
-                            WHERE o.table_number = t.table_number
-                            AND DATE(o.order_time) = CURRENT_DATE
-                        ) THEN 'свободно'
+  
+    WHEN EXISTS (
+        SELECT 1 
+        FROM restaurant.orders o
+        WHERE o.table_number = t.table_number
+        AND o.status IN ('Завершен', 'Отменен')
+        AND DATE(o.order_time) = CURRENT_DATE
+    ) THEN 'свободно'
     
-                        ELSE status
-                    END
-                    WHERE t.table_number > 0;";
+ 
+    WHEN NOT EXISTS (
+        SELECT 1
+        FROM restaurant.orders o
+        WHERE o.table_number = t.table_number
+        AND DATE(o.order_time) = CURRENT_DATE
+    ) THEN 'свободно'
+    
+ 
+    ELSE status
+END
+WHERE t.table_number > 0;";
             using (MySqlConnection con = new MySqlConnection(MySqlCon.con))
             {
                 try
@@ -293,7 +302,7 @@ namespace Restaraunt.View
             }
             else
             {
-                query = $@"SELECT menu_id, name, description, price, Image FROM Menu 
+                query = $@"SELECT menu_id, name, description,  concat_ws(' ', price, 'р.') as 'price', Image FROM Menu 
                   WHERE category_id = '{SafeData.categoriesId}' 
                   AND terminalStatus = 'Показать'";
             }
@@ -468,7 +477,7 @@ namespace Restaraunt.View
                 SafeData.step = 0;
                 PhaseElips();
                 AddTables.Visibility = Visibility.Visible;
-                Menu.Visibility = Visibility.Visible;
+                Menu.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -508,7 +517,6 @@ namespace Restaraunt.View
         {
             var radioBtn = sender as RadioButton;
             SafeData.idpayment_method = radioBtn.Uid;
-       
         }
 
         /// <summary>
@@ -536,7 +544,7 @@ namespace Restaraunt.View
 
                 if (dt.Rows.Count != 0)
                 {
-                    MessageBox.Show("Гостя с данным номером телефона найден", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Гость с данным номером телефона найден", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
                     qPhoneNumber.Text = dt.Rows[0][0].ToString();
                     qPhoneNumber.Visibility = Visibility.Visible;
                     addClients.Visibility = Visibility.Collapsed;

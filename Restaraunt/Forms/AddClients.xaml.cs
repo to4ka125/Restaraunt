@@ -101,7 +101,7 @@ namespace Restaraunt.Forms
 
         private void qEmail_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-         //   if (Regex.IsMatch(e.Text, @"^[]$")) { e.Handled = true; }
+            if (Regex.IsMatch(e.Text, @"^[а-я-А-Я]$")) { e.Handled = true; }
         }
     }
 }

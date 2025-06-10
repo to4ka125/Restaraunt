@@ -181,6 +181,14 @@ namespace Restaraunt.View
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+
+            if (SafeData.role == "Шеф")
+            {
+                ReportBtn.Visibility = Visibility.Collapsed;
+                AddBtn.Visibility = Visibility.Collapsed;
+                EditBtnClick.Visibility = Visibility.Collapsed;
+            }
+
             UpdateDataGridView(query, currentPage);
             UpdatePaginationButtons();
             foreach (var child in paginationBar.Children)

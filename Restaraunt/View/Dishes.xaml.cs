@@ -57,7 +57,6 @@ namespace Restaraunt.View
                          categories.name AS 'Категория',  
                          CONCAT(menu.price, ' ₽') AS 'Цена',
                          menu.terminalStatus
-
                          FROM 
                              menu
                          INNER JOIN 

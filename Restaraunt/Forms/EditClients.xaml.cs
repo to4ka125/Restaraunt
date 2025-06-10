@@ -99,7 +99,7 @@ namespace Restaraunt.Forms
 
         private void qEmail_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if (Regex.IsMatch(e.Text, @"^[0-9\W]$")) { e.Handled = true; }
+            if (Regex.IsMatch(e.Text, @"^[а-я-А-Я]$")) { e.Handled = true; }
         }
     
     }

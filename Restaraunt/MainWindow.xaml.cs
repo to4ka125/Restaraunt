@@ -22,7 +22,6 @@ using Restaraunt.Utilits;
 using System.IO;
 using Path = System.IO.Path;
 using System.Diagnostics;
-using Timer = Restaraunt.Utilits.Timer;
 
 namespace Restaraunt
 {

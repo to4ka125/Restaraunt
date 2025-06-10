@@ -53,7 +53,7 @@ namespace Restaraunt.Forms
         private void OnInactivityTimeout(object sender, EventArgs e)
         {
             _inactivityTimer.Stop();
-            MessageBox.Show("Вы бездействовали слишком долго. Приложение будет закрыто.", "Внимание");
+            MessageBox.Show("Вы бездействовали слишком долго. Приложение будет закрыто.", "Внимание",MessageBoxButton.OK, MessageBoxImage.Warning);
             Close();
         }
    

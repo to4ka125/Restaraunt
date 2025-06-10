@@ -57,11 +57,18 @@
                            Style="{StaticResource textblock}" 
                            FontSize="18"
                            HorizontalAlignment="Left"/>
-                    <TextBlock Text="650 руб." 
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="650" 
                            x:Name="TotalPrice" 
                            Style="{StaticResource textblock}" 
                            FontSize="18"
                            HorizontalAlignment="Right"/>
+                        <TextBlock Text=" руб." 
+                           Style="{StaticResource textblock}" 
+                           FontSize="18"
+                           HorizontalAlignment="Right"/>
+                    </StackPanel>
+             
                 </Grid>
 
                 <!-- Кнопки -->

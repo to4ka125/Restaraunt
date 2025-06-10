@@ -111,5 +111,10 @@ namespace Restaraunt.Forms
         {
             if (Regex.IsMatch(e.Text, @"^[0-9a-zA-Z\W]$")) { e.Handled = true; }
         }
+
+        private void qEmail_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (Regex.IsMatch(e.Text, @"^[а-я-А-Я]$")) { e.Handled = true; }
+        }
     }
 }

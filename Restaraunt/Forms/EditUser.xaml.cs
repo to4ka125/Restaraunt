@@ -197,7 +197,13 @@ namespace Restaraunt.Forms
 
         private void ClearUser_Click(object sender, RoutedEventArgs e)
         {
-
+            qName.Clear();
+            qLastName.Clear();
+            qLogin.Clear();
+            qPassword.Clear();
+            qRole.Text = "";
+            qEmail.Clear();
+            qPhone.Clear();
         }
     }
 
