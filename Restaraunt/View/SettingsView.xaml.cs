@@ -37,6 +37,7 @@ namespace Restaraunt.View
             if (MessageBox.Show("Сохранить изменения?", "Предупреждение", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
                 Properties.Settings.Default.blockingTime = time;
+                Properties.Settings.Default.Save();
                 MessageBox.Show("Измения успешно сохранены?");
             }
         }
@@ -44,6 +45,7 @@ namespace Restaraunt.View
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             TimeBox.Text = (Properties.Settings.Default.blockingTime).ToString();
+   
         }
 
         private void TimeBox_PreviewTextInput(object sender, TextCompositionEventArgs e)

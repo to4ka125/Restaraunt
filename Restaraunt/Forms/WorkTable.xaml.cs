@@ -26,6 +26,7 @@ namespace Restaraunt.Forms
 
         private DispatcherTimer _inactivityTimer;
         private readonly TimeSpan _inactivityTimeout = TimeSpan.FromSeconds(Properties.Settings.Default.blockingTime);
+        private bool _isClosing; // Флаг для предотвращения множественного срабатывания
         public WorkTable()
         {
             InitializeComponent(); 
@@ -36,28 +37,39 @@ namespace Restaraunt.Forms
         }
         private void InitializeInactivityTimer()
         {
-            _inactivityTimer = new DispatcherTimer
+            _inactivityTimer = new DispatcherTimer(DispatcherPriority.Background)
             {
                 Interval = _inactivityTimeout
             };
             _inactivityTimer.Tick += OnInactivityTimeout;
+
+            // Регистрируем обработчики только один раз
+            EventManager.RegisterClassHandler(typeof(Window), Keyboard.KeyDownEvent, new KeyEventHandler(ResetInactivityTimer), true);
+            EventManager.RegisterClassHandler(typeof(Window), Mouse.MouseMoveEvent, new MouseEventHandler(ResetInactivityTimer), true);
+            EventManager.RegisterClassHandler(typeof(Window), Mouse.MouseDownEvent, new MouseButtonEventHandler(ResetInactivityTimer), true);
+
             _inactivityTimer.Start();
-            this.MouseMove += ResetInactivityTimer;
-            this.KeyDown += ResetInactivityTimer;
-            this.MouseDown += ResetInactivityTimer;
         }
         private void ResetInactivityTimer(object sender, EventArgs e)
         {
-            _inactivityTimer.Stop();
-            _inactivityTimer.Start();
+            // Сбрасываем таймер только если он активен
+            if (_inactivityTimer.IsEnabled)
+            {
+                _inactivityTimer.Stop();
+                _inactivityTimer.Start();
+            }
         }
+
         private void OnInactivityTimeout(object sender, EventArgs e)
         {
+            if (_isClosing) return;
+
+            _isClosing = true;
             _inactivityTimer.Stop();
+
             MessageBox.Show("Вы бездействовали слишком долго. Приложение будет закрыто.", "Внимание");
             Close();
         }
-
         private void Btn_Click(object sender, RoutedEventArgs e)
         {
             var radioButton = sender as RadioButton;
