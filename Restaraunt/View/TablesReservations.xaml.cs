@@ -148,6 +148,7 @@ namespace Restaraunt.View
            MessageBoxButton.OK,
            MessageBoxImage.Information
        );
+                TablesPopulateGrid();
             }
         }
         public void UpdateTableReservationStatus()

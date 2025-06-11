@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -29,18 +30,14 @@ namespace Restaraunt.View
         {
             if (TimeBox.Text == null)
             {
-                MessageBox.Show("Поле Время бездействия должно быть заполнено.\nПожалуйста, введите значение.",
-        "Ошибка ввода",
-        MessageBoxButton.OK,
-        MessageBoxImage.Warning);
+                MessageBox.Show("Необходимо ввести время бездействия пользователя \nдля сохранения изменений", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
             int time = int.Parse(TimeBox.Text);
-            if (MessageBox.Show("Вы хотите сохранить изменения", "Предупреждение", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
+            if (MessageBox.Show("Сохранить изменения?", "Предупреждение", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
                 Properties.Settings.Default.blockingTime = time;
-                Properties.Settings.Default.Save();
-                MessageBox.Show("Настройки сохраненны");
+                MessageBox.Show("Измения успешно сохранены?");
             }
         }
 
@@ -51,7 +48,7 @@ namespace Restaraunt.View
 
         private void TimeBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-
+            if (Regex.IsMatch(e.Text, @"^[а-яА-ЯA-Za-z \W]$")) { e.Handled = true; }
         }
     }
 }

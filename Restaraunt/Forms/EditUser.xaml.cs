@@ -164,9 +164,7 @@ namespace Restaraunt.Forms
 
         private void qEmail_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if (Regex.IsMatch(e.Text, @"^[а-яА-Я \W]$")) { e.Handled = true; }
-            if (Regex.IsMatch(e.Text, @"^[_]$")) { e.Handled = false; }
-            if (Regex.IsMatch(e.Text, @"^[@]$")) { e.Handled = false; }
+            if (Regex.IsMatch(e.Text, @"^[а-я-А-Я]$")) { e.Handled = true; }
         }
 
         private void qPhone_PreviewTextInput(object sender, TextCompositionEventArgs e)

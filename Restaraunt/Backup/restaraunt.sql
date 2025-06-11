@@ -123,7 +123,7 @@ CREATE TABLE `orders` (
   KEY `idpayment_method_idx` (`idpayment_method`),
   CONSTRAINT `idpayment_method` FOREIGN KEY (`idpayment_method`) REFERENCES `payment_method` (`idpayment_method`),
   CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -154,8 +154,8 @@ CREATE TABLE `products` (
   `unit_price` decimal(10,2) NOT NULL,
   `supplier_id` int DEFAULT NULL,
   PRIMARY KEY (`product_id`),
-  KEY `fk_supplier` (`supplier_id`),
-  CONSTRAINT `fk_supplier` FOREIGN KEY (`supplier_id`) REFERENCES `supplier` (`supplier_id`) ON DELETE SET NULL
+  KEY `si_idx` (`supplier_id`),
+  CONSTRAINT `si` FOREIGN KEY (`supplier_id`) REFERENCES `supplier` (`supplier_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -188,7 +188,7 @@ DROP TABLE IF EXISTS `supplier`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `supplier` (
-  `supplier_id` int NOT NULL,
+  `supplier_id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `first_name` varchar(100) DEFAULT NULL,
   `phone` varchar(20) NOT NULL,
@@ -196,7 +196,7 @@ CREATE TABLE `supplier` (
   `address` varchar(255) NOT NULL,
   `last_name` varchar(45) NOT NULL,
   PRIMARY KEY (`supplier_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -244,4 +244,4 @@ CREATE TABLE `users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-06-09 15:52:00
+-- Dump completed on 2025-06-11 16:26:33

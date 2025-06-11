@@ -23,6 +23,7 @@ namespace Restaraunt.Forms
     /// </summary>
     public partial class WorkTable : Window
     {
+
         private DispatcherTimer _inactivityTimer;
         private readonly TimeSpan _inactivityTimeout = TimeSpan.FromSeconds(Properties.Settings.Default.blockingTime);
         public WorkTable()
@@ -53,10 +54,10 @@ namespace Restaraunt.Forms
         private void OnInactivityTimeout(object sender, EventArgs e)
         {
             _inactivityTimer.Stop();
-            MessageBox.Show("Вы бездействовали слишком долго. Приложение будет закрыто.", "Внимание",MessageBoxButton.OK, MessageBoxImage.Warning);
+            MessageBox.Show("Вы бездействовали слишком долго. Приложение будет закрыто.", "Внимание");
             Close();
         }
-   
+
         private void Btn_Click(object sender, RoutedEventArgs e)
         {
             var radioButton = sender as RadioButton;

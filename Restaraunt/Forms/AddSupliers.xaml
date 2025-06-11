@@ -70,7 +70,7 @@
                 <TextBox x:Name="qAdress" Style="{StaticResource pcaholderText}" 
                          Width="310"
                          Height="50" 
-                         Tag="Введите адрессс"/>
+                         Tag="Введите адресс"/>
             </StackPanel>
 
             <Grid Grid.Row="2" >

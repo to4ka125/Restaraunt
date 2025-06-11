@@ -80,7 +80,7 @@
                     <Button x:Name="ClearBtn" 
                         Style="{StaticResource btnStyleSmall}" 
                         Height="35" Width="135"
-                        Content="Отчистить" Click="ClearBtn_Click"/>
+                        Content="Очистить" Click="ClearBtn_Click"/>
 
                     <Button x:Name="AddOrderBtn" 
                         Margin="10 0 0 0" 
