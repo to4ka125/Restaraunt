@@ -583,9 +583,23 @@ namespace Restaraunt.View
     
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            string backupDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Backup");
-            string backupPath = Path.Combine(backupDirectory, "restaraunt.sql");
+            string backupPath = "";
+
+         
+            try
+            {
+                var combinedPath = Path.Combine(Directory.GetCurrentDirectory(), "Backup", "restaraunt.sql");
+                backupPath = Path.GetFullPath(combinedPath);
+            }
+            catch
+            {
+                var combinedPath = Path.Combine(Directory.GetCurrentDirectory(), "..\\..", "Backup", "restaraunt.sql");
+                backupPath = Path.GetFullPath(combinedPath);
+            }
+            
             string databaseName = "restaurant";
+
+
 
             string conString = "host=127.0.0.1; uid=root;pwd=;";
             using (MySqlConnection con = new MySqlConnection(conString))

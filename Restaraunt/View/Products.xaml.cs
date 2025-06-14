@@ -114,6 +114,8 @@ namespace Restaraunt.View
                 try
                 {
                     dataAdapter.Fill(dataTable);
+                    dataGrid.ItemsSource = dataTable.DefaultView;
+                    dataGrid.Columns[0].Visibility = Visibility.Hidden;
                 }
                 catch (Exception ex)
                 {
@@ -121,8 +123,7 @@ namespace Restaraunt.View
                 }
             }
 
-            dataGrid.ItemsSource = dataTable.DefaultView;
-            dataGrid.Columns[0].Visibility = Visibility.Hidden;
+    
         }
 
         private void UpdatePaginationButtons()

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -36,7 +37,7 @@ namespace Restaraunt.View
         string status="all";
 
 
-        private readonly string FileName = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Template", "check.docx");
+        private readonly string FileName = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Template", "check.docx");
         public OrderView()
         {
             InitializeComponent();
@@ -235,6 +236,8 @@ namespace Restaraunt.View
 
                     // Работа с Word
                     var wordApp = new Microsoft.Office.Interop.Word.Application();
+
+
                     wordApp.Visible = true; // Делаем Word видимым
                     Microsoft.Office.Interop.Word.Document wordDocument = null;
                     string localCopyPath = null;

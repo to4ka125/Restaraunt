@@ -18,6 +18,7 @@ using MySql.Data.MySqlClient;
 using System.Data;
 using Restaraunt.Forms;
 using System.Windows.Media.Effects;
+using System.Reflection;
 
 namespace Restaraunt.View
 {
@@ -300,7 +301,9 @@ WHERE t.table_number > 0;";
                   WHERE category_id = '{SafeData.categoriesId}' 
                   AND terminalStatus = 'Показать'";
             }
-
+            string pathError = Assembly.GetEntryAssembly().Location;
+            string baseDir = System.IO.Path.GetDirectoryName(pathError);
+            string spath;
             using (MySqlConnection con = new MySqlConnection(MySqlCon.con))
             {
                 try
@@ -340,7 +343,19 @@ WHERE t.table_number > 0;";
 
                     for (int i = 0; i < dt.Rows.Count; i++)
                     {
-                        image = new BitmapImage(new Uri($"/Images/ImagesMenu/{dt.Rows[i]["Image"]}", UriKind.RelativeOrAbsolute));
+                        try
+                        {
+                            var combinedPath = System.IO.Path.Combine(baseDir, "Images", "ImagesMenu", dt.Rows[i]["Image"].ToString());
+                            spath = System.IO.Path.GetFullPath(combinedPath);
+                            image = new BitmapImage(new Uri(combinedPath, UriKind.RelativeOrAbsolute));
+                        }
+                        catch (Exception ex)
+                        {
+                            var combinedPath = System.IO.Path.Combine(baseDir, "..\\..", "Images", "ImagesMenu", dt.Rows[i]["Image"].ToString());
+                            spath = System.IO.Path.GetFullPath(combinedPath);
+                            image = new BitmapImage(new Uri(combinedPath, UriKind.RelativeOrAbsolute));
+                        }
+                     
                         var dishes = new DishesBlock
                         {
                             Source = image,

@@ -43,12 +43,10 @@ namespace Restaraunt.Forms
             };
             _inactivityTimer.Tick += OnInactivityTimeout;
 
-            // Регистрируем обработчики только один раз
-            EventManager.RegisterClassHandler(typeof(Window), Keyboard.KeyDownEvent, new KeyEventHandler(ResetInactivityTimer), true);
-            EventManager.RegisterClassHandler(typeof(Window), Mouse.MouseMoveEvent, new MouseEventHandler(ResetInactivityTimer), true);
-            EventManager.RegisterClassHandler(typeof(Window), Mouse.MouseDownEvent, new MouseButtonEventHandler(ResetInactivityTimer), true);
-
             _inactivityTimer.Start();
+            this.MouseMove += ResetInactivityTimer;
+            this.KeyDown += ResetInactivityTimer;
+            this.MouseDown += ResetInactivityTimer;
         }
         private void ResetInactivityTimer(object sender, EventArgs e)
         {
